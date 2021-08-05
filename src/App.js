@@ -23,12 +23,12 @@ import Register from './component/Register';
 function App() {
     // return (
     //     <div>
-    //         <Event prop='1'></Event>
+    //         <Event id='1'></Event>
     //     </div>
     // );
     return (
         <BrowserRouter>
-                <Header />
+            <Header />
             <Switch>
                 <Route exact path="/about" component={About}></Route>
                 <Route exact path="/" component={Body}></Route>
