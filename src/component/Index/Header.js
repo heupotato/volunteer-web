@@ -40,9 +40,7 @@ export default class Header extends Component {
                          <header style={{ height: '140px' }}>
                              <div class="row-article">
                                  <div class="col-sm-9">
-                                     <Link to="/">
                                          <img src="Image/logo.png" class="img-responsive" style={{display: 'inline-block'}}></img>
-                                     </Link>
                                  </div>    
                             
                                  <div class="col-sm-auto">
@@ -123,9 +121,7 @@ export default class Header extends Component {
                             <header style={{ height: '140px' }}>
                                 <div class="row-article">
                                     <div class="col-sm-9">
-                                        <Link to="/">
                                             <img src="Image/logo.png" class="img-responsive" style={{display: 'inline-block'}}></img>
-                                        </Link>
                                     </div>    
                                
                                     <div class="col-sm-auto">
