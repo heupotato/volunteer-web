@@ -4,11 +4,12 @@ import Collapsible from "react-collapsible";
 import Comment from "../../component/Comment"
 import Thumbnail from "../../component/Thumbnail"
 import Map from "../../component/Map"
-function Event(props){
+function Event({match}){
     //từ props.id (id của event xài axios lấy thông tin xuống)
     /*
      * Đoạn ni BLong quẩy axios đi nha =))) 
      */
+    console.log("id" + match.params.id); 
     
     var info = {
         name: "Chương trình tình nguyện xây nhà tình thương tại Liên Chiểu, Đà Nẵng", 
@@ -231,7 +232,7 @@ function Event(props){
                     <div className="blank"></div>
                     <Collapsible trigger="ĐỊA ĐIỂM" className="Collapsible">
                         <div className="collapse-container" >
-                            <Map address={info.place}></Map>
+                            {/* <Map address={info.place}></Map> */}
                         </div>
                        
                     </Collapsible>

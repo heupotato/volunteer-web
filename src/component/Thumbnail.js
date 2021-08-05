@@ -27,9 +27,9 @@ function Thumbnail(props) {
                 <p>Địa điểm: {postInfo.place}</p>
                 <p>Thời gian: Từ ngày {postInfo.start} đến ngày {postInfo.end}</p>
                 <img class="card-img-bottom" src={postInfo.img} alt="" />
-                <a href={`/event/${props.id}`}>
+                <Link to={`/event/${props.id}`}>
                     <button class="btn btn-primary">Xem thêm</button>
-                </a>
+                </Link>
 
             </div>
         </div>

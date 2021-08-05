@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import AuthService from "../../services/auth.service";
 import { Redirect } from "react-router-dom";
 import { isCompositeComponentWithType } from 'react-dom/test-utils';
+import logo from "../../img/logo.png"
 export default class Header extends Component {
 
     constructor(props) {
@@ -40,7 +41,7 @@ export default class Header extends Component {
                          <header style={{ height: '140px' }}>
                              <div class="row-article">
                                  <div class="col-sm-9">
-                                         <img src="Image/logo.png" class="img-responsive" style={{display: 'inline-block'}}></img>
+                                         <img src={logo} class="img-responsive" style={{display: 'inline-block'}}></img>
                                  </div>    
                             
                                  <div class="col-sm-auto">
