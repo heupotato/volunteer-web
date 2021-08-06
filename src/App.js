@@ -36,7 +36,6 @@ function App() {
                 <Route exact path="/password" component={UpdatePassword} />
                 <Route exact path = "/body" component= {Body} />
                 <Route exact path = "/admin" component= {Admin} />
-                <Route exact path = "/edit/:id" component= {edit} />
                 <Route exact path="/event" component={Favourites}></Route>
                 <Route exact path="/event/:id" component={Event}></Route>
                 <Route exact path="/newEvent" component={NewEvent}></Route>
