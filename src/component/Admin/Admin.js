@@ -1,9 +1,25 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import ThumbnailAdmin from './ThumbnailAdmin'
 import { Link } from 'react-router-dom'
+import UserService from "../../services/user.service"
+import userService from "../../services/user.service";
+
 function Search(props) {
-  var favouritesIDs = [1,2,3,4,5,6,7,8,9,10]
-    const listFavourites = favouritesIDs.map((favouritesID) =>
+    var favouritesIDs = []
+    const [userIDs, setUserIDs] = useState([]);
+    useEffect(async () => {
+        console.log('useEffect has been called!');
+        await userService.getUserAll().then(response => {
+            var listUser = response.data;
+            let ids = listUser.map(element => element.id);
+            setUserIDs(ids);
+          })
+        .finally()
+      }, []);
+      
+    Object.values(userIDs).forEach(x => favouritesIDs.push(x));
+
+    const listUser = favouritesIDs.map((favouritesID) =>
         <div>
             <ThumbnailAdmin id={favouritesID} ></ThumbnailAdmin>
         </div>
@@ -13,7 +29,7 @@ function Search(props) {
                 <div class="row" >
                     <div class="col-md-12">
                         <div class="user-dashboard-info-box table-responsive mb-0 bg-white p-4 shadow-sm">
-                            {listFavourites}
+                            {listUser}
                         </div>
                     </div>
                 </div>

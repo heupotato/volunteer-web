@@ -5,7 +5,6 @@ import UserService from "../../services/user.service";
 
 function ThumbnailAdmin(props)
 {
-   
     const [details, setDetails] = useState({name:"",username:"",address:"",phone:"",role:"",active:""})
     useEffect(() => {
         UserService.getUser(props.id).then(res => {
@@ -26,23 +25,15 @@ function ThumbnailAdmin(props)
                 <div class="thumb">
                     <img class="img-fluid" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="" />
                 </div>
-                <div class="candidate-list-details">
-                    <div class="candidate-list-info">
-                    <div class="candidate-list-title">
-                        <h5 class="mb-0"><Link to="/">{details.username}</Link></h5>
-                    </div>
-                    <div class="candidate-list-option">
+                <div class="candidate-list-details col-sm-5">
+                        <h5 class="mb-0" style={{color:'#DD0000'}}>{details.username}</h5>   
+                        <h7>Name: {details.name}</h7><br />
+                        <h7>Role: {role}</h7>
                         <ul class="list-unstyled">
                         <li><i class="fas fa-filter pr-1"></i>{details.phone}</li>
                         <li><i class="fas fa-map-marker-alt pr-1"></i>{details.address}</li>
                         </ul>
-                    </div>
-                    </div>
                 </div>
-                </td>
-                <td class="candidate-list-favourite-time text-center">
-                <Link class="candidate-list-favourite order-2 text-danger" to="/"><i class="fas fa-heart"></i></Link>
-                <span class="candidate-list-time order-1">{role}</span>
                 </td>
                 <td>
                 <ul class="list-unstyled mb-0 d-flex justify-content-end" >
