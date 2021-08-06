@@ -1,9 +1,9 @@
-import  React, { Component, useState } from "react";
-import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
-import Geocode from "react-geocode";
-
+import  React, { Component, useEffect, useState } from "react";
+import axios from "axios";
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
+import 'leaflet/dist/leaflet.css';
 const containerStyle = {
-    width: '100%npm install --save react-geocode', 
+    width: '100%', 
     height: '400px'
 }
 
@@ -13,48 +13,30 @@ var center = {
 }
 
 function Map(prop){
-    Geocode.setApiKey("AIzaSyBaipkMWy_EAdUwc76DR04db6d32NWCnoA")
-    Geocode.enableDebug();
-    Geocode.fromAddress(prop.address).then(
-        (response) => {
-          const { lat, lng } = response.results[0].geometry.location;
-          console.log(lat, lng);
-          center.lat = lat
-          center.lng = lng
-        },
-        (error) => {
-          console.error(error);
-        }
-      );
-    const {isLoaded} = useJsApiLoader({
-        id: 'google-map-script',
-        googleMapsApiKey: "AIzaSyBaipkMWy_EAdUwc76DR04db6d32NWCnoA" 
-    })
-
-    const [map, setMap] = React.useState(null)
-
-    const onLoad = React.useCallback(function callback(map) {
-        const bounds = new window.google.maps.LatLngBounds();
-        map.fitBounds(bounds);
-        setMap(map)
+    const [data, setData] = useState([{lat: 0, lng: 0}]); 
+    const address = prop.address; 
+    useEffect(() => {
+        axios.get("https://open.mapquestapi.com/geocoding/v1/address?key=TETmPNAGrSsGs5AMz2vpaGXTc0jdCR5N&location=" + address)
+      .then(res => {
+        const dataPlace = res.data; 
+        const latLng = dataPlace.results[0].locations[0].latLng; 
+        console.log(latLng); 
+        setData(latLng); 
+        console.log(data); 
+      })
+      .catch(error => console.log(error));
     }, [])
 
-    const onUnmount = React.useCallback(function callback(map) {
-        setMap(null)
-    }, [])
 
-    return isLoaded ? (
-        <GoogleMap
-            mapContainerStyle={containerStyle}
-            center={center}
-            zoom={10}
-            onLoad={onLoad}
-            onUnmount={onUnmount}
-        >
-            <></>
-        </GoogleMap>
-    ) : <></>
-
+    return(
+        <div>
+            <h5 style={{fontStyle: 'italic'}}>Địa chỉ: {prop.address}</h5>
+            <div>
+                <img alt='static Mapbox map of address' 
+                src={`https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/${data.lng},${data.lat},11,0/600x400@2x?access_token=pk.eyJ1IjoiaGV1cG90YXRvIiwiYSI6ImNrcmU5M3ppMDF6bnMybmxxdWZybnhnZ2EifQ.HipNHpiJeyatsN3dj4-zvA`}/>
+            </div>
+        </div>
+    ); 
 }
 
 export default Map; 

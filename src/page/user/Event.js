@@ -1,10 +1,14 @@
-import  React, { Component, useRef} from "react";
+import  React, { Component, useEffect, useRef} from "react";
 import moment  from "moment";
 import Collapsible from "react-collapsible";
 import Comment from "../../component/Comment"
 import Thumbnail from "../../component/Thumbnail"
 import Map from "../../component/Map"
 function Event({match}){
+    // useEffect(() => {
+    //     document.title = "Sự kiện"; 
+    // }, []); 
+
     //từ props.id (id của event xài axios lấy thông tin xuống)
     /*
      * Đoạn ni BLong quẩy axios đi nha =))) 
@@ -23,7 +27,7 @@ function Event({match}){
         totalRated: 0, 
         eventDescription: "description here", 
         eventReq: "requirements here", 
-        place: "Danang University of Technology", //địa điểm diễn ra sự kiện để gọi google api 
+        place: "54 Ngo Si Lien, Da Nang", //địa điểm diễn ra sự kiện để gọi google api 
         maxPeople: 0, 
         nowRegistered: 0, //số lượng người hiện tại đã đăng ký 
         deadline: "15-5-2018", 
@@ -180,13 +184,17 @@ function Event({match}){
                                         <img width="300px" height="200px" style={{marginBottom: '0%'}} src={info.img}></img>
                                     </div>
                                 </div>
-                                <div>
-                                    <i className="news-icon fa fa-heart" style={{display: 'inline-block', marginRight: '5px'}}></i>
-                                    <h6>5 stars rated: {info.starRated}/{info.totalRated}</h6>
-                                    <i className="news-icon fa fa-share-alt-square" style={{display: 'inline-block', marginRight: '5px'}}></i>
-                                    <h6>Like/Share</h6>
-                                    <button type="button" onClick={handleRegister}
-                                    className="btn btn-info view-button">Đăng ký ngay</button> 
+                                <div className="row">
+                                    <div className="col">
+                                        <i className="news-icon fa fa-heart" style={{display: 'inline-block', marginRight: '5px', fontSize:'20px'}}></i>
+                                        <h6>5 stars rated: {info.starRated}/{info.totalRated}</h6>
+                                        <i className="news-icon fa fa-share-alt-square" style={{display: 'inline-block', marginRight: '5px', fontSize:'20px'}}></i>
+                                        <h6>Like/Share</h6>
+                                    </div>
+                                    <div className = "col">
+                                        <button type="button" onClick={handleRegister}
+                                        className="btn btn-info view-button">Đăng ký ngay</button> 
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -232,7 +240,7 @@ function Event({match}){
                     <div className="blank"></div>
                     <Collapsible trigger="ĐỊA ĐIỂM" className="Collapsible">
                         <div className="collapse-container" >
-                            {/* <Map address={info.place}></Map> */}
+                            <Map address={info.place}></Map>
                         </div>
                        
                     </Collapsible>

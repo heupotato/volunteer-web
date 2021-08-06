@@ -21,11 +21,6 @@ import NewEvent from './page/host/NewEvent';
 import Register from './component/Register';
 
 function App() {
-    // return (
-    //     <div>
-    //         <Event id='1'></Event>
-    //     </div>
-    // );
     return (
         <BrowserRouter>
             <Header />
@@ -51,9 +46,6 @@ function App() {
             </Switch>
             <Footer />
         </BrowserRouter>
-        // <div>
-        //     <NewEvent></NewEvent>
-        // </div>
     );
 }
 
