@@ -4,10 +4,6 @@ import ReactDOM from 'react-dom';
 
 function Favourites() 
 {
-    // useEffect(() => {
-    //     document.title = "Các sự kiện được yêu thích"; 
-    // }, []); 
-
     var favouritesIDs = [1,2,3,4,5,6,7,8,9,10,11,12]
     //gọi API lấy top 12 ID event được yêu thích nhất 
     const listFavourites = favouritesIDs.map((favouritesID) =>
