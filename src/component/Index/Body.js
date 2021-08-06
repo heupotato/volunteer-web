@@ -1,13 +1,12 @@
 import React,{Component} from 'react'
 import UserService from "../../services/user.service";
-import {login} from "../TestLogin/TestLogin"
+import {login} from "../TestLogin/TestLogin";
 import { Link } from 'react-router-dom';
-
 class Body extends Component{
   
     render() {
         return (
-        <main>
+        <main style = {{marginBottom:'40px'}}>
         <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-indicators">
                 <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -23,18 +22,11 @@ class Body extends Component{
                     </svg>
 
                     <div class="container">
-                        <div class="carousel-caption-0 text-start" style={{marginTop:"10px"}}>
-                            <h1 class="bg-light text-define" id="fit-h1">Tạo sự kiện của chính bạn</h1>
-                            <p><Link class="btn btn-lg btn-primary" to="/newEvent">Đăng ký ngay</Link></p>
-                        </div>
-                    </div>
-
-                    {/* <div class="container">
                         <div class="carousel-caption-0 text-start">
                             <h1 class="bg-light text-define" id="fit-h1">Volunteer</h1>
                             <p class="bg-primary text-light" id="fit-h1">Một trang web tìm kiếm tình nguyện viên miễn phí mang lại những giá trị tuyệt vời cho thế giới</p>
                         </div>
-                    </div> */}
+                    </div>
                 </div>
                 <div class="carousel-item">
                     <svg class="bd-placeholder-img" width="100%" height="100%" aria-hidden="true" focusable="false">
@@ -83,8 +75,7 @@ class Body extends Component{
                     </svg>
                     <h2>Sự kiện</h2>
                     <p>Some representative placeholder content for the three columns of text below the carousel. This is the first column.</p>
-                    {/* <p><a class="btn bg-define text-light" href="#">View details &raquo;</a></p> */}
-                    <p><a href="/event" class="btn bg-define text-light">View details &raquo;</a></p>
+                    <p><Link to = "event" class="btn bg-define text-light" >View details &raquo;</Link></p>
                 </div>
                 <div class="col-lg-4">
                     <svg class="bd-placeholder-img rounded-circle border-button" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#186c91"/><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text>

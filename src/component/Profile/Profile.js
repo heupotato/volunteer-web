@@ -5,9 +5,6 @@ import '../CSS/profile.css'
 import UserService from "../../services/user.service";
 import AuthService from "../../services/auth.service";
 export default class Profile extends Component  {
-    //dòng này để test dữ liệu cứng, ko có api
-    
-    //thay link dưới bằng link api của mình
     constructor(props) {
         super(props);
     
@@ -51,7 +48,6 @@ export default class Profile extends Component  {
               });
             }
           );
-       
        
       }
       

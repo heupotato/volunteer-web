@@ -31,11 +31,11 @@ function App() {
                 <Route exact path="/login" component={Signin}></Route>
                 <Route exact path="/search" component={Search}></Route>
                 <Route exact path="/profile" component={Profile} />
+                <Route exact path="/profile/:id" component={Profile}></Route>
                 <Route exact path="/update" component={Update} />
                 <Route exact path="/password" component={UpdatePassword} />
                 <Route exact path = "/body" component= {Body} />
                 <Route exact path = "/admin" component= {Admin} />
-                <Route exact path = "/edit/:id" component= {edit} />
                 <Route exact path="/event" component={Favourites}></Route>
                 <Route exact path="/event/:id" component={Event}></Route>
                 <Route exact path="/newEvent" component={NewEvent}></Route>
