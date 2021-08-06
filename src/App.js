@@ -5,6 +5,7 @@ import Footer from './component/Index/Footer';
 import About from './component/About';
 import Signup from './component/Signup_Signin/Signup';
 import { BrowserRouter, BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { useEffect } from 'react';
 import Signin from './component/Signup_Signin/Signin';
 import Search from './component/Search/Search';
 import Profile from './component/Profile/Profile';
@@ -26,6 +27,7 @@ function App() {
     //         <Event id='1'></Event>
     //     </div>
     // );
+ 
     return (
         <BrowserRouter>
             <Header />
