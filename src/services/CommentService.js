@@ -4,15 +4,15 @@ const COMMENT_API_BASE_URL = "http://localhost:8080/api/comments";
 
 class CommentService {
 
-    getComment() {
+    getComments() {
         return axios.get(COMMENT_API_BASE_URL);
     }
         
-    // addComment(comment) {
-    //     return axios.post(COMMENT_API_BASE_URL, comment);
-    // }
+    addComment(comment) {
+        return axios.post(COMMENT_API_BASE_URL, comment);
+    }
 
-    getCommentId(commentId) {
+    getComment(commentId) {
         return axios.get(COMMENT_API_BASE_URL + "/" + commentId);
     }
 }
