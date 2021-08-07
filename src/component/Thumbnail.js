@@ -1,25 +1,36 @@
 import React, { Component } from "react";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
+import EventService from "../services/EventService";
 
 function Thumbnail(props) {
-    //props.id = 0; 
     console.log(props.id);
-    var postInfo = {
-        name: "Event's name",
-        place: "Event's place",
-        start: '15-6-2019',
-        end: '15-8-2019',
-        img: "https://i.pinimg.com/originals/55/f9/64/55f964e6a39c4b6794ed3ad466091349.png"
-    }
 
-    const handleView = (evt) => {
-        evt.preventDefault();
-        console.log(props.id);
-        //route sang trang event kèm props id
-    }
+    const [postInfo, setPostInfo] = useState({
+                                            name: "Event's name",
+                                            place: "Event's place",
+                                            start: '15-6-2019',
+                                            end: '15-8-2019',
+                                            img: "https://i.pinimg.com/originals/55/f9/64/55f964e6a39c4b6794ed3ad466091349.png"
+                                        }); 
+    const eventID = prop.id; 
+    useEffect(
+        () => {
+            console.log("Fetching data for event's thumnail"); 
+            EventService.getEvent(eventID).then( response => {
+                var eventData = response.data; 
+                setPostInfo({
+                    name: eventData.eventName, 
+                    place: eventData.eventPlace, 
+                    start: eventData.eventStart, 
+                    end: eventData.eventEnd,
+                    img: eventData.eventImg
+                }); 
+            })
+            .catch(error => console.log(error));
+        }, []
+    )
 
-    
     return (
         <div class="text-black rounded-article bg-article bg-gradient card">
             <div class="card-body-article">
