@@ -1,17 +1,38 @@
 import  React, { Component, useState, useEffect} from "react";
 import Thumbnail from '../component/Thumbnail'; 
 import ReactDOM from 'react-dom';
+import EventService from "../services/EventService";
 
 function Favourites() 
 {
-    var favouritesIDs = [1,2,3,4,5,6,7,8,9,10,11,12]
-    //gọi API lấy top 12 ID event được yêu thích nhất 
+    var favouritesIDs = []
+    
+    const [eventIDs, setEventIDs] = useState([]); 
+
+    useEffect(
+        () => {
+            console.log("Fetching most favourite events' ID"); 
+            /*
+            Chưa có API cho event được yêu thích nhất nên lấy tạm get all event để test
+            */
+            EventService.getEvents().then( response => {
+                var listEvents = response.data; 
+                let ids = listEvents.map(event => event.id);
+                setEventIDs(ids); 
+            })
+            .catch(error => console.log(error));
+        }, []
+    )
+
+    Object.values(eventIDs).forEach(id => favouritesIDs.push(id));
+
     const listFavourites = favouritesIDs.map((favouritesID) =>
         <div style={{marginRight: '30px', display:'inline-block'}}>
             <Thumbnail id={favouritesID} ></Thumbnail>
             <div className="blank"></div>
         </div>
     )
+    
     return (
         <div>
             <div className="blank"></div>

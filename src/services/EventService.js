@@ -22,6 +22,10 @@ class EventService {
     updateEvent(eventID, newEvent){
         return axios.put(EVENT_API_BASE_URL + "/" + eventID, newEvent); 
     }
+
+    /*
+    * Thiếu API cho top most favourite events 
+    */
 }
 
 export default new EventService()
