@@ -19,8 +19,10 @@ import Favourites from './page/Favourites';
 import Event from './page/user/Event';
 import NewEvent from './page/host/NewEvent';
 import Register from './component/Register';
+import UpdateEvent from "./page/host/UpdateEvent";
 
 function App() {
+
     return (
         <BrowserRouter>
             <Header />
@@ -32,16 +34,17 @@ function App() {
                 <Route exact path="/search" component={Search}></Route>
                 <Route exact path="/profile" component={Profile} />
                 <Route exact path="/profile/:id" component={Profile}></Route>
-                <Route exact path="/update" component={UpdateProfile} />
+                <Route exact path="/update" component={Update} />
                 <Route exact path="/password" component={UpdatePassword} />
                 <Route exact path = "/body" component= {Body} />
+                <Route exact path = "/admin" component= {Admin} />
                 <Route exact path="/event" component={Favourites}></Route>
                 <Route exact path="/event/:id" component={Event}></Route>
                 <Route exact path="/newEvent" component={NewEvent}></Route>
                 <Route exact path="/homepage" component={Body}></Route>
                 <Route exact path="/registerEvent" component={Register}></Route>
-                {<PrivateRoute exact path="/admin" component={Admin} isAuthenticated={localStorage.getItem('role') === '3'}></PrivateRoute> }
-                {<PrivateRoute exact path="/user" component={BoardUser} isAuthenticated={localStorage.getItem('role') === '1'}></PrivateRoute> }
+                {/* <PrivateRoute exact path="/admin" component={BoardAdmin} isAuthenticated={localStorage.getItem('role') === '3'}></PrivateRoute> */}
+                {/* <PrivateRoute exact path="/user" component={BoardUser} isAuthenticated={localStorage.getItem('role') === '1'}></PrivateRoute> */}
             </Switch>
             <Footer />
         </BrowserRouter>

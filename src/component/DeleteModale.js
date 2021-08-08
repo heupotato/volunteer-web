@@ -1,5 +1,6 @@
 import { Button } from 'react-bootstrap';
 import  React, { Component, useState } from "react";
+import EventService from '../services/EventService';
 import Modal from 'react-bootstrap/Modal'
 function DeleteModale(prop)
 {
@@ -11,11 +12,12 @@ function DeleteModale(prop)
         console.log(prop.projectID)
         if (reason == ""); 
         else {
-            /*
-            * đoạn này backend set lại status của project (đã có ID project được truyền qua)
-                kèm với lí do là biến reason
-            */
-            handleClose(); 
+            EventService.deleteEvent(prop.projectID).then( () => {
+                handleClose(); 
+                /*
+                * chỗ này navigate về trang chủ luôn nhé
+                */
+            })   
         }
     }
 
@@ -35,7 +37,7 @@ function DeleteModale(prop)
             </Modal.Header>
             <Modal.Body>
                 <textarea className="form-control" rows="5" onChange={handleChange}
-                placeholder="Lí do bạn muốn huỷ bỏ sự kiện?"></textarea>
+                placeholder="Lí do bạn muốn huỷ bỏ sự kiện? Nếu không có lí do thì không thể xoá sự kiện"></textarea>
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
