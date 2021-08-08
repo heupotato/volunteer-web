@@ -1,13 +1,9 @@
 import React, { Component } from "react";
-import UserService from "../../services/user.service";
 import { Link } from 'react-router-dom';
-import axios from 'axios';
-import { render } from '@testing-library/react';
 import AuthService from "../../services/auth.service";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
-import {login} from '../TestLogin/TestLogin'
 
 const required = value => {
     if (!value) {

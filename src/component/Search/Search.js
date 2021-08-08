@@ -1,30 +1,64 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import  React, { useState, useEffect} from "react";
+import EventService from "../../services/EventService";
+import searchService from "../../services/search.service";
+import SearchResult from "./SearchResult";
 
-function Search() {
-  return (
-    <div id="results">
-        <h2 id="title">Search results</h2>
-        <div class='row-post' style={{marginBottom:'20px'}}>
-            <div class='container'>
-                <div class='card-post rounded-post' style={{border: '1px solid rgb(160, 155, 155)'}}>
-                    <div class='row'>
-                        <div class='col-lg-5' style={{marginLeft:'40px', marginTop:'30px'}}>
-                            <div>
-                                <h3>Title</h3>
-                                <h6>Time</h6>
-                                <p>Content.........</p>
-                                <Link  to="/">Readmore</Link>
-                            </div>
-                        </div>
-                        <div class='col-lg-5 offset-lg-define'>
-                            <center><img src='https://www.besttimetovisit.co.za/uploads/2019/01/beste-reistijd-danang-vietnam-640x360.jpg' style={{marginTop:'30px', marginBottom:'30px',  width:'100%', height:'100%'}} /></center>
-                        </div>
-                    </div>
-                </div>
+function Search() 
+{
+    var favouritesIDs = []
+    const [eventIDs, setEventIDs] = useState([]);
+    
+    const [state, setState] = useState({
+        eventName: "",
+    });
+    useEffect(() => {
+        console.log('useEffect has been called!');
+        const queryParams = new URLSearchParams(window.location.search);
+        const value = queryParams.get('value');
+        if (value == null) {
+            EventService.getEvents().then(response => {
+                var listUser = response.data;
+                let ids = listUser.map(element => element.id);
+                setEventIDs(ids);
+              })
+            .finally();
+        }
+        else {
+            searchService.getSearchResult(value).then(response => {
+                var listEvent = response.data;
+                let ids = listEvent.map(element => element.id);
+                setEventIDs(ids);
+                console.log(eventIDs);
+              })
+            .finally()
+        }
+      }, []);
+
+      Object.values(eventIDs).forEach(x => favouritesIDs.push(x));
+      
+    const handleSubmit = () => {
+        
+    }
+
+    const handleInputChanged = (event) => {
+        setState({
+          eventName: event.target.value
+        });
+      }
+    return (
+        <div style={{marginBottom:'30px'}}>
+            <div className="blank"></div>
+            <h2 id="title" style={{textAlign:'center'}}>Trang tìm kiếm</h2>
+            <form class="d-flex search">
+                <input class="form-define me-2 border-success" type="search" name="value" placeholder="Search..." aria-label="Search"
+                onChange={event => handleInputChanged(event)} />
+                <button class="btn btn-success" style={{marginLeft:'300px',position:'absolute', paddingLeft:'20px',paddingRight:'20px', marginTop:'14px'}} type="submit"
+                onClick={handleSubmit()} >Search</button>
+            </form>
+            <div hidden={localStorage.getItem('setState') == null}>
+            <SearchResult listIDs = {favouritesIDs}></SearchResult>
             </div>
         </div>
-    </div>
-  );
+    ); 
 }
-export default Search;
+export default Search; 

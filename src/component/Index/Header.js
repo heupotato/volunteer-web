@@ -61,7 +61,7 @@ export default class Header extends Component {
                             </h6>
                             <ul class='dropdown-menu' aria-labelledby='navbarDropdown'>
                                 <li><Link class='dropdown-item' to='/profile'>Thông tin chung</Link></li>
-                                <li><Link class='dropdown-item' to='/newpost'>New post</Link></li>
+                                <li><Link class='dropdown-item' to='/newEvent'>Tạo bài đăng</Link></li>
                                 <li><Link class='dropdown-item' to='/password'>Đổi mật khẩu</Link></li>
                                 <li><hr class='dropdown-divider' /></li>
                                 <li class='dropdown-item' >
