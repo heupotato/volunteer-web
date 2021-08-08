@@ -24,7 +24,7 @@ import UpdateEvent from "./page/host/UpdateEvent";
 function App() {
     return (
         <div>
-            <UpdateEvent></UpdateEvent>
+            <NewEvent></NewEvent>
         </div>
     )
 

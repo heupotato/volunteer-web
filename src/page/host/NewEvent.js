@@ -6,8 +6,7 @@ function NewEvent(){
     //từ id của leader lấy các thông tin của leaderInfo và orgInfo ra 
     //axios he
     var leaderInfo = {
-        leaderFirstname: "Firstname", 
-        leaderLastname: "Lastname", 
+        leaderName: "Name",
         leaderEmail: "Email@gmail.com", 
         LeaderPhone: "01234586", 
     }
@@ -109,12 +108,8 @@ function NewEvent(){
             <form id="form-new-event" name="form-new-event" onSubmit={handleSubmit} method="POST">
                 <div className="row">
                     <div className="col">
-                        <input type="text" name="leaderFirstname" value={leaderInfo.leaderFirstname} readOnly
-                        className="form-control" placeholder="First name" aria-label="First name"/>
-                    </div>
-                    <div className="col">
-                        <input type="text" name="leaderLastname" value={leaderInfo.leaderLastname} readOnly
-                        className="form-control" placeholder="Last name" aria-label="Last name"/>
+                        <input type="text" name="leaderName" value={leaderInfo.leaderName} readOnly
+                        className="form-control" placeholder="Họ và tên" aria-label="Họ và tên"/>
                     </div>
                 </div>
                 <div className="row">

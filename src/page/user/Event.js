@@ -9,10 +9,10 @@ function Event({match}){
     //     document.title = "Sự kiện"; 
     // }, []); 
 
-    //từ props.id (id của event xài axios lấy thông tin xuống)
     /*
      * Đoạn ni BLong quẩy axios đi nha =))) 
      */
+    //đây là id của event, do truyền theo link nên xài match
     console.log("id" + match.params.id); 
     
     var info = {
