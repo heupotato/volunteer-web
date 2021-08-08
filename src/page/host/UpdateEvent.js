@@ -41,7 +41,6 @@ function UpdateEvent({match}){
     * API Update
     */
     const currentUser = localStorage.getItem("id");//JSON.parse(localStorage.getItem("currentUser")); 
-    console.log("id" + currentUser); 
     // leaderInfo.leaderName = currentUser.name; 
     // leaderInfo.leaderPhone = currentUser.phone;
     // leaderInfo.leaderEmail = currentUser.email;
@@ -57,8 +56,8 @@ function UpdateEvent({match}){
         () => {
             userService.getUser(currentUser).then( response => {
                 var userData = response.data; 
-                console.log("userData" + userData.name); 
                 setLeader(userData);   
+                console.log(response.data);
                 const hostID = userData.host
                 HostService.getHostId(hostID).then( response => {
                 var hostData = response.data;
@@ -74,8 +73,6 @@ function UpdateEvent({match}){
             EventService.getEvent(eventID).then( response => {
                 var eventData = response.data; 
                 setEvent(eventData); 
-                console.log("eventData " + eventData.eventName)
-                console.log("event state" + event.eventName); 
             })
             .catch(error => console.log(error));
             
@@ -110,7 +107,6 @@ function UpdateEvent({match}){
         let file = eventImg.image; 
         var storage = firebase.storage(); 
         var storageRef = storage.ref(); 
-        console.log(storageRef);
         var uploadTask = storageRef.child('folder/' + projectID + file.name).put(file); 
 
         uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
@@ -125,13 +121,10 @@ function UpdateEvent({match}){
             },  () => {
                 uploadTask.snapshot.ref.getDownloadURL().then( (url) => {
                     downloadURL = url;
-                    console.log("eventurl" + downloadURL);
-                    console.log("realurl" + url)  ; 
                 }).then(() => {
                     //đoạn này direct về trang chủ và sử dụng API 
                     //biến downloadURL là link ảnh, post về API 
                     document.getElementById("eventImg").value = null;
-                    console.log("res" + downloadURL)
                     var newEvent = {
                         eventName: event.eventStart, 
                         eventStart: event.eventStart, 
