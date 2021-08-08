@@ -4,8 +4,9 @@ import Collapsible from "react-collapsible";
 import Comment from "../../component/Comment"
 import Thumbnail from "../../component/Thumbnail"
 import Map from "../../component/Map"
-function EventHost(props){
-    //từ props.id (id của event xài axios lấy thông tin xuống)
+function EventHost({match}){
+    //event Host này đi theo link nên id là 
+    console.log(match.params.id); 
     /*
      * Đoạn ni BLong quẩy axios đi nha =))) 
      */
@@ -188,6 +189,7 @@ function EventHost(props){
                                     <h6>Like/Share</h6>
                                     <button type="button"  onClick={handleViewParticipant}
                                     className="btn btn-info view-button">Xem danh sách người đã đăng ký</button> 
+                                    {/* set link cua nut cap nhat tai day */}
                                     <button type="button" onClick={handleUpdate} style={{marginLeft:"30px"}}
                                     className="btn btn-primary">Cập nhật sự kiện</button>  
                                 </div>

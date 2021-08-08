@@ -1,6 +1,8 @@
-import  React, { Component, useState } from "react";
+import  React, { Component, useState, useEffect} from "react";
 import ReactDOM from 'react-dom';
 import axios from 'axios';
+import HostService from "../../services/HostService";
+import EventService from "../../services/EventService";
 import firebase from 'firebase'
 function NewEvent(){
     //từ id của leader lấy các thông tin của leaderInfo và orgInfo ra 
@@ -16,6 +18,39 @@ function NewEvent(){
         OrgEmail: "Org@gmail.com", 
         OrgPhone: "0236012345", 
     }
+    /*
+    * API Add
+    */
+    const currentUser = localStorage.getItem("currentUser"); 
+    leaderInfo.leaderName = currentUser.name; 
+    leaderInfo.leaderPhone = currentUser.phone;
+    leaderInfo.leaderEmail = currentUser.email;
+    const hostID = currentUser.hostID; 
+     //state dùng cho API
+    const [host, setHost] = useState(orgInfo); 
+    const [currentID, setID] = useState(0); 
+    useEffect( 
+        () => {
+            console.log("Fetching event"); 
+            HostService.getHostId(hostID).then( response => { 
+                var host = response.data;  
+                setHost({
+                    orgName : host.orgName, 
+                    OrgAddress : host.OrgAddress, 
+                    OrgEmail : host.OrgEmail,
+                    OrgPhone : host.OrgPhone, 
+                    hostID : host.hostID
+                })
+            })
+            .catch(error => console.log(error));
+            EventService.getEvents().then ( response => {
+                var currentID = response.data.length; 
+                setID(currentID); 
+            })
+        }, []
+    )
+    orgInfo = host; 
+
     //state thông tin của người dùng
     const [state, setState] = useState({
         eventName: "", 
@@ -29,7 +64,7 @@ function NewEvent(){
         place: ""
 
     })
-    var id = parseInt("1") + 1; //SELECT TOP 1 * FROM Project ORDER BY ProjectID DESC - Dùng câu lệnh này để lấy id cuối cùng của mảng
+    var id = currentID; 
     //xâu "1" là 
     var projectID = "PJ" + id; 
     console.log(projectID);
@@ -78,7 +113,25 @@ function NewEvent(){
                     //biến downloadURL là link ảnh, post về API 
                     document.getElementById("eventImg").value = null;
                     console.log("res" + downloadURL)
-                    alert("Đã upload xong, quay về trang chủ")
+                    var newEvent = {
+                        eventName: state.eventStart, 
+                        eventStart: state.eventStart, 
+                        eventEnd: state.eventEnd, 
+                        eventDescription: state.eventDescription, 
+                        eventReq: state.eventReq, 
+                        minPeople: state.minPeople, 
+                        maxPeople: state.maxPeople, 
+                        deadline: state.deadline,
+                        place: state.place, 
+                        eventImg: downloadURL, 
+                        host: host
+                    }
+                    EventService.createEvent(newEvent).then(() => {
+                        alert("Đã update xong, quay về trang chủ"); 
+                        /*
+                        * Chỗ này cho nó back về trang trước hoặc về local host giufm tui nha pà
+                        */
+                    })
                 })
             }
         )
