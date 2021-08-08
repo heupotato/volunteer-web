@@ -19,6 +19,7 @@ import Favourites from './page/Favourites';
 import Event from './page/user/Event';
 import NewEvent from './page/host/NewEvent';
 import Register from './component/Register';
+import UpdateEvent from "./page/host/UpdateEvent";
 
 function App() {
     return (
