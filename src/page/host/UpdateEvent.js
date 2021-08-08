@@ -21,6 +21,7 @@ function UpdateEvent({match}){
         OrgAddress: "Address", 
         OrgEmail: "Org@gmail.com", 
         OrgPhone: "0236012345", 
+        hostID: 1
     }
    
     var eventInfo = {
@@ -66,7 +67,9 @@ function UpdateEvent({match}){
                 setHost({
                     orgName : host.orgName, 
                     OrgAddress : host.OrgAddress, 
-                    OrgEmail : host.OrgEmail
+                    OrgEmail : host.OrgEmail, 
+                    OrgPhone : host.OrgPhone, 
+                    hostID : host.hostID
                 })
             })
             .catch(error => console.log(error));
