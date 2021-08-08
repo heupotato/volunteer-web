@@ -132,11 +132,11 @@ class Body extends Component{
             <hr class="featurette-divider"></hr>
 
             <div class="row featurette">
-                <div class="col-md-7">
+                <div class="col-md-7" >
                     <h2 class="featurette-heading">Quản lý chuyên nghiệp<br /> <span class="text-muted">Quy tắc</span></h2>
                     <p class="lead">Chúng tôi có đội ngũ quản lý tầm cỡ, luôn tuân thủ các quy tắc chung để điều hành cộng đồng tình nguyện lớn mạnh.</p>
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-5"  style={{marginBottom:'50px'}}>
                     <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#eee"/><text x="50%" y="50%" fill="#aaa" dy=".3em">500x500</text>
                         <image xlinkHref="https://i.ibb.co/x3n8CWP/image.png"
                             x="0" y="0px" height="100%" width="100%"/>

@@ -1,10 +1,8 @@
 import React, {useEffect, useState} from "react";
 import ThumbnailAdmin from './ThumbnailAdmin'
-import { Link } from 'react-router-dom'
-import UserService from "../../services/user.service"
 import userService from "../../services/user.service";
 
-function Search(props) {
+function Admin() {
     var favouritesIDs = []
     const [userIDs, setUserIDs] = useState([]);
     useEffect(async () => {
@@ -37,4 +35,4 @@ function Search(props) {
         
     ); 
 }
-export default Search;
+export default Admin;

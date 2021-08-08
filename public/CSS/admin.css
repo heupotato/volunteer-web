@@ -1,6 +1,12 @@
 .p-4 {
     padding: 1.5rem!important;
 }
+.search{
+    padding-left:58rem;
+    margin-right: 50px;
+    padding-right: 0.5rem;
+    position: relative;
+}
 .mb-0, .my-0 {
     margin-bottom: 0!important;
 }
