@@ -40,13 +40,7 @@ function UpdateEvent({match}){
     /*
     * API Update
     */
-    const currentUser = localStorage.getItem("id");//JSON.parse(localStorage.getItem("currentUser")); 
-    // leaderInfo.leaderName = currentUser.name; 
-    // leaderInfo.leaderPhone = currentUser.phone;
-    // leaderInfo.leaderEmail = currentUser.email;
-    // const hostId = localStorage.getItem('id');
-    // console.log("hi"); 
-    // console.log(currentUser); 
+    const currentUser = localStorage.getItem("id");
 
      //state dùng cho API 
     const [leader, setLeader] = useState(leaderInfo); 
