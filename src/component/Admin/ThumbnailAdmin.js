@@ -5,16 +5,13 @@ import UserService from "../../services/user.service";
 
 function ThumbnailAdmin(props)
 {
-    const [details, setDetails] = useState({name:"",username:"",address:"",phone:"",role:"",active:""})
+    const [details, setDetails] = useState({name:"",username:"",address:"",phone:"",role:"",active:"", avatar:""})
     useEffect(() => {
         UserService.getUser(props.id).then(res => {
                 setDetails(res.data)
         }).catch(err => console.log(err))
     })
-    const handleChange = event =>{
-        setDetails({...details,[event.target.name]:event.target.value});
-    }
-    
+    console.log(details);
     var role = details.role == 3 ? 'Admin' : details.role == 2 ? 'Host' : 'User';
    
     return(
@@ -23,7 +20,7 @@ function ThumbnailAdmin(props)
             <tr class="candidates-list">
                 <td class="title">
                 <div class="thumb">
-                    <img class="img-fluid" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="" />
+                    <img class="img-fluid" src={details.avatar} alt="" />
                 </div>
                 <div class="candidate-list-details col-sm-5">
                         <h5 class="mb-0" style={{color:'#DD0000'}}>{details.username}</h5>   

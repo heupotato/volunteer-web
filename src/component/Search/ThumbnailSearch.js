@@ -10,6 +10,7 @@ function Thumbnail(props) {
                 setDetails(res.data)
         }).catch(err => console.log(err))
     })
+    
     const handleChange = event =>{
         setDetails({...details,[event.target.name]:event.target.value});
     }

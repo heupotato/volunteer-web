@@ -1,24 +1,26 @@
-import  React, { Component, useRef} from "react";
-import moment  from "moment";
+import  React, { Component, useEffect, useRef, useState} from "react";
+import EventService from "../../services/EventService";
 import Collapsible from "react-collapsible";
 import Comment from "../../component/Comment"
 import Thumbnail from "../../component/Thumbnail"
+import { useHistory } from "react-router";
 import Map from "../../component/Map"
+import { Redirect } from "react-router-dom";
 function EventHost({match}){
     //event Host này đi theo link nên id là 
-    console.log(match.params.id); 
+    var eventID = match.params.id;
     /*
      * Đoạn ni BLong quẩy axios đi nha =))) 
      */
-    
-    var info = {
-        name: "Chương trình tình nguyện xây nhà tình thương tại Liên Chiểu, Đà Nẵng", 
+    let history = useHistory();
+    const [info, setInfo] = useState({
+        eventName: "Chương trình tình nguyện xây nhà tình thương tại Liên Chiểu, Đà Nẵng", 
         orgPoint: 5,  // điểm cho tổ chức, tính khoảng 5 đi 
         eventPoint: 5, //điểm cho sự kiện
         commentNum: 0, //số lượng cmt select count 
         eventStart: '15-6-2018', 
         eventEnd: '15-8-2018', 
-        img: "https://vtv1.mediacdn.vn/zoom/550_339/2019/12/31/15-tin-off-bac-lieu-ho-tro-xay-sua-moi-2000-can-nha-tinh-thuong-15777826253271299318612.jpg", 
+        eventImg: "https://vtv1.mediacdn.vn/zoom/550_339/2019/12/31/15-tin-off-bac-lieu-ho-tro-xay-sua-moi-2000-can-nha-tinh-thuong-15777826253271299318612.jpg", 
         starRated: 0, 
         totalRated: 0, 
         eventDescription: "description here", 
@@ -27,17 +29,48 @@ function EventHost({match}){
         maxPeople: 0, 
         nowRegistered: 0, //số lượng người hiện tại đã đăng ký 
         deadline: "15-5-2018", 
-    }
-    var contact = {
+    })
+    const [contact, setContact] = useState({
         leaderFirstname: "leaderFirstname", 
         leaderLastname: "leaderLastname", 
         leaderEmail: "leaderEmail", 
         LeaderPhone: "LeaderPhone", 
-        OrgName: "OrgName", 
-        OrgAddress: "OrgAddress", 
-        OrgEmail: "OrgEmail", 
-        OrgPhone: "OrgPhone", 
-    }
+        orgName: "orgName", 
+        orgAddress: "orgAddress", 
+        orgEmail: "orgEmail", 
+        orgPhone: "orgPhone", 
+    })
+    useEffect( 
+        () => {
+            console.log("Fetching event"); 
+            EventService.getEvent(eventID).then( response => {
+                var eventData = response.data; 
+                setInfo({
+                    eventName: eventData.eventName, 
+                    place: eventData.eventPlace, 
+                    eventStart: eventData.eventStart, 
+                    eventEnd: eventData.eventEnd,
+                    eventDescription: eventData.eventDescription, 
+                    eventReq: eventData.eventReq, 
+                    minPeople: eventData.minPeople, 
+                    maxPeople: eventData.maxPeople, 
+                    deadline: eventData.deadline, 
+                    eventImg: eventData.eventImg
+                }); 
+                console.log(info);
+                var host = eventData.host; 
+                setContact({
+                    orgName : host.orgName, 
+                    orgAddress : host.orgAddress, 
+                    orgEmail : host.orgEmail, 
+                    orgPhone : host.orgPhone, 
+                    hostID : host.hostID
+                })
+                
+            })
+            .catch(error => console.log(error));
+        }, []
+    )
     //comment của người dùng ở đây
     var userComment = ""; 
     const handleChange = (evt) => {userComment = evt.target.value; }
@@ -58,8 +91,6 @@ function EventHost({match}){
         var from = info.eventEnd.split("-")
         var dateEnd = new Date(from[2], from[1], from[0])
         var today = new Date()
-        console.log(today)
-        console.log(dateEnd)
         if (today > dateEnd){
             //chuyển sang trang rating (này là Hiếu làm),
             //route qua kèm với project ID để đánh giá 
@@ -80,14 +111,14 @@ function EventHost({match}){
     *
     */
     const handleUpdate = (evt) => {
-        //Chuyển sang trang update (trang update event kèm với id của sự kiện)
+        history.push('/updateEvent' + "/" + eventID);
     }
-    const comments = [1, 2, 3, 4, 5]; //lấy xuống các id comments của event này, content trong mảng là để test, có thể sửa lại sau
+    const comments = [1, 2, 3]; //lấy xuống các id comments của event này, content trong mảng là để test, có thể sửa lại sau
     const listComments = comments.map((comment) => 
         <Comment id = {comment}></Comment>
     );
 
-    const recentPosts = [1, 2, 3, 4, 5]; //lấy xuống top 5 event được post gần đây nhất
+    const recentPosts = [1, 2, 3]; //lấy xuống top 5 event được post gần đây nhất
     const listPosts  = recentPosts.map((post) =>
         <div>
              <Thumbnail id = {post}></Thumbnail>
@@ -102,7 +133,7 @@ function EventHost({match}){
             <div className="row">
                 <div className="col-9">
                     <div style={{paddingTop: '25px'}}>
-                        <h4 className="web-text">{info.name}</h4>
+                        <h4 className="web-text">{info.eventName}</h4>
                         <i className="fa fa-street-view" id="icon-location" style={{ fontSize: '20px', marginTop: '10px', marginRight: '5px'}}></i>
                         <label className="web-text" htmlFor ="icon-location">{info.place}</label>
                         <div className="row">
@@ -179,7 +210,7 @@ function EventHost({match}){
                             <div className="col">
                                 <div className="img-polaroid">
                                     <div className="overflow-hidden position-relative">
-                                        <img width="300px" height="200px" style={{marginBottom: '0%'}} src={info.img}></img>
+                                        <img width="300px" height="200px" style={{marginBottom: '0%'}} src={info.eventImg}></img>
                                     </div>
                                 </div>
                                 <div>
@@ -227,10 +258,10 @@ function EventHost({match}){
                             <p> - Email: {contact.leaderEmail} </p>
                             
                             <h6 style={{fontStyle: 'italic'}}>VỀ ĐƠN VỊ TỔ CHỨC: </h6> 
-                            <p> - Tên đơn vị tổ chức: {contact.OrgName} </p>
-                            <p> - Số điện thoại: {contact.OrgPhone} </p>
-                            <p> - Email: {contact.OrgEmail}  </p>
-                            <p> - Địa chỉ: {contact.OrgAddress} </p>
+                            <p> - Tên đơn vị tổ chức: {contact.orgName} </p>
+                            <p> - Số điện thoại: {contact.orgPhone} </p>
+                            <p> - Email: {contact.orgEmail}  </p>
+                            <p> - Địa chỉ: {contact.orgAddress} </p>
                         </div>
                         
                     </Collapsible>
