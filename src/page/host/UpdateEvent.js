@@ -63,7 +63,7 @@ function UpdateEvent({match}){
                 var hostData = response.data;
                 setHost({
                     orgName : hostData.orgName, 
-                    orgAddress : hostData.orgAddress, 
+                    orgAddress : hostData.address, 
                     orgEmail : hostData.orgEmail, 
                     orgPhone : hostData.orgPhone, 
                 })
