@@ -40,13 +40,7 @@ function UpdateEvent({match}){
     /*
     * API Update
     */
-    const currentUser = localStorage.getItem("id");//JSON.parse(localStorage.getItem("currentUser")); 
-    // leaderInfo.leaderName = currentUser.name; 
-    // leaderInfo.leaderPhone = currentUser.phone;
-    // leaderInfo.leaderEmail = currentUser.email;
-    // const hostId = localStorage.getItem('id');
-    // console.log("hi"); 
-    // console.log(currentUser); 
+    const currentUser = localStorage.getItem("id");
 
      //state dùng cho API 
     const [leader, setLeader] = useState(leaderInfo); 
@@ -102,52 +96,72 @@ function UpdateEvent({match}){
     //gọi api các kiểu ở đây nè 
     //gọi hàm này để cập nhật lại thông tin sự kiện 
     const handleSubmit = (evt) => {
-        if (eventImg.image == null) return
-        evt.preventDefault(); 
-        let file = eventImg.image; 
-        var storage = firebase.storage(); 
-        var storageRef = storage.ref(); 
-        var uploadTask = storageRef.child('folder/' + projectID + file.name).put(file); 
-
-        uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
-            (snapshot) => {
-                var progress = Math.round((snapshot.bytesTransferred/snapshot.totalBytes))*100
-                setEventImg({
-                    ...eventImg, 
-                    progress: progress
-                })
-            }, (error) =>{
-                console.log(error)
-            },  () => {
-                uploadTask.snapshot.ref.getDownloadURL().then( (url) => {
-                    downloadURL = url;
-                }).then(() => {
-                    //đoạn này direct về trang chủ và sử dụng API 
-                    //biến downloadURL là link ảnh, post về API 
-                    document.getElementById("eventImg").value = null;
-                    var newEvent = {
-                        eventName: event.eventStart, 
-                        eventStart: event.eventStart, 
-                        eventEnd: event.eventEnd, 
-                        eventDescription: event.eventDescription, 
-                        eventReq: event.eventReq, 
-                        minPeople: event.minPeople, 
-                        maxPeople: event.maxPeople, 
-                        deadline: event.deadline,
-                        address: event.address, 
-                        eventImg: downloadURL
-                    }
-                    EventService.updateEvent(eventID, newEvent).then(() => {
-                        alert("Đã update xong, quay về trang chủ"); 
-                        /*
-                        * Chỗ này cho nó back về trang trước hoặc về local host giufm tui nha pà
-                        */
-                    })
-                })
+        if (eventImg.image == null) {
+            var newEvent = {
+                eventName: event.eventStart, 
+                eventStart: event.eventStart, 
+                eventEnd: event.eventEnd, 
+                eventDescription: event.eventDescription, 
+                eventReq: event.eventReq, 
+                minPeople: event.minPeople, 
+                maxPeople: event.maxPeople, 
+                deadline: event.deadline,
+                address: event.address, 
             }
-        )
+            EventService.updateEvent(eventID, newEvent).then(() => {
+                alert("Đã update xong, quay về trang chủ"); 
+                /*
+                * Chỗ này cho nó back về trang trước hoặc về local host giufm tui nha pà
+                */
+            })
+        }
+        else 
+        {
+            evt.preventDefault(); 
+            let file = eventImg.image; 
+            var storage = firebase.storage(); 
+            var storageRef = storage.ref(); 
+            var uploadTask = storageRef.child('folder/' + projectID + file.name).put(file); 
 
-        
+            uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
+                (snapshot) => {
+                    var progress = Math.round((snapshot.bytesTransferred/snapshot.totalBytes))*100
+                    setEventImg({
+                        ...eventImg, 
+                        progress: progress
+                    })
+                }, (error) =>{
+                    console.log(error)
+                },  () => {
+                    uploadTask.snapshot.ref.getDownloadURL().then( (url) => {
+                        downloadURL = url;
+                    }).then(() => {
+                        //đoạn này direct về trang chủ và sử dụng API 
+                        //biến downloadURL là link ảnh, post về API 
+                        document.getElementById("eventImg").value = null;
+                        var newEvent = {
+                            eventName: event.eventStart, 
+                            eventStart: event.eventStart, 
+                            eventEnd: event.eventEnd, 
+                            eventDescription: event.eventDescription, 
+                            eventReq: event.eventReq, 
+                            minPeople: event.minPeople, 
+                            maxPeople: event.maxPeople, 
+                            deadline: event.deadline,
+                            address: event.address, 
+                            eventImg: downloadURL
+                        }
+                        EventService.updateEvent(eventID, newEvent).then(() => {
+                            alert("Đã update xong, quay về trang chủ"); 
+                            /*
+                            * Chỗ này cho nó back về trang trước hoặc về local host giufm tui nha pà
+                            */
+                        })
+                    })
+                }
+            )
+
+        }
     }
     
     const handleUpload = (evt) => {

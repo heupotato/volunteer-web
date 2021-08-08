@@ -8,48 +8,50 @@ function NewEvent(){
     //từ id của leader lấy các thông tin của leaderInfo và orgInfo ra 
     //axios he
     var leaderInfo = {
-        leaderName: "Name",
-        leaderEmail: "Email@gmail.com", 
-        LeaderPhone: "01234586", 
+        name : "", 
+        email: "", 
+        phone: "", 
     }
+
     var orgInfo = {
-        OrgName: "Organization's name", 
-        OrgAddress: "Address", 
-        OrgEmail: "Org@gmail.com", 
-        OrgPhone: "0236012345", 
+        OrgName: "", 
+        OrgAddress: "", 
+        orgEmail: "", 
+        orgPhone: "", 
+        hostID: 1
     }
     /*
     * API Add
     */
-    const currentUser = localStorage.getItem("currentUser"); 
-    leaderInfo.leaderName = currentUser.name; 
-    leaderInfo.leaderPhone = currentUser.phone;
-    leaderInfo.leaderEmail = currentUser.email;
-    const hostID = currentUser.hostID; 
+    const currentUser = localStorage.getItem("id");
+    
      //state dùng cho API
-    const [host, setHost] = useState(orgInfo); 
-    const [currentID, setID] = useState(0); 
+    const [leader, setLeader] = useState(leaderInfo); 
+    const [host, setHost] = useState(orgInfo);  
+    const [eventID, setID] = useState(0); 
     useEffect( 
         () => {
-            console.log("Fetching event"); 
-            HostService.getHostId(hostID).then( response => { 
-                var host = response.data;  
+            userService.getUser(currentUser).then( response => {
+                var userData = response.data; 
+                setLeader(userData);   
+                console.log(response.data);
+                const hostID = userData.host
+                HostService.getHostId(hostID).then( response => {
+                var hostData = response.data;
                 setHost({
-                    orgName : host.orgName, 
-                    OrgAddress : host.OrgAddress, 
-                    OrgEmail : host.OrgEmail,
-                    OrgPhone : host.OrgPhone, 
-                    hostID : host.hostID
+                    orgName : hostData.orgName, 
+                    orgAddress : hostData.orgAddress, 
+                    orgEmail : hostData.orgEmail, 
+                    orgPhone : hostData.orgPhone, 
                 })
             })
-            .catch(error => console.log(error));
+            })
             EventService.getEvents().then ( response => {
                 var currentID = response.data.length; 
                 setID(currentID); 
             })
         }, []
     )
-    orgInfo = host; 
 
     //state thông tin của người dùng
     const [state, setState] = useState({
@@ -64,8 +66,7 @@ function NewEvent(){
         place: ""
 
     })
-    var id = currentID; 
-    //xâu "1" là 
+    var id = eventID; 
     var projectID = "PJ" + id; 
     console.log(projectID);
     //state này dùng cho ảnh thui 
@@ -161,40 +162,40 @@ function NewEvent(){
             <form id="form-new-event" name="form-new-event" onSubmit={handleSubmit} method="POST">
                 <div className="row">
                     <div className="col">
-                        <input type="text" name="leaderName" value={leaderInfo.leaderName} readOnly
+                        <input type="text" name="leaderName" value={leader.leaderName} readOnly
                         className="form-control" placeholder="Họ và tên" aria-label="Họ và tên"/>
                     </div>
                 </div>
                 <div className="row">
                     <div className="col">
-                        <input type="email" name="leaderEmail" value={leaderInfo.leaderEmail} readOnly
+                        <input type="email" name="leaderEmail" value={leader.leaderEmail} readOnly
                         className="form-control" placeholder="Email" aria-label="Email"/>
                     </div>
                     <div className="col">
-                        <input type="tel" name="leaderPhone" value={leaderInfo.LeaderPhone} readOnly
+                        <input type="tel" name="leaderPhone" value={leader.LeaderPhone} readOnly
                         className="form-control" placeholder="Số điện thoại" aria-label="Số điện thoại"/>
                     </div>
                 </div>
                     <h4 className="text-white mb-0">2. Thông tin về đơn vị tổ chức</h4>
                     <div className= "row">
                         <div className="col">
-                            <input type="text" name="OrgName" value={orgInfo.OrgName} readOnly
+                            <input type="text" name="OrgName" value={host.OrgName} readOnly
                             className="form-control" placeholder="Tên đơn vị tổ chức" aria-label="Tên đơn vị tổ chức"/>
                         </div>
                     </div>
                     <div className= "row">
                         <div className="col">
-                            <input type="text" name="OrgAddress" value={orgInfo.OrgAddress} readOnly
+                            <input type="text" name="OrgAddress" value={host.OrgAddress} readOnly
                             className="form-control" placeholder="Địa chỉ" aria-label="Địa chỉ đơn vị tổ chức"/>
                         </div>
                     </div>
                     <div className="row">
                         <div className="col">
-                            <input type="email" name="OrgEmail" value={orgInfo.OrgEmail} readOnly
+                            <input type="email" name="OrgEmail" value={host.OrgEmail} readOnly
                             className="form-control" placeholder="Email" aria-label="Email"/>
                         </div>
                         <div className="col">
-                            <input type="tel" name="OrgPhone" value={orgInfo.OrgPhone} readOnly
+                            <input type="tel" name="OrgPhone" value={host.OrgPhone} readOnly
                             className="form-control" placeholder="Số điện thoại" aria-label="Số điện thoại"/>
                         </div>
                     </div>
