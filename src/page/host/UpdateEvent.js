@@ -232,7 +232,7 @@ function UpdateEvent({match}){
                     </div>
                     <div className= "row">
                         <div className="col">
-                            <input type="text" name="place" value={event.address} onChange={handleChange}
+                            <input type="text" name="address" value={event.address} onChange={handleChange}
                             className="form-control" placeholder="Địa điểm" aria-label="Địa điểm"/>
                         </div>
                     </div>

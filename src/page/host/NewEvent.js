@@ -1,6 +1,5 @@
 import  React, { Component, useState, useEffect} from "react";
-import ReactDOM from 'react-dom';
-import axios from 'axios';
+import userService from "../../services/user.service";
 import HostService from "../../services/HostService";
 import EventService from "../../services/EventService";
 import firebase from 'firebase'
