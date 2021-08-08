@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const EVENT_API_BASE_URL = "http://localhost:8080/api/projects";
+const EVENT_API_BASE_URL = "/api/test/projects";
 
 class EventService {
     getEvents() {

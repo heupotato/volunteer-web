@@ -1,7 +1,6 @@
-import  React, { Component, useEffect, useState } from "react";
+import  React, { useEffect, useState } from "react";
 import axios from "axios";
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
-import 'leaflet/dist/leaflet.css';
+
 const containerStyle = {
     width: '100%', 
     height: '400px'

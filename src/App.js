@@ -35,14 +35,13 @@ function App() {
                 <Route exact path="/update" component={UpdateProfile} />
                 <Route exact path="/password" component={UpdatePassword} />
                 <Route exact path = "/body" component= {Body} />
-                <Route exact path = "/admin" component= {Admin} />
                 <Route exact path="/event" component={Favourites}></Route>
                 <Route exact path="/event/:id" component={Event}></Route>
                 <Route exact path="/newEvent" component={NewEvent}></Route>
                 <Route exact path="/homepage" component={Body}></Route>
                 <Route exact path="/registerEvent" component={Register}></Route>
-                {/* <PrivateRoute exact path="/admin" component={BoardAdmin} isAuthenticated={localStorage.getItem('role') === '3'}></PrivateRoute> */}
-                {/* <PrivateRoute exact path="/user" component={BoardUser} isAuthenticated={localStorage.getItem('role') === '1'}></PrivateRoute> */}
+                {<PrivateRoute exact path="/admin" component={Admin} isAuthenticated={localStorage.getItem('role') === '3'}></PrivateRoute> }
+                {<PrivateRoute exact path="/user" component={BoardUser} isAuthenticated={localStorage.getItem('role') === '1'}></PrivateRoute> }
             </Switch>
             <Footer />
         </BrowserRouter>
