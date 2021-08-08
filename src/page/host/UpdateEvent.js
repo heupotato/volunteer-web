@@ -1,27 +1,28 @@
-import  React, { Component, useState } from "react";
+import  React, { Component, useState, useEffect} from "react";
+import { useHistory } from "react-router-dom";
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import firebase from 'firebase'
+import EventService from "../../services/EventService";
+import HostService from "../../services/HostService"; 
 import DeleteModale from "../../component/DeleteModale";
-function UpdateEvent(prop){
+function UpdateEvent({match}){
     //var id là id của project
-    var id = prop.projectID; 
-
-    //từ id của leader lấy các thông tin của leaderInfo và orgInfo ra 
-    //axios he
+    //const eventID = match.param.id; 
+    const eventID = 1;
     var leaderInfo = {
-        leaderFirstname: "Firstname", 
-        leaderLastname: "Lastname", 
+        leaderName : "Name", 
         leaderEmail: "Email@gmail.com", 
-        LeaderPhone: "01234586", 
+        leaderPhone: "01234586", 
     }
+
     var orgInfo = {
         OrgName: "Organization's name", 
         OrgAddress: "Address", 
         OrgEmail: "Org@gmail.com", 
         OrgPhone: "0236012345", 
     }
-    //từ id của sự kiện lấy được các thông tin của sự kiện 
+   
     var eventInfo = {
         eventName: "Event's name", 
         eventStart: "2020-06-20", 
@@ -34,7 +35,47 @@ function UpdateEvent(prop){
         place: "Danang University of Technology", 
         imgUrl: "https://firebasestorage.googleapis.com/v0/b/volunteer-app-650f4.appspot.com/o/folder%2FPJ27961552429715654a8145ce5ea68b9e7.jpg?alt=media&token=eaae586d-cf16-406e-95a6-a29505206d15"
     }
-    //state thông tin của người dùng
+    /*
+    * API Update
+    */
+    const currentUser = localStorage.getItem("currentUser"); 
+    leaderInfo.leaderName = currentUser.name; 
+    leaderInfo.leaderPhone = currentUser.phone;
+    leaderInfo.leaderEmail = currentUser.email;
+     //state dùng cho API
+    const [host, setHost] = useState(orgInfo); 
+    const [event, setEvent] = useState(eventInfo)
+    useEffect( 
+        () => {
+            console.log("Fetching event"); 
+            EventService.getEvent(eventID).then( response => {
+                var eventData = response.data; 
+                setEvent({
+                    eventName: eventData.eventName, 
+                    place: eventData.eventPlace, 
+                    eventStart: eventData.eventStart, 
+                    eventEnd: eventData.eventEnd,
+                    eventDescription: eventData.eventDescription, 
+                    eventReq: eventData.eventReq, 
+                    minPeople: eventData.minPeople, 
+                    maxPeople: eventData.maxPeople, 
+                    deadline: eventData.deadline, 
+                    imgUrl: eventData.eventImg
+                }); 
+                var host = eventData.host; 
+                setHost({
+                    orgName : host.orgName, 
+                    OrgAddress : host.OrgAddress, 
+                    OrgEmail : host.OrgEmail
+                })
+            })
+            .catch(error => console.log(error));
+        }, []
+    )
+    eventInfo = event; 
+    orgInfo = host; 
+
+    //state thông tin của sự kiện
     const [state, setState] = useState({
         eventName: eventInfo.eventStart, 
         eventStart: eventInfo.eventStart, 
@@ -47,7 +88,7 @@ function UpdateEvent(prop){
         place: eventInfo.place
     })
     
-    var projectID = "PJ" + id; 
+    var projectID = "PJ" + eventID; 
     //state này dùng cho ảnh thui 
     const [eventImg, setEventImg] = useState({
         image : null, 
@@ -63,6 +104,8 @@ function UpdateEvent(prop){
         });
     }
     var downloadURL = eventInfo.imgUrl;
+
+
     //hàm này xử lý submit nè
     //gọi api các kiểu ở đây nè 
     //gọi hàm này để cập nhật lại thông tin sự kiện 
@@ -90,21 +133,33 @@ function UpdateEvent(prop){
                     console.log("eventurl" + downloadURL);
                     console.log("realurl" + url)  ; 
                 }).then(() => {
-                    //đoạn này direct về trang chủ nha làm gì đó nha  
+                    //đoạn này direct về trang chủ và sử dụng API 
                     //biến downloadURL là link ảnh, post về API 
                     document.getElementById("eventImg").value = null;
                     console.log("res" + downloadURL)
-                    alert("Đã upload xong, quay về trang chủ")
+                    var newEvent = {
+                        eventName: state.eventStart, 
+                        eventStart: state.eventStart, 
+                        eventEnd: state.eventEnd, 
+                        eventDescription: state.eventDescription, 
+                        eventReq: state.eventReq, 
+                        minPeople: state.minPeople, 
+                        maxPeople: state.maxPeople, 
+                        deadline: state.deadline,
+                        place: state.place, 
+                        eventImg: downloadURL, 
+                        host: host
+                    }
+                    EventService.updateEvent(eventID, newEvent).then(() => {
+                        alert("Đã update xong, quay về trang chủ"); 
+                        /*
+                        * Chỗ này cho nó back về trang trước hoặc về local host giufm tui nha pà
+                        */
+                    })
                 })
             }
         )
 
-        
-    }
-    /*
-    *
-    */
-    const handleDelete = (evt) => {
         
     }
     
@@ -130,12 +185,8 @@ function UpdateEvent(prop){
             <form id="form-new-event" name="form-new-event">
                 <div className="row">
                     <div className="col">
-                        <input type="text" name="leaderFirstname" value={leaderInfo.leaderFirstname} readOnly
-                        className="form-control" placeholder="First name" aria-label="First name"/>
-                    </div>
-                    <div className="col">
-                        <input type="text" name="leaderLastname" value={leaderInfo.leaderLastname} readOnly
-                        className="form-control" placeholder="Last name" aria-label="Last name"/>
+                        <input type="text" name="leaderName" value={leaderInfo.leaderName} readOnly
+                        className="form-control" placeholder="Họ và tên" aria-label="Họ và tên"/>
                     </div>
                 </div>
                 <div className="row">
@@ -144,7 +195,7 @@ function UpdateEvent(prop){
                         className="form-control" placeholder="Email" aria-label="Email"/>
                     </div>
                     <div className="col">
-                        <input type="tel" name="leaderPhone" value={leaderInfo.LeaderPhone} readOnly
+                        <input type="tel" name="leaderPhone" value={leaderInfo.leaderPhone} readOnly
                         className="form-control" placeholder="Số điện thoại" aria-label="Số điện thoại"/>
                     </div>
                 </div>
@@ -256,7 +307,7 @@ function UpdateEvent(prop){
                         <button type="button" className= "btn btn-success btn-lg" onClick={handleSubmit}
                         form="form-new-event">Cập nhật</button>
                         <div className="blank"></div>
-                        <DeleteModale projectID={id}></DeleteModale>
+                        <DeleteModale projectID={eventID}></DeleteModale>
                         {/* <button type="button" onClick={handleDelete}
                         className="btn btn-lg btn-danger">Xoá sự kiện</button> */}
                     </div>        
