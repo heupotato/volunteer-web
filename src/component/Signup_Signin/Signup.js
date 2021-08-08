@@ -200,7 +200,7 @@ export default class Register extends Component {
 
     render() {
         return (
-            <div class="register">
+            <div class="register" style={{marginBottom:'80px'}} >
                 <div class="row">
                     <div class="col-md-3 register-left">
                         <img src="https://icons-for-free.com/iconfiles/png/512/plane+icon-1320184416039486906.png" alt="" />

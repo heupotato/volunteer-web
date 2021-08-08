@@ -81,7 +81,7 @@ export default class Login extends Component {
 
     render() {
         return (
-            <div class="login">
+            <div class="login"  style = {{marginBottom:'80px'}}>
                 <div class="row">
                     <div class="col-md-3 register-left" style={{ marginTop: "0px" }}>
                         <img src="https://icons-for-free.com/iconfiles/png/512/plane+icon-1320184416039486906.png" alt="" style={{ paddingTop: "20px" }} />
