@@ -140,7 +140,7 @@ function UpdateEvent({match}){
                         //biến downloadURL là link ảnh, post về API 
                         document.getElementById("eventImg").value = null;
                         var newEvent = {
-                            eventName: event.eventStart, 
+                            eventName: event.eventName, 
                             eventStart: event.eventStart, 
                             eventEnd: event.eventEnd, 
                             eventDescription: event.eventDescription, 
