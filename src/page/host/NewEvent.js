@@ -62,7 +62,7 @@ function NewEvent(){
         minPeople: 0, 
         maxPeople: 0, 
         deadline: "2020-06-20",
-        place: ""
+        address: ""
 
     })
     var id = eventID; 
@@ -122,9 +122,10 @@ function NewEvent(){
                         minPeople: state.minPeople, 
                         maxPeople: state.maxPeople, 
                         deadline: state.deadline,
-                        place: state.place, 
+                        address: state.address, 
                         eventImg: downloadURL, 
-                        host: host
+                        status: 1, 
+                        user: leader.id
                     }
                     EventService.createEvent(newEvent).then(() => {
                         alert("Đã update xong, quay về trang chủ"); 
@@ -207,7 +208,7 @@ function NewEvent(){
                     </div>
                     <div className= "row">
                         <div className="col">
-                            <input type="text" name="place" value={state.place} onChange={handleChange}
+                            <input type="text" name="place" value={state.address} onChange={handleChange}
                             className="form-control" placeholder="Địa điểm" aria-label="Địa điểm"/>
                         </div>
                     </div>
