@@ -55,7 +55,7 @@ const vdate = value => {
 
 
 
-export default class Update extends Component{
+export default class UpdateProfile extends Component{
     
     constructor(props) {
         super(props);

@@ -8,7 +8,7 @@ import { BrowserRouter, BrowserRouter as Router, Route, Switch } from "react-rou
 import Signin from './component/Signup_Signin/Signin';
 import Search from './component/Search/Search';
 import Profile from './component/Profile/Profile';
-import Update from './component/Update/Update';
+import UpdateProfile from './component/Update/UpdateProfile';
 import Admin from './component/Admin/Admin';
 import edit from './component/Admin/edit';
 import UpdatePassword from './component/Update/UpdatePassword';
@@ -32,7 +32,7 @@ function App() {
                 <Route exact path="/search" component={Search}></Route>
                 <Route exact path="/profile" component={Profile} />
                 <Route exact path="/profile/:id" component={Profile}></Route>
-                <Route exact path="/update" component={Update} />
+                <Route exact path="/update" component={UpdateProfile} />
                 <Route exact path="/password" component={UpdatePassword} />
                 <Route exact path = "/body" component= {Body} />
                 <Route exact path = "/admin" component= {Admin} />
