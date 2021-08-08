@@ -63,7 +63,7 @@ export default class Profile extends Component  {
                             <div class="card" style={{height:"22.5rem"}}>
                                 <div class="card-body">
                                 <div class="d-flex flex-column align-items-center text-center">
-                                    <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150" />
+                                    <img src={this.state.avatar} alt="Admin" class="rounded-circle" width="150" />
                                     <div class="mt-3">
                                     <h4>{this.state.name}</h4>
                                     <p class="text-secondary mb-1">{this.state.role == 1 ? 'User' : this.state.role == 2 ? 'Host' : 'Admin'}</p>

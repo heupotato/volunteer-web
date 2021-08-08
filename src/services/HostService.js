@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const HOST_API_BASE_URL = "http://localhost:8080/api/hosts";
+const HOST_API_BASE_URL = "api/hosts";
 
 class HostService {
 

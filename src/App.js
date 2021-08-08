@@ -11,6 +11,7 @@ import Profile from './component/Profile/Profile';
 import UpdateProfile from './component/Update/UpdateProfile';
 import Admin from './component/Admin/Admin';
 import edit from './component/Admin/edit';
+import Review from './component/Review/Review';
 import UpdatePassword from './component/Update/UpdatePassword';
 import BoardUser from "./component/board-user.component";
 import BoardAdmin from "./component/board-admin.component";
@@ -20,6 +21,7 @@ import Event from './page/user/Event';
 import NewEvent from './page/host/NewEvent';
 import Register from './component/Register';
 import UpdateEvent from "./page/host/UpdateEvent";
+import EventHost from './page/host/EventHost';
 
 function App() {
 
@@ -34,17 +36,19 @@ function App() {
                 <Route exact path="/search" component={Search}></Route>
                 <Route exact path="/profile" component={Profile} />
                 <Route exact path="/profile/:id" component={Profile}></Route>
-                <Route exact path="/update" component={Update} />
+                <Route exact path="/update" component={UpdateProfile} />
                 <Route exact path="/password" component={UpdatePassword} />
+                <Route exact path="/updateEvent/:id" component={UpdateEvent} />
                 <Route exact path = "/body" component= {Body} />
-                <Route exact path = "/admin" component= {Admin} />
                 <Route exact path="/event" component={Favourites}></Route>
+                <Route exact path="/eventHost/:id" component={EventHost}></Route>
                 <Route exact path="/event/:id" component={Event}></Route>
                 <Route exact path="/newEvent" component={NewEvent}></Route>
                 <Route exact path="/homepage" component={Body}></Route>
                 <Route exact path="/registerEvent" component={Register}></Route>
-                {/* <PrivateRoute exact path="/admin" component={BoardAdmin} isAuthenticated={localStorage.getItem('role') === '3'}></PrivateRoute> */}
-                {/* <PrivateRoute exact path="/user" component={BoardUser} isAuthenticated={localStorage.getItem('role') === '1'}></PrivateRoute> */}
+                <Route exact path="/review" component={Review}></Route>
+                {<PrivateRoute exact path="/admin" component={Admin} isAuthenticated={localStorage.getItem('role') === '3'}></PrivateRoute> }
+                {<PrivateRoute exact path="/user" component={BoardUser} isAuthenticated={localStorage.getItem('role') === '1'}></PrivateRoute>}
             </Switch>
             <Footer />
         </BrowserRouter>

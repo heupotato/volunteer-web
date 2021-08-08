@@ -2,6 +2,7 @@ import React,{Component} from 'react'
 import { Link } from 'react-router-dom';
 import AuthService from "../../services/auth.service";
 import { Redirect } from "react-router-dom";
+import logo from "../../img/logo.png"
 import { isCompositeComponentWithType } from 'react-dom/test-utils';
 export default class Header extends Component {
 
@@ -37,7 +38,7 @@ export default class Header extends Component {
                 <header style={{ height: '125px' }}>
                     <div class="row-article">
                         <div class="col-sm-9">
-                                <img src="Image/logo.png" class="img-responsive" style={{display: 'inline-block'}}></img>
+                                <img src={logo} class="img-responsive" style={{display: 'inline-block'}}></img>
                         </div>    
                 
                         <div class="col-sm-auto">
@@ -116,7 +117,7 @@ export default class Header extends Component {
                     <header style={{ height: '125px' }}>
                         <div class="row-article">
                             <div class="col-sm-9">
-                                    <img src="Image/logo.png" class="img-responsive" style={{display: 'inline-block'}}></img>
+                                    <img src={logo} class="img-responsive" style={{display: 'inline-block'}}></img>
                             </div>    
                         
                             <div class="col-sm-auto">

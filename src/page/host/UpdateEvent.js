@@ -6,21 +6,22 @@ import firebase from 'firebase'
 import EventService from "../../services/EventService";
 import HostService from "../../services/HostService"; 
 import DeleteModale from "../../component/DeleteModale";
+import userService from "../../services/user.service";
 function UpdateEvent({match}){
     //var id là id của project
-    //const eventID = match.param.id; 
-    const eventID = 1;
+    console.log(match.params.id);
+    const eventID = match.params.id; 
     var leaderInfo = {
-        leaderName : "Name", 
-        leaderEmail: "Email@gmail.com", 
-        leaderPhone: "01234586", 
+        name : "", 
+        email: "", 
+        phone: "", 
     }
 
     var orgInfo = {
-        OrgName: "Organization's name", 
-        OrgAddress: "Address", 
-        OrgEmail: "Org@gmail.com", 
-        OrgPhone: "0236012345", 
+        OrgName: "", 
+        OrgAddress: "", 
+        orgEmail: "", 
+        orgPhone: "", 
         hostID: 1
     }
    
@@ -33,63 +34,54 @@ function UpdateEvent({match}){
         minPeople: 10, 
         maxPeople: 30, 
         deadline: "2020-06-20",
-        place: "Danang University of Technology", 
+        address: "Danang University of Technology", 
         imgUrl: "https://firebasestorage.googleapis.com/v0/b/volunteer-app-650f4.appspot.com/o/folder%2FPJ27961552429715654a8145ce5ea68b9e7.jpg?alt=media&token=eaae586d-cf16-406e-95a6-a29505206d15"
     }
     /*
     * API Update
     */
-    const currentUser = localStorage.getItem("currentUser"); 
-    leaderInfo.leaderName = currentUser.name; 
-    leaderInfo.leaderPhone = currentUser.phone;
-    leaderInfo.leaderEmail = currentUser.email;
-     //state dùng cho API
+    const currentUser = localStorage.getItem("id");//JSON.parse(localStorage.getItem("currentUser")); 
+    console.log("id" + currentUser); 
+    // leaderInfo.leaderName = currentUser.name; 
+    // leaderInfo.leaderPhone = currentUser.phone;
+    // leaderInfo.leaderEmail = currentUser.email;
+    // const hostId = localStorage.getItem('id');
+    // console.log("hi"); 
+    // console.log(currentUser); 
+
+     //state dùng cho API 
+    const [leader, setLeader] = useState(leaderInfo); 
     const [host, setHost] = useState(orgInfo); 
     const [event, setEvent] = useState(eventInfo)
     useEffect( 
         () => {
+            userService.getUser(currentUser).then( response => {
+                var userData = response.data; 
+                console.log("userData" + userData.name); 
+                setLeader(userData);   
+                const hostID = userData.host
+                HostService.getHostId(hostID).then( response => {
+                var hostData = response.data;
+                setHost({
+                    orgName : hostData.orgName, 
+                    orgAddress : hostData.orgAddress, 
+                    orgEmail : hostData.orgEmail, 
+                    orgPhone : hostData.orgPhone, 
+                })
+            })
+            })
             console.log("Fetching event"); 
             EventService.getEvent(eventID).then( response => {
                 var eventData = response.data; 
-                setEvent({
-                    eventName: eventData.eventName, 
-                    place: eventData.eventPlace, 
-                    eventStart: eventData.eventStart, 
-                    eventEnd: eventData.eventEnd,
-                    eventDescription: eventData.eventDescription, 
-                    eventReq: eventData.eventReq, 
-                    minPeople: eventData.minPeople, 
-                    maxPeople: eventData.maxPeople, 
-                    deadline: eventData.deadline, 
-                    imgUrl: eventData.eventImg
-                }); 
-                var host = eventData.host; 
-                setHost({
-                    orgName : host.orgName, 
-                    OrgAddress : host.OrgAddress, 
-                    OrgEmail : host.OrgEmail, 
-                    OrgPhone : host.OrgPhone, 
-                    hostID : host.hostID
-                })
+                setEvent(eventData); 
+                console.log("eventData " + eventData.eventName)
+                console.log("event state" + event.eventName); 
             })
             .catch(error => console.log(error));
+            
         }, []
     )
-    eventInfo = event; 
-    orgInfo = host; 
-
-    //state thông tin của sự kiện
-    const [state, setState] = useState({
-        eventName: eventInfo.eventStart, 
-        eventStart: eventInfo.eventStart, 
-        eventEnd: eventInfo.eventEnd, 
-        eventDescription: eventInfo.eventDescription, 
-        eventReq: eventInfo.eventReq, 
-        minPeople: eventInfo.minPeople, 
-        maxPeople: eventInfo.maxPeople, 
-        deadline: eventInfo.deadline,
-        place: eventInfo.place
-    })
+    
     
     var projectID = "PJ" + eventID; 
     //state này dùng cho ảnh thui 
@@ -101,8 +93,8 @@ function UpdateEvent({match}){
     const handleChange = (evt) => 
     {
         const value = evt.target.value; 
-        setState({
-            ...state, 
+        setEvent({
+            ...event, 
             [evt.target.name] : value
         });
     }
@@ -141,17 +133,16 @@ function UpdateEvent({match}){
                     document.getElementById("eventImg").value = null;
                     console.log("res" + downloadURL)
                     var newEvent = {
-                        eventName: state.eventStart, 
-                        eventStart: state.eventStart, 
-                        eventEnd: state.eventEnd, 
-                        eventDescription: state.eventDescription, 
-                        eventReq: state.eventReq, 
-                        minPeople: state.minPeople, 
-                        maxPeople: state.maxPeople, 
-                        deadline: state.deadline,
-                        place: state.place, 
-                        eventImg: downloadURL, 
-                        host: host
+                        eventName: event.eventStart, 
+                        eventStart: event.eventStart, 
+                        eventEnd: event.eventEnd, 
+                        eventDescription: event.eventDescription, 
+                        eventReq: event.eventReq, 
+                        minPeople: event.minPeople, 
+                        maxPeople: event.maxPeople, 
+                        deadline: event.deadline,
+                        address: event.address, 
+                        eventImg: downloadURL
                     }
                     EventService.updateEvent(eventID, newEvent).then(() => {
                         alert("Đã update xong, quay về trang chủ"); 
@@ -175,7 +166,7 @@ function UpdateEvent({match}){
             //console.log(eventImg); 
         }
     }
-
+    console.log(host);
     return(
         <div className = "bg-image" style={{backgroundImage: "url('https://vicongdong.vn/wp-content/uploads/2020/02/t%C3%ACnh-nguy%E1%BB%87n-vi%C3%AAn.jpg'",
         height: '100%'}} >
@@ -188,53 +179,53 @@ function UpdateEvent({match}){
             <form id="form-new-event" name="form-new-event">
                 <div className="row">
                     <div className="col">
-                        <input type="text" name="leaderName" value={leaderInfo.leaderName} readOnly
+                        <input type="text" name="leaderName" value={leader.name} readOnly
                         className="form-control" placeholder="Họ và tên" aria-label="Họ và tên"/>
                     </div>
                 </div>
                 <div className="row">
                     <div className="col">
-                        <input type="email" name="leaderEmail" value={leaderInfo.leaderEmail} readOnly
+                        <input type="email" name="leaderEmail" value={leader.email} readOnly
                         className="form-control" placeholder="Email" aria-label="Email"/>
                     </div>
                     <div className="col">
-                        <input type="tel" name="leaderPhone" value={leaderInfo.leaderPhone} readOnly
+                        <input type="tel" name="leaderPhone" value={leader.phone} readOnly
                         className="form-control" placeholder="Số điện thoại" aria-label="Số điện thoại"/>
                     </div>
                 </div>
                     <h4 className="text-white mb-0">2. Thông tin về đơn vị tổ chức</h4>
                     <div className= "row">
                         <div className="col">
-                            <input type="text" name="OrgName" value={orgInfo.OrgName} readOnly
+                            <input type="text" name="orgName" value={host.orgName} readOnly
                             className="form-control" placeholder="Tên đơn vị tổ chức" aria-label="Tên đơn vị tổ chức"/>
                         </div>
                     </div>
                     <div className= "row">
                         <div className="col">
-                            <input type="text" name="OrgAddress" value={orgInfo.OrgAddress} readOnly
+                            <input type="text" name="orgAddress" value={host.orgAddress} readOnly
                             className="form-control" placeholder="Địa chỉ" aria-label="Địa chỉ đơn vị tổ chức"/>
                         </div>
                     </div>
                     <div className="row">
                         <div className="col">
-                            <input type="email" name="OrgEmail" value={orgInfo.OrgEmail} readOnly
+                            <input type="email" name="orgEmail" value={host.orgEmail} readOnly
                             className="form-control" placeholder="Email" aria-label="Email"/>
                         </div>
                         <div className="col">
-                            <input type="tel" name="OrgPhone" value={orgInfo.OrgPhone} readOnly
+                            <input type="tel" name="orgPhone" value={host.orgPhone} readOnly
                             className="form-control" placeholder="Số điện thoại" aria-label="Số điện thoại"/>
                         </div>
                     </div>
                     <h4 className="text-white mb-0">3. Thông tin về sự kiện</h4>
                     <div className= "row">
                         <div className="col">
-                            <input type="text" name="eventName" value={state.eventName} onChange={handleChange}
+                            <input type="text" name="eventName" value={event.eventName} onChange={handleChange}
                             className="form-control" placeholder="Tên sự kiện" aria-label="Tên sự kiện"/>
                         </div>
                     </div>
                     <div className= "row">
                         <div className="col">
-                            <input type="text" name="place" value={state.place} onChange={handleChange}
+                            <input type="text" name="place" value={event.address} onChange={handleChange}
                             className="form-control" placeholder="Địa điểm" aria-label="Địa điểm"/>
                         </div>
                     </div>
@@ -248,33 +239,33 @@ function UpdateEvent({match}){
                     </div>
                     <div className="row form-floating mb-3">
                         <div className="col">
-                            <input type="date" name="eventStart" value={state.eventStart} onChange={handleChange}
+                            <input type="date" name="eventStart" value={event.eventStart} onChange={handleChange}
                             className="form-control" placeholder="Ngày bắt đầu sự kiện" aria-label="Ngày bắt đầu sự kiện"/>  
                         </div>
                         <div className="col">
-                            <input type="date" name="eventEnd" value={state.eventEnd} onChange={handleChange}
+                            <input type="date" name="eventEnd" value={event.eventEnd} onChange={handleChange}
                             className="form-control" placeholder="Ngày kết thúc sự kiện" aria-label="Ngày kết thúc sự kiện"/>
                         </div>
                     </div> 
                     <div className="row">
                         <div className = "col">
-                            <textarea className="form-control" name="eventDescription" value={state.eventDescription} onChange={handleChange}
+                            <textarea className="form-control" name="eventDescription" value={event.eventDescription} onChange={handleChange}
                             id="event-des" placeholder="Mô tả sự kiện" rows="5"></textarea>
                         </div>
                     </div>
                     <div className="row">
                         <div className="col">
-                            <textarea className="form-control" name="eventReq" value={state.eventReq} onChange={handleChange}
+                            <textarea className="form-control" name="eventReq" value={event.eventReq} onChange={handleChange}
                             id="event-req" placeholder="Yêu cầu dành cho người tham gia" rows="5"></textarea>
                         </div> 
                     </div>
                     <div className="row">
                         <div className="col">
-                            <input type="text"  name="minPeople" value={state.minPeople} onChange={handleChange}
+                            <input type="text"  name="minPeople" value={event.minPeople} onChange={handleChange}
                             className="form-control" placeholder="Số lượng tối thiểu" aria-label="Số lượng tối thiểu"/>
                         </div>
                         <div className="col">
-                            <input type="text" name="maxPeople" value={state.maxPeople} onChange={handleChange}
+                            <input type="text" name="maxPeople" value={event.maxPeople} onChange={handleChange}
                             className="form-control" placeholder="Số lượng tối đa" aria-label="Số lượng tối đa"/>
                         </div>
                     </div>
@@ -283,7 +274,7 @@ function UpdateEvent({match}){
                             <h5 className="text-white mb-0">Hạn chót đăng ký: </h5>
                         </div>
                         <div className="col-10">
-                            <input type="date" name="deadline" value={state.deadline} onChange={handleChange}
+                            <input type="date" name="deadline" value={event.deadline} onChange={handleChange}
                             className="form-control" aria-label="Hạn chót đăng ký"/>
                         </div>
                     </div>
@@ -292,7 +283,7 @@ function UpdateEvent({match}){
                             <h5 className="text-white mb-0">Ảnh của sự kiện: </h5>
                         </div>
                         <div className="col-9">
-                            <img src={eventInfo.imgUrl} width="200" height="200"></img>
+                            <img src={event.eventImg} width="200" height="200"></img>
                         </div>
                     </div>
                     <div className="blank"></div>

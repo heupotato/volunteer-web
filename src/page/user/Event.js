@@ -1,47 +1,72 @@
-import  React, { Component, useEffect, useRef} from "react";
+import  React, { Component, useEffect, useRef, useState} from "react";
 import moment  from "moment";
 import Collapsible from "react-collapsible";
 import Comment from "../../component/Comment"
 import Thumbnail from "../../component/Thumbnail"
 import Map from "../../component/Map"
+import EventService from "../../services/EventService";
 function Event({match}){
-    // useEffect(() => {
-    //     document.title = "Sự kiện"; 
-    // }, []); 
-
+    var eventID = match.params.id;
     /*
      * Đoạn ni BLong quẩy axios đi nha =))) 
      */
-    //đây là id của event, do truyền theo link nên xài match
-    console.log("id" + match.params.id); 
-    
-    var info = {
-        name: "Chương trình tình nguyện xây nhà tình thương tại Liên Chiểu, Đà Nẵng", 
+    const [info, setInfo] = useState({
+        eventName: "Chương trình tình nguyện xây nhà tình thương tại Liên Chiểu, Đà Nẵng", 
         orgPoint: 5,  // điểm cho tổ chức, tính khoảng 5 đi 
         eventPoint: 5, //điểm cho sự kiện
         commentNum: 0, //số lượng cmt select count 
         eventStart: '15-6-2018', 
         eventEnd: '15-8-2018', 
-        img: "https://vtv1.mediacdn.vn/zoom/550_339/2019/12/31/15-tin-off-bac-lieu-ho-tro-xay-sua-moi-2000-can-nha-tinh-thuong-15777826253271299318612.jpg", 
+        eventImg: "https://vtv1.mediacdn.vn/zoom/550_339/2019/12/31/15-tin-off-bac-lieu-ho-tro-xay-sua-moi-2000-can-nha-tinh-thuong-15777826253271299318612.jpg", 
         starRated: 0, 
         totalRated: 0, 
         eventDescription: "description here", 
         eventReq: "requirements here", 
-        place: "54 Ngo Si Lien, Da Nang", //địa điểm diễn ra sự kiện để gọi google api 
+        address: "Danang University of Technology", //địa điểm diễn ra sự kiện để gọi google api 
         maxPeople: 0, 
         nowRegistered: 0, //số lượng người hiện tại đã đăng ký 
         deadline: "15-5-2018", 
-    }
-    var contact = {
+    })
+    const [contact, setContact] = useState({
         leaderFirstname: "leaderFirstname", 
         leaderLastname: "leaderLastname", 
         leaderEmail: "leaderEmail", 
         LeaderPhone: "LeaderPhone", 
-        OrgName: "OrgName", 
-        OrgAddress: "OrgAddress", 
-        OrgEmail: "OrgEmail", 
-        OrgPhone: "OrgPhone", 
-    }
+        orgName: "orgName", 
+        orgAddress: "orgAddress", 
+        orgEmail: "orgEmail", 
+        orgPhone: "orgPhone", 
+    })
+    useEffect( 
+        () => {
+            console.log("Fetching event"); 
+            EventService.getEvent(eventID).then( response => {
+                var eventData = response.data; 
+                setInfo({
+                    eventName: eventData.eventName, 
+                    address: eventData.address, 
+                    eventStart: eventData.eventStart, 
+                    eventEnd: eventData.eventEnd,
+                    eventDescription: eventData.eventDescription, 
+                    eventReq: eventData.eventReq, 
+                    minPeople: eventData.minPeople, 
+                    maxPeople: eventData.maxPeople, 
+                    deadline: eventData.deadline, 
+                    eventImg: eventData.eventImg
+                }); 
+                console.log(info);
+                var host = eventData.user; 
+                setContact({
+                    orgName : host.orgName, 
+                    orgAddress : host.orgAddress, 
+                    orgEmail : host.orgEmail, 
+                    orgPhone : host.orgPhone, 
+                    hostID : host.hostID
+                })
+            })
+            .catch(error => console.log(error));
+        }, []
+    )
     //comment của người dùng ở đây
     var userComment = ""; 
     const handleChange = (evt) => {userComment = evt.target.value; }
@@ -104,9 +129,9 @@ function Event({match}){
             <div className="row">
                 <div className="col-9">
                     <div style={{paddingTop: '25px'}}>
-                        <h4 className="web-text">{info.name}</h4>
+                        <h4 className="web-text">{info.eventName}</h4>
                         <i className="fa fa-street-view" id="icon-location" style={{ fontSize: '20px', marginTop: '10px', marginRight: '5px'}}></i>
-                        <label className="web-text" htmlFor ="icon-location">{info.place}</label>
+                        <label className="web-text" htmlFor ="icon-location">{info.address}</label>
                         <div className="row">
                             <div className="col news-text">
                                 <ul className="no-bullets">
@@ -181,7 +206,7 @@ function Event({match}){
                             <div className="col">
                                 <div className="img-polaroid">
                                     <div className="overflow-hidden position-relative">
-                                        <img width="300px" height="200px" style={{marginBottom: '0%'}} src={info.img}></img>
+                                        <img width="300px" height="200px" style={{marginBottom: '0%'}} src={info.eventImg}></img>
                                     </div>
                                 </div>
                                 <div className="row">
@@ -230,17 +255,17 @@ function Event({match}){
                             <p> - Email: {contact.leaderEmail} </p>
                             
                             <h6 style={{fontStyle: 'italic'}}>VỀ ĐƠN VỊ TỔ CHỨC: </h6> 
-                            <p> - Tên đơn vị tổ chức: {contact.OrgName} </p>
-                            <p> - Số điện thoại: {contact.OrgPhone} </p>
-                            <p> - Email: {contact.OrgEmail}  </p>
-                            <p> - Địa chỉ: {contact.OrgAddress} </p>
+                            <p> - Tên đơn vị tổ chức: {contact.orgName} </p>
+                            <p> - Số điện thoại: {contact.orgPhone} </p>
+                            <p> - Email: {contact.orgEmail}  </p>
+                            <p> - Địa chỉ: {contact.orgAddress} </p>
                         </div>
                         
                     </Collapsible>
                     <div className="blank"></div>
                     <Collapsible trigger="ĐỊA ĐIỂM" className="Collapsible">
                         <div className="collapse-container" >
-                            <Map address={info.place}></Map>
+                            <Map address={info.address}></Map>
                         </div>
                        
                     </Collapsible>

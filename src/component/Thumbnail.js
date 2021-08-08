@@ -4,7 +4,7 @@ import  React,{useEffect,useState} from "react";
 import moment from "moment";
 
 function Thumbnail(props) {
-    const [details, setDetails] = useState({eventName:"", id:"", place:"", eventStart:"",eventEnd:"", eventImg:""})
+    const [details, setDetails] = useState({eventName:"", id:"", address:"", eventStart:"",eventEnd:"", eventImg:""})
     useEffect(() => {
         EventService.getEvent(props.id).then(res => {
                 setDetails(res.data)
@@ -18,7 +18,7 @@ function Thumbnail(props) {
         <div class="text-black rounded-article bg-article bg-gradient card">
             <div class="card-body-event"  style={{marginLeft:'50px'}}>
                 <h5 class="card-title">{details.eventName.toUpperCase()}</h5>
-                <p>Địa điểm: {details.place}</p>
+                <p>Địa điểm: {details.address}</p>
                 <p>Thời gian: Từ ngày {moment(details.eventStart)
                                         .subtract(10, "days")
                                         .calendar()}
