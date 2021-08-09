@@ -24,41 +24,37 @@ function ListParticipants(prop)
         project: 0,
         id: 0
     }])
-    const [listUsers, setListUsers] = useState([{
-        name: "",
-        email: "",
-        phone: ""
-    }])
-    const[listParticipants, setListParticipants] = useState(); 
+    // const [listUsers, setListUsers] = useState([{
+    //     name: "",
+    //     email: "",
+    //     phone: ""
+    // }])
+    const[listParticipants, setListParticipants] = useState([]); 
     useEffect(() => {
         console.log('useEffect has been called!');
         registrationprojectService.getAllRegisterProject(1).then(response => {
-            var listParticipants = response.data;
-            setDetails(listParticipants);
-            var listUser = []
-            listParticipants.map(x => userService.getUser(x.user).then( res =>
+            var listUsers = response.data;
+            
+            //var listParticipant = []
+            listUsers.map((x, index) => userService.getUser(x.user).then( res =>
                 {
-                    listUser.push(res.data);
-                },
-                setListUsers(listUser,
-                    setListParticipants(listUsers.map((participant, index) =>
-                    {
-                        return (
+                    var participant = res.data; 
+                    console.log(participant)
+                    setListParticipants( currentArray => [
                         <tr>
-                            <th key={index}>{index}</th>
-                            <th>{participant.name}</th>
-                            {/* <th>{participant.DoB}</th> */}
-                            <th>{participant.email}</th>
-                            <th>{participant.phone}</th>
-                            <th><ReasonModal index={index} name={checkdata.name} reason={checkdata.reason}></ReasonModal></th>
-                        </tr>
-                        )
-                    }))
-                ),
-                console.log(listUsers),
+                        <th key={index}>{index}</th>
+                        <th>{participant.name}</th>
+                        {/* <th>{participant.DoB}</th> */}
+                        <th>{participant.email}</th>
+                        <th>{participant.phone}</th>
+                        <th><ReasonModal index={index} name={checkdata.name} reason={checkdata.reason}></ReasonModal></th>
+                    </tr>, ...currentArray]
+                    )
+                },
             ))
           })
         .finally()
+
       }, []);
 
      
