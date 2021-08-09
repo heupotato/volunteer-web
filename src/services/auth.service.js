@@ -14,6 +14,7 @@ class AuthService {
           localStorage.setItem("user", JSON.stringify(response.data));
 		      localStorage['role'] = response.data.role;
           localStorage['id'] = response.data.id;
+          localStorage['username'] = response.data.username; 
         }
 
         return response.data;
@@ -25,7 +26,7 @@ class AuthService {
     localStorage.removeItem("id");
 	  localStorage.removeItem("role");
     localStorage.removeItem("currentUser"); 
-    localStorage.removeItem("checkUpdateEvent");
+    localStorage.removeItem("username"); 
   }
 
   register(name,username, email, password,phone,gender,date,role) {
