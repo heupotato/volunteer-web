@@ -36,9 +36,7 @@ function App() {
                 <Route exact path="/search" component={Search}></Route>
                 <Route exact path="/profile" component={Profile} />
                 <Route exact path="/profile/:id" component={Profile}></Route>
-                <Route exact path="/update" component={UpdateProfile} />
                 <Route exact path="/password" component={UpdatePassword} />
-                <Route exact path="/updateEvent/:id" component={UpdateEvent} />
                 <Route exact path = "/body" component= {Body} />
                 <Route exact path="/event" component={Favourites}></Route>
                 <Route exact path="/eventHost/:id" component={EventHost}></Route>
@@ -48,7 +46,8 @@ function App() {
                 <Route exact path="/registerEvent" component={Register}></Route>
                 <Route exact path="/review" component={Review}></Route>
                 {<PrivateRoute exact path="/admin" component={Admin} isAuthenticated={localStorage.getItem('role') === '3'}></PrivateRoute> }
-                {<PrivateRoute exact path="/user" component={BoardUser} isAuthenticated={localStorage.getItem('role') === '1'}></PrivateRoute>}
+                {<PrivateRoute exact path="/updateProfile" component={UpdateProfile} isAuthenticated={localStorage.getItem('id') != null}></PrivateRoute> }
+                {<PrivateRoute exact path="/updateEvent/:id" component={UpdateEvent} isAuthenticated={localStorage.getItem('checkUpdatEvent')}></PrivateRoute> }
             </Switch>
             <Footer />
         </BrowserRouter>

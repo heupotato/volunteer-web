@@ -19,7 +19,7 @@ function Thumbnail(props) {
         <div class="text-black rounded-article bg-article bg-gradient card">
             <div class="card-body-event"  style={{marginLeft:'50px'}}>
                 <h5 class="card-title">{details.eventName.toUpperCase()}</h5>
-                <p>Địa điểm: {details.place}</p>
+                <p>Địa điểm: {details.address}</p>
                 <p>Thời gian: Từ ngày {moment(details.eventStart)
                                         .subtract(10, "days")
                                         .calendar()}
@@ -30,7 +30,7 @@ function Thumbnail(props) {
                 </p>
                 <img class="card-img-bottom" src={details.eventImg} alt="" style={{ height:'300px', width:'350px'}}/>
                 <Link to={`/event/${props.id}`}>
-                    <button class="btn btn-primary" style={{position: 'absolute', left:'35%'}}>Xem thêm</button>
+                    <button class="btn btn-primary" style={{position: 'absolute', left:'40%'}}>Xem thêm</button>
                 </Link>
 
             </div>

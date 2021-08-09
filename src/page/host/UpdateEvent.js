@@ -26,16 +26,17 @@ function UpdateEvent({match}){
     }
    
     var eventInfo = {
-        eventName: "Event's name", 
-        eventStart: "2020-06-20", 
-        eventEnd: "2020-06-20", 
-        eventDescription: "This is event description", 
-        eventReq: "This is event requirement", 
+        eventName: "", 
+        eventStart: "", 
+        eventEnd: "", 
+        eventDescription: "", 
+        eventReq: "", 
         minPeople: 10, 
         maxPeople: 30, 
-        deadline: "2020-06-20",
-        address: "Danang University of Technology", 
-        imgUrl: "https://firebasestorage.googleapis.com/v0/b/volunteer-app-650f4.appspot.com/o/folder%2FPJ27961552429715654a8145ce5ea68b9e7.jpg?alt=media&token=eaae586d-cf16-406e-95a6-a29505206d15"
+        deadline: "",
+        address: "", 
+        imgUrl: "",
+        user: 0
     }
     /*
     * API Update
@@ -67,6 +68,9 @@ function UpdateEvent({match}){
             EventService.getEvent(eventID).then( response => {
                 var eventData = response.data; 
                 setEvent(eventData); 
+                if (event.user == localStorage.getItem('id')) 
+                    localStorage['checkUpdateEvent'] = true;
+                else localStorage['checkUpdateEvent'] = false;
             })
             .catch(error => console.log(error));
             
