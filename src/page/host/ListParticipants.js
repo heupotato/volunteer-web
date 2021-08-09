@@ -1,26 +1,40 @@
 import { Table } from "react-bootstrap";
-import  React, { Component, useState } from "react";
+import  React, { useState, useEffect } from "react";
 import ReasonModal from "../../component/ReasonModal";
+import registrationprojectService from "../../services/registrationproject.service";
 function ListParticipants(prop)
 {
     var projectID = prop.projectID; 
     //từ projectID lấy ra projectName 
-    var projectName = "projectName"; 
+    var projectName = ""; 
 
     //từ projectID lấy ra danh sách người dùng đăng ký vào sự kiện projectID
     var participants = [];
 
     var checkdata = {
-        name: "user's name", 
-        DoB: "20-10-2020", 
-        email: "abc@gmail.com", 
-        tel: "0123456", 
-        reason: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        name: "", 
+        DoB: "", 
+        email: "", 
+        tel: "", 
+        reason: ""
     } //cái checkdata này để test, có api thì xoá đi 
+    const [details, setDetails] = useState([{
+        user: 0,
+        project: 0,
+        id: 0
+    }])
+    useEffect(async () => {
+        console.log('useEffect has been called!');
+        await registrationprojectService.getAllRegisterProject(1).then(response => {
+            var listParticipants = response.data;
+            setDetails(listParticipants);
+            console.log("details: "+ details[0].project);
+          })
+        .finally()
+      }, []);
     for (var i = 0; i< 10; i++) participants.push(checkdata)
     const listParticipants = participants.map((participant, index) =>
     {
-        console.log(participant); 
         return (
         <tr>
             <th key={index}>{index}</th>
