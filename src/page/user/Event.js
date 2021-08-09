@@ -77,7 +77,20 @@ function Event({match}){
     const handleSubmit = (evt) => {
         //xử lý sự kiện đăng cmt ở đây
         console.log("Đăng sự kiện")
-        window.location.reload()
+        var newComment = {
+            content : evt.target.value, 
+            eventId: eventID, 
+            createdDate: Date.now().toString(), 
+            username: localStorage.getItem("username")
+        }
+        CommentService.addComment(newComment).then(response => {
+            alert("Đã đăng cmt thành công"); 
+            /*
+            * Khi nào comment được thì mình mở cái dòng window.location.reload() nha pà
+            */
+            //window.location.reload()
+        })
+       .catch(error => console.log(error))
     }
     /*
     *
@@ -90,7 +103,9 @@ function Event({match}){
         console.log(today)
         console.log(dateEnd)
         if (today > dateEnd){
-            //chuyển sang trang rating (này là Hiếu làm),
+            /*
+             * Chuyển sang trang rating tại chỗ này nhé Hiếu 
+             */
             //route qua kèm với project ID để đánh giá 
             console.log("Đã được đánh giá")
         }
