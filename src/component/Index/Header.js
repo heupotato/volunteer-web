@@ -42,7 +42,7 @@ export default class Header extends Component {
                         </div>    
                 
                         <div class="col-sm-auto">
-                            <Link to="#" style={{ textDecoration:'none', color:'black'}}>
+                            <Link to="/event" style={{ textDecoration:'none', color:'black'}}>
                                 <div class="navbar-user-item">
                                     <div class="navbar-user-icon" style={{alignItems: 'center'}}>
                                         <i class="fa fa-heart " style={{fontSize:'36px', marginTop: '15px', marginLeft: '15px'}}>
@@ -64,6 +64,7 @@ export default class Header extends Component {
                                 <li><Link class='dropdown-item' to='/profile'>Thông tin chung</Link></li>
                                 <li hidden={localStorage.getItem('role') != '2'}><Link class='dropdown-item' to='/newEvent'>Tạo bài đăng</Link></li>
                                 <li hidden={localStorage.getItem('role') != '3'}><Link class='dropdown-item' to='/admin'>Quản lý người dùng</Link></li>
+                                <li hidden={localStorage.getItem('role') != '2'}><Link class='dropdown-item' to='/admin'>Xem bài đăng đã tạo</Link></li>
                                 <li><Link class='dropdown-item' to='/password'>Đổi mật khẩu</Link></li>
                                 <li><hr class='dropdown-divider' /></li>
                                 <li class='dropdown-item' >
@@ -122,7 +123,7 @@ export default class Header extends Component {
                             </div>    
                         
                             <div class="col-sm-auto">
-                                <Link to="#" style={{ textDecoration:'none', color:'black'}}>
+                                <Link to="/event" style={{ textDecoration:'none', color:'black'}}>
                                     <div class="navbar-user-item">
                                         <div class="navbar-user-icon" style={{alignItems: 'center'}}>
                                             <i class="fa fa-heart " style={{fontSize:'36px', marginTop: '15px', marginLeft: '17px'}}>

@@ -4,8 +4,11 @@ import EventService from "../../services/EventService";
 import HostService from "../../services/HostService"; 
 import DeleteModale from "../../component/DeleteModale";
 import userService from "../../services/user.service";
+import { useHistory } from "react-router";
+import moment from "moment";
 function UpdateEvent({match}){
     //var id là id của project
+    const history = useHistory();
     console.log(match.params.id);
     const eventID = match.params.id; 
     var leaderInfo = {
@@ -32,7 +35,7 @@ function UpdateEvent({match}){
         maxPeople: 30, 
         deadline: "",
         address: "", 
-        imgUrl: "",
+        eventImg: "",
         user: 0
     }
     /*
@@ -49,7 +52,6 @@ function UpdateEvent({match}){
             userService.getUser(currentUser).then( response => {
                 var userData = response.data; 
                 setLeader(userData);   
-                console.log(response.data);
                 const hostID = userData.host
                 HostService.getHostId(hostID).then( response => {
                 var hostData = response.data;
@@ -65,9 +67,10 @@ function UpdateEvent({match}){
             EventService.getEvent(eventID).then( response => {
                 var eventData = response.data; 
                 setEvent(eventData); 
-                if (event.user === localStorage.getItem('id')) 
-                    localStorage['checkUpdateEvent'] = true;
-                else localStorage['checkUpdateEvent'] = false;
+                console.log(event);
+                if (eventData.user != localStorage.getItem('id')) {
+                    history.push("/");
+                }
             })
             .catch(error => console.log(error));
             
@@ -98,7 +101,6 @@ function UpdateEvent({match}){
     //gọi hàm này để cập nhật lại thông tin sự kiện 
     const handleSubmit = (evt) => {
         if (eventImg.image == null) {
-            console.log(event); 
             var newEvent = {
                 eventName: event.eventName, 
                 eventStart: event.eventStart, 
@@ -109,6 +111,7 @@ function UpdateEvent({match}){
                 maxPeople: event.maxPeople, 
                 deadline: event.deadline,
                 address: event.address, 
+                eventImg: event.eventImg
             }
             EventService.updateEvent(eventID, newEvent).then(() => {
                 alert("Đã update xong, quay về trang chủ"); 
@@ -172,10 +175,8 @@ function UpdateEvent({match}){
                 ...eventImg, 
                 image: evt.target.files[0]
             })
-            //console.log(eventImg); 
         }
     }
-    console.log(host);
     return(
         <div className = "bg-image" style={{backgroundImage: "url('https://vicongdong.vn/wp-content/uploads/2020/02/t%C3%ACnh-nguy%E1%BB%87n-vi%C3%AAn.jpg'",
         height: '100%'}} >
@@ -248,11 +249,13 @@ function UpdateEvent({match}){
                     </div>
                     <div className="row form-floating mb-3">
                         <div className="col">
-                            <input type="date" name="eventStart" value={event.eventStart} onChange={handleChange}
+                            <input type="date" name="eventStart" value={moment(event.eventStart).format('YYYY-MM-DD')} 
+                            onChange={handleChange}
                             className="form-control" placeholder="Ngày bắt đầu sự kiện" aria-label="Ngày bắt đầu sự kiện"/>  
                         </div>
                         <div className="col">
-                            <input type="date" name="eventEnd" value={event.eventEnd} onChange={handleChange}
+                            <input type="date" name="eventEnd" value={moment(event.eventEnd).format('YYYY-MM-DD')} 
+                            onChange={handleChange}
                             className="form-control" placeholder="Ngày kết thúc sự kiện" aria-label="Ngày kết thúc sự kiện"/>
                         </div>
                     </div> 
@@ -283,7 +286,7 @@ function UpdateEvent({match}){
                             <h5 className="text-white mb-0">Hạn chót đăng ký: </h5>
                         </div>
                         <div className="col-10">
-                            <input type="date" name="deadline" value={event.deadline} onChange={handleChange}
+                            <input type="date" name="deadline" value={moment(event.deadline).format('YYYY-MM-DD')} onChange={handleChange}
                             className="form-control" aria-label="Hạn chót đăng ký"/>
                         </div>
                     </div>

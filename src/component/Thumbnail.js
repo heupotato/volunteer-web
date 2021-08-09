@@ -21,7 +21,7 @@ function Thumbnail(props) {
                 <p>Địa điểm: {details.address}</p>
                 <p>Thời gian: Từ ngày {moment(details.eventStart)
                                         .subtract(10, "days")
-                                        .calendar()}
+                                        .calendar()} 
                              đến ngày {moment(details.eventEnd)
                                         .subtract(10, "days")
                                         .calendar()}

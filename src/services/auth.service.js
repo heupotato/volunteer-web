@@ -25,6 +25,7 @@ class AuthService {
     localStorage.removeItem("id");
 	  localStorage.removeItem("role");
     localStorage.removeItem("currentUser"); 
+    localStorage.removeItem("checkUpdateEvent");
   }
 
   register(name,username, email, password,phone,gender,date,role) {
