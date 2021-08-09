@@ -4,7 +4,7 @@ function Comment(props){
     //props.id là id của cmt nè 
     //xài axios từ id của cmt get hết thông tin ra nè 
     var comment = {
-        img: "https://i.pinimg.com/originals/d2/bd/e8/d2bde8df6f9111ad741ac8b803957b93.png", 
+        img: "https://thelifetank.com/wp-content/uploads/2018/08/avatar-default-icon.png", 
         name: "Name", 
         time: "25-3-2021",
         content: "Content of comment",

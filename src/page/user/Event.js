@@ -278,7 +278,7 @@ function Event({match}){
                             <input name="comment" id="comment" class="btn btn-primary" onClick={handleSubmit}
                             type="button" value="Đăng"/>
                             <div className="blank"></div>
-                           <h6>Comments ({info.commentNum})</h6> 
+                           <h6>Comments ({listComments.length})</h6> 
                            {listComments}
                         </div>
                     </Collapsible>

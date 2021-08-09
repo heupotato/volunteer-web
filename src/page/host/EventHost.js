@@ -21,7 +21,7 @@ function EventHost({match}){
         commentNum: 0, //số lượng cmt select count 
         eventStart: '15-6-2018', 
         eventEnd: '15-8-2018', 
-        eventImg: "https://vtv1.mediacdn.vn/zoom/550_339/2019/12/31/15-tin-off-bac-lieu-ho-tro-xay-sua-moi-2000-can-nha-tinh-thuong-15777826253271299318612.jpg", 
+        eventImg: "https://thelifetank.com/wp-content/uploads/2018/08/avatar-default-icon.png", 
         starRated: 0, 
         totalRated: 0, 
         eventDescription: "description here", 
@@ -285,7 +285,7 @@ function EventHost({match}){
                             <input name="comment" id="comment" class="btn btn-primary" onClick={handleSubmit}
                             type="button" value="Đăng"/>
                             <div className="blank"></div>
-                           <h6>Comments ({info.commentNum})</h6> 
+                           <h6>Comments ({listComments.length})</h6> 
                            {listComments}
                         </div>
                     </Collapsible>
