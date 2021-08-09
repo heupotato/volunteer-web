@@ -97,8 +97,9 @@ function UpdateEvent({match}){
     //gọi hàm này để cập nhật lại thông tin sự kiện 
     const handleSubmit = (evt) => {
         if (eventImg.image == null) {
+            console.log(event); 
             var newEvent = {
-                eventName: event.eventStart, 
+                eventName: event.eventName, 
                 eventStart: event.eventStart, 
                 eventEnd: event.eventEnd, 
                 eventDescription: event.eventDescription, 
