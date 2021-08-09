@@ -39,6 +39,8 @@ function Event({match}){
         phone: "", 
     })
     const [listComments, setListComments] = useState([]); 
+    const [disabled, setDisable] = useState(false);
+    const [status, setStatus] = useState(0); 
     useEffect( 
         () => {
             console.log("Fetching event"); 
@@ -46,6 +48,31 @@ function Event({match}){
                 var eventData = response.data; 
                 setInfo(eventData); 
                 console.log(info);
+                
+                /*Kiểm tra trạng thái của sự kiện
+                * 0: chưa diễn ra 
+                * 1: đã bị huỷ
+                * 2: đang diễn ra 
+                * 3: đã kết thúc
+                */
+                var from = eventData.deadline.split("-");
+                var deadlineDate = new Date(from[2], from[1], from[0]);
+                from = eventData.eventStart.split("-"); 
+                var startDate = new Date(from[2], from[1], from[0]);
+                from = eventData.eventEnd.split("-"); 
+                var endDate = new Date(from[2], from[1], from[0]);
+                var today = new Date();
+                if (today <= deadlineDate) setDisable(true);
+                    else setDisable(false);
+
+                var stat = eventData.status; 
+                if (stat == 1) setStatus(stat); 
+                else {
+                    if (today < startDate) setStatus(0); 
+                    else if (today >= startDate && today <=endDate) setStatus(2); 
+                    else if (today > endDate) setStatus(3); 
+                }
+
                 var host = eventData.user; 
                 HostService.getHostId(host).then( response => {
                     var hostData = response.data;
@@ -233,13 +260,27 @@ function Event({match}){
                                         <h6>Like/Share</h6>
                                     </div>
                                     <div className = "col">
-                                        <button type="button" onClick={handleRegister}
+                                        <button type="button" disabled={disabled} onClick={handleRegister}
                                         className="btn btn-info view-button">Đăng ký ngay</button> 
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div className="blank"></div>
+                    {
+                        status == 0 
+                        ? <button type="button"  disabled={true} class="btn btn-block btn-success btn-lg">Sự kiện sắp diễn ra</button>
+                        :[
+                            status == 1 
+                            ? <button type="button"  disabled={true} class="btn btn-block btn-danger btn-lg">Sự kiện đã bị huỷ</button>
+                            : [
+                                status == 2
+                                ? <button type="button"  disabled={true} className="btn btn-block btn-info btn-lg">Sự kiện đang diễn ra</button>
+                                : <button type="button"  disabled={true} class="btn btn-block btn-primary btn-lg">Sự kiện đã kết thúc</button>
+                            ]
+                        ]
+                    }
                     <div className="blank"></div>
                     <Collapsible trigger="CHI TIẾT VỀ SỰ KIỆN" className="Collapsible">
                         <div className="collapse-container">   
