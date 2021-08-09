@@ -1,5 +1,4 @@
-import  React, { Component } from "react";
-import {Link} from "react-router-dom";
+import  React from "react";
 function Comment(props){
     console.log(props);
     //props.id là id của cmt nè 

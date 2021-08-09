@@ -1,6 +1,5 @@
 import  React, { Component, useState, useEffect} from "react";
 import Thumbnail from '../component/Thumbnail'; 
-import ReactDOM from 'react-dom';
 import EventService from "../services/EventService";
 
 function Favourites() 

@@ -1,4 +1,4 @@
-import  React, { Component, useEffect, useRef, useState} from "react";
+import  React, { useEffect, useRef, useState} from "react";
 import moment  from "moment";
 import Collapsible from "react-collapsible";
 import Comment from "../../component/Comment"

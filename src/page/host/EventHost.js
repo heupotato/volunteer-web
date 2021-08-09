@@ -1,11 +1,11 @@
-import  React, { Component, useEffect, useRef, useState} from "react";
+import  React, { useEffect, useRef, useState} from "react";
 import EventService from "../../services/EventService";
 import Collapsible from "react-collapsible";
 import Comment from "../../component/Comment"
 import Thumbnail from "../../component/Thumbnail"
+import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
 import Map from "../../component/Map"
-import { Redirect } from "react-router-dom";
 function EventHost({match}){
     //event Host này đi theo link nên id là 
     var eventID = match.params.id;
@@ -219,7 +219,7 @@ function EventHost({match}){
                                     <i className="news-icon fa fa-share-alt-square" style={{display: 'inline-block', marginRight: '5px'}}></i>
                                     <h6>Like/Share</h6>
                                     <button type="button"  onClick={handleViewParticipant}
-                                    className="btn btn-info view-button">Xem danh sách người đã đăng ký</button> 
+                                    className="btn btn-info view-button"><Link style={{ textDecoration: 'none', color:'white' }} to = "/listParticipants">Xem danh sách người đã đăng ký</Link></button> 
                                     {/* set link cua nut cap nhat tai day */}
                                     <button type="button" onClick={handleUpdate} style={{marginLeft:"30px"}}
                                     className="btn btn-primary">Cập nhật sự kiện</button>  

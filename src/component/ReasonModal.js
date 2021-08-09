@@ -1,5 +1,5 @@
 import { Button } from 'react-bootstrap';
-import  React, { Component, useState } from "react";
+import  React, { useState } from "react";
 import Modal from 'react-bootstrap/Modal'
 function ReasonModal(prop)
 {

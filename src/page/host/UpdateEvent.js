@@ -1,7 +1,4 @@
-import  React, { Component, useState, useEffect} from "react";
-import { useHistory } from "react-router-dom";
-import ReactDOM from 'react-dom';
-import axios from 'axios';
+import  React, { useState, useEffect} from "react";
 import firebase from 'firebase'
 import EventService from "../../services/EventService";
 import HostService from "../../services/HostService"; 
@@ -68,7 +65,7 @@ function UpdateEvent({match}){
             EventService.getEvent(eventID).then( response => {
                 var eventData = response.data; 
                 setEvent(eventData); 
-                if (event.user == localStorage.getItem('id')) 
+                if (event.user === localStorage.getItem('id')) 
                     localStorage['checkUpdateEvent'] = true;
                 else localStorage['checkUpdateEvent'] = false;
             })

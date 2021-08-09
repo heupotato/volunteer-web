@@ -1,9 +1,7 @@
-import  React, { Component, useState } from "react";
-import { mockComponent } from "react-dom/test-utils";
-import { Link } from 'react-router-dom';
+import  React, {useState } from "react";
 
 
-function Register(props){
+function Register(){
     //từ props gọi props.id là id của project
     //dùng axios để lấy tên project
     var projectName = "Project's Name"; 
