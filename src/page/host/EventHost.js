@@ -5,7 +5,8 @@ import Comment from "../../component/Comment"
 import Thumbnail from "../../component/Thumbnail"
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
-import Map from "../../component/Map"
+import Map from "../../component/Map";
+import moment from "moment";
 function EventHost({match}){
     //event Host này đi theo link nên id là 
     var eventID = match.params.id;
@@ -25,7 +26,7 @@ function EventHost({match}){
         totalRated: 0, 
         eventDescription: "description here", 
         eventReq: "requirements here", 
-        place: "Danang University of Technology", //địa điểm diễn ra sự kiện để gọi google api 
+        address: "Danang University of Technology", //địa điểm diễn ra sự kiện để gọi google api 
         maxPeople: 0, 
         nowRegistered: 0, //số lượng người hiện tại đã đăng ký 
         deadline: "15-5-2018", 
@@ -47,7 +48,7 @@ function EventHost({match}){
                 var eventData = response.data; 
                 setInfo({
                     eventName: eventData.eventName, 
-                    place: eventData.eventPlace, 
+                    address: eventData.address, 
                     eventStart: eventData.eventStart, 
                     eventEnd: eventData.eventEnd,
                     eventDescription: eventData.eventDescription, 
@@ -135,7 +136,7 @@ function EventHost({match}){
                     <div style={{paddingTop: '25px'}}>
                         <h4 className="web-text">{info.eventName}</h4>
                         <i className="fa fa-street-view" id="icon-location" style={{ fontSize: '20px', marginTop: '10px', marginRight: '5px'}}></i>
-                        <label className="web-text" htmlFor ="icon-location">{info.place}</label>
+                        <label className="web-text" htmlFor ="icon-location">{info.address}</label>
                         <div className="row">
                             <div className="col news-text">
                                 <ul className="no-bullets">
@@ -190,7 +191,11 @@ function EventHost({match}){
                                         </div>
                                         <h6>Thời gian diễn ra sự kiện</h6>
                                         <div style={{color: '#212529'}}>
-                                            <p>Từ {info.eventStart} <span id="datetime"></span> đến {info.eventEnd} <span id="datetime1"></span> </p>
+                                            <p>Từ {moment(info.eventStart)
+                                        .subtract(10, "days")
+                                        .calendar()} <span id="datetime"></span> đến {moment(info.eventEnd)
+                                            .subtract(10, "days")
+                                            .calendar()} <span id="datetime1"></span> </p>
                                         </div>
                                     </li>
                                     <li className="list-line">
@@ -218,10 +223,10 @@ function EventHost({match}){
                                     <h6>5 stars rated: {info.starRated}/{info.totalRated}</h6>
                                     <i className="news-icon fa fa-share-alt-square" style={{display: 'inline-block', marginRight: '5px'}}></i>
                                     <h6>Like/Share</h6>
-                                    <button type="button"  onClick={handleViewParticipant}
-                                    className="btn btn-info view-button"><Link style={{ textDecoration: 'none', color:'white' }} to = "/listParticipants">Xem danh sách người đã đăng ký</Link></button> 
+                                    <button type="button" style={{maxWidth:'100px', maxHeight:'100px', marginTop:'20px'}} onClick={handleViewParticipant}
+                                    className="btn btn-info view-button"><Link style={{ textDecoration: 'none', color:'white' }} to = "/listParticipants">Danh sách đăng ký</Link></button> 
                                     {/* set link cua nut cap nhat tai day */}
-                                    <button type="button" onClick={handleUpdate} style={{marginLeft:"30px"}}
+                                    <button type="button"  onClick={handleUpdate} style={{marginLeft:"30px", maxWidth:'100px', maxHeight:'100px',  marginTop:'20px'}}
                                     className="btn btn-primary">Cập nhật sự kiện</button>  
                                 </div>
                             </div>
@@ -268,7 +273,7 @@ function EventHost({match}){
                     <div className="blank"></div>
                     <Collapsible trigger="ĐỊA ĐIỂM" className="Collapsible">
                         <div className="collapse-container" >
-                            <Map address={info.place}></Map>
+                            <Map address={info.address}></Map>
                         </div>
                        
                     </Collapsible>
