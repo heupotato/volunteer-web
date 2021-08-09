@@ -285,7 +285,7 @@ function Event({match}){
                 </div>
                 <div className="col-3" >
                     <div className="blank"></div>
-                    <div>
+                    <div >
 
                         <h6 className="container-post">Most recent...</h6>
                         {listPosts}

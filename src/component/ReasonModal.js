@@ -13,7 +13,7 @@ function ReasonModal(prop)
 
     return (
     <div>
-        <Button variant="primary btn-lg" onClick={handleShow}>
+        <Button variant="primary btn-lg" onClick={handleShow} style={{marginLeft:'30%'}}>
             Xem thêm
         </Button>
         <Modal show={show} onHide={handleClose}>

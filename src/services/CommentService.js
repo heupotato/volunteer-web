@@ -1,6 +1,7 @@
 import axios from 'axios'
+import authHeader from './auth-header';
 
-const COMMENT_API_BASE_URL = "http://localhost:8080/api/comments";
+const COMMENT_API_BASE_URL = "http://localhost:8080/api/test/comments";
 
 class CommentService {
 
@@ -21,7 +22,7 @@ class CommentService {
     }
 
     getAllCommentsOfEvent(eventId) {
-        return axios.get(COMMENT_API_BASE_URL + "/" + eventId);
+        return axios.get(COMMENT_API_BASE_URL + "/" + "event/" + eventId);
     }
 }
 
