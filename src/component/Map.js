@@ -11,19 +11,19 @@ var center = {
     lng: 108.14914
 }
 
-function removeAccents(str) {
-    return str.normalize('NFD')
-              .replace(/[\u0300-\u036f]/g, '')
-              .replace(/đ/g, 'd').replace(/Đ/g, 'D');
-  }
+// function removeAccents(str) {
+//     return str.normalize('NFD')
+//               .replace(/[\u0300-\u036f]/g, '')
+//               .replace(/đ/g, 'd').replace(/Đ/g, 'D');
+//   }
 
 
 function Map(prop){
     const [data, setData] = useState([{lat: 0, lng: 0}]); 
     var address = prop.address; 
-    const strAddress = removeAccents(address); 
+    //const strAddress = removeAccents(address); 
     useEffect(() => {
-        axios.get("https://open.mapquestapi.com/geocoding/v1/address?key=TETmPNAGrSsGs5AMz2vpaGXTc0jdCR5N&location=" + strAddress)
+        axios.get("https://open.mapquestapi.com/geocoding/v1/address?key=TETmPNAGrSsGs5AMz2vpaGXTc0jdCR5N&location=" + address)
       .then(res => {
         const dataPlace = res.data; 
         const latLng = dataPlace.results[0].locations[0].latLng; 
