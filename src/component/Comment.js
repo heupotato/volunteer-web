@@ -16,6 +16,9 @@ function Comment(props){
 	// 		SetComment(res.data)
 	// 	}).catch( err => console.log(err))
 	// })	
+	comment.name = props.comment.username; 
+	comment.time = props.comment.createdDate; 
+	comment.content = props.comment.content; 
 	
     return(
         <div className="be-comment">

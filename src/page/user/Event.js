@@ -7,11 +7,10 @@ import Map from "../../component/Map"
 import HostService from "../../services/HostService";
 import EventService from "../../services/EventService";
 import userService from "../../services/user.service";
+import CommentService from "../../services/CommentService";
 function Event({match}){
     var eventID = match.params.id;
-    /*
-     * Đoạn ni BLong quẩy axios đi nha =))) 
-     */
+    
     const [info, setInfo] = useState({
         eventName: "", 
         commentNum: 0, //số lượng cmt select count 
@@ -39,6 +38,7 @@ function Event({match}){
         email: "", 
         phone: "", 
     })
+    const [listComments, setListComments] = useState([]); 
     useEffect( 
         () => {
             console.log("Fetching event"); 
@@ -58,6 +58,13 @@ function Event({match}){
                 });
             })
             .catch(error => console.log(error));
+            CommentService.getAllCommentsOfEvent(eventID).then(response => {
+                var commentData = response.data; 
+                var listComment = commentData.map((comment) => 
+                    <Comment comment = {comment}></Comment>
+                ); 
+                setListComments(listComment)
+            })
         }, []
     )
     //comment của người dùng ở đây
@@ -102,10 +109,7 @@ function Event({match}){
     /*
     *
     */
-    const comments = [1, 2, 3, 4, 5]; //lấy xuống các id comments của event này, content trong mảng là để test, có thể sửa lại sau
-    const listComments = comments.map((comment) => 
-        <Comment id = {comment}></Comment>
-    );
+    
 
     const recentPosts = [1, 2, 3, 4, 5]; //lấy xuống top 5 event được post gần đây nhất
     const listPosts  = recentPosts.map((post) =>
@@ -166,7 +170,7 @@ function Event({match}){
                                             </div>
                                             <h6>Đánh giá cụ thể: </h6>
                                             <div style={{color: '#212529'}}>
-                                                <h6 style={{display: 'inline-block'}}>{info.commentNum} comment(s)</h6>
+                                                <h6 style={{display: 'inline-block'}}>{listComments.length} comment(s)</h6>
                                                 <button type="button" onClick={executeScroll}
                                                 className="btn btn-info view-button">View</button>          
                                             </div> 
