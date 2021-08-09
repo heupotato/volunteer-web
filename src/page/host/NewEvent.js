@@ -114,7 +114,7 @@ function NewEvent(){
                     document.getElementById("eventImg").value = null;
                     console.log("res" + downloadURL)
                     var newEvent = {
-                        eventName: state.eventStart, 
+                        eventName: state.eventName, 
                         eventStart: state.eventStart, 
                         eventEnd: state.eventEnd, 
                         eventDescription: state.eventDescription, 
@@ -208,7 +208,7 @@ function NewEvent(){
                     </div>
                     <div className= "row">
                         <div className="col">
-                            <input type="text" name="place" value={state.address} onChange={handleChange}
+                            <input type="text" name="address" value={state.address} onChange={handleChange}
                             className="form-control" placeholder="Địa điểm" aria-label="Địa điểm"/>
                         </div>
                     </div>
