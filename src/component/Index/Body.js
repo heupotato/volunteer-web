@@ -38,7 +38,7 @@ class Body extends Component{
                     <div class="container">
                         <div class="carousel-caption">
                             <h1 class="text-dark" style={{marginBottom: '20px'}} >Suy nghĩ khác biệt, kết nối toàn cầu</h1>
-                            <p><a class="btn btn-lg btn-primary" href="#">Tìm hiểu thêm</a></p>
+                            <p><Link class="btn btn-lg btn-primary" to="/search">Tìm kiếm</Link></p>
                         </div>
                     </div>
                 </div>
@@ -51,7 +51,7 @@ class Body extends Component{
 
                     <div class="container">
                         <div class="carousel-caption-1">
-                            <p style={{float: 'right' }}><a class="btn btn-lg btn-primary" href="#">Tìm kiếm</a></p>
+                        <p style={{float: 'right' }}><Link class="btn btn-lg btn-primary" to="/search">Tìm kiếm</Link></p>
                         </div>
                     </div>
                 </div>

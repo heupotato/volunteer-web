@@ -4,65 +4,58 @@ import Collapsible from "react-collapsible";
 import Comment from "../../component/Comment"
 import Thumbnail from "../../component/Thumbnail"
 import Map from "../../component/Map"
+import HostService from "../../services/HostService";
 import EventService from "../../services/EventService";
+import userService from "../../services/user.service";
 function Event({match}){
     var eventID = match.params.id;
     /*
      * Đoạn ni BLong quẩy axios đi nha =))) 
      */
     const [info, setInfo] = useState({
-        eventName: "Chương trình tình nguyện xây nhà tình thương tại Liên Chiểu, Đà Nẵng", 
-        orgPoint: 5,  // điểm cho tổ chức, tính khoảng 5 đi 
-        eventPoint: 5, //điểm cho sự kiện
+        eventName: "", 
         commentNum: 0, //số lượng cmt select count 
-        eventStart: '15-6-2018', 
-        eventEnd: '15-8-2018', 
-        eventImg: "https://vtv1.mediacdn.vn/zoom/550_339/2019/12/31/15-tin-off-bac-lieu-ho-tro-xay-sua-moi-2000-can-nha-tinh-thuong-15777826253271299318612.jpg", 
+        eventStart: '', 
+        eventEnd: '', 
+        eventImg: "", 
         starRated: 0, 
         totalRated: 0, 
-        eventDescription: "description here", 
-        eventReq: "requirements here", 
-        address: "Danang University of Technology", //địa điểm diễn ra sự kiện để gọi google api 
+        eventDescription: "", 
+        eventReq: "", 
+        address: "", //địa điểm diễn ra sự kiện để gọi google api 
         maxPeople: 0, 
         nowRegistered: 0, //số lượng người hiện tại đã đăng ký 
-        deadline: "15-5-2018", 
+        deadline: "", 
     })
     const [contact, setContact] = useState({
-        leaderFirstname: "leaderFirstname", 
-        leaderLastname: "leaderLastname", 
-        leaderEmail: "leaderEmail", 
-        LeaderPhone: "LeaderPhone", 
         orgName: "orgName", 
-        orgAddress: "orgAddress", 
+        address: "address", 
         orgEmail: "orgEmail", 
         orgPhone: "orgPhone", 
+    })
+    const [leader, setLeader] = useState({
+        name: "",
+        address: "", 
+        email: "", 
+        phone: "", 
     })
     useEffect( 
         () => {
             console.log("Fetching event"); 
             EventService.getEvent(eventID).then( response => {
                 var eventData = response.data; 
-                setInfo({
-                    eventName: eventData.eventName, 
-                    address: eventData.address, 
-                    eventStart: eventData.eventStart, 
-                    eventEnd: eventData.eventEnd,
-                    eventDescription: eventData.eventDescription, 
-                    eventReq: eventData.eventReq, 
-                    minPeople: eventData.minPeople, 
-                    maxPeople: eventData.maxPeople, 
-                    deadline: eventData.deadline, 
-                    eventImg: eventData.eventImg
-                }); 
+                setInfo(eventData); 
                 console.log(info);
                 var host = eventData.user; 
-                setContact({
-                    orgName : host.orgName, 
-                    orgAddress : host.orgAddress, 
-                    orgEmail : host.orgEmail, 
-                    orgPhone : host.orgPhone, 
-                    hostID : host.hostID
-                })
+                HostService.getHostId(host).then( response => {
+                    var hostData = response.data;
+                    setContact(hostData)
+                });
+                userService.getUser(host).then( response => {
+                    var userData = response.data;
+                    setLeader(userData)
+                    console.log("userdata" + userData.name);
+                });
             })
             .catch(error => console.log(error));
         }, []
@@ -186,7 +179,11 @@ function Event({match}){
                                         </div>
                                         <h6>Thời gian diễn ra sự kiện</h6>
                                         <div style={{color: '#212529'}}>
-                                            <p>Từ {info.eventStart} <span id="datetime"></span> đến {info.eventEnd} <span id="datetime1"></span> </p>
+                                            <p>Từ {moment(info.eventStart)
+                                        .subtract(10, "days")
+                                        .calendar()} <span id="datetime"></span> đến {moment(info.eventEnd)
+                                            .subtract(10, "days")
+                                            .calendar()} <span id="datetime1"></span> </p>
                                         </div>
                                     </li>
                                     <li className="list-line">
@@ -250,15 +247,15 @@ function Event({match}){
                     <Collapsible trigger="LIÊN HỆ" className="Collapsible">
                         <div className="collapse-container">
                             <h6 style={{fontStyle: 'italic'}}>VỀ TRƯỞNG ĐOÀN: </h6> 
-                            <p> - Họ và tên: {contact.leaderFirstname + " " + contact.leaderLastname} </p> 
-                            <p> - Số điện thoại: {contact.LeaderPhone} </p> 
-                            <p> - Email: {contact.leaderEmail} </p>
+                            <p> - Họ và tên: {leader.name} </p> 
+                            <p> - Số điện thoại: {leader.phone} </p> 
+                            <p> - Email: {leader.email} </p>
                             
                             <h6 style={{fontStyle: 'italic'}}>VỀ ĐƠN VỊ TỔ CHỨC: </h6> 
                             <p> - Tên đơn vị tổ chức: {contact.orgName} </p>
                             <p> - Số điện thoại: {contact.orgPhone} </p>
                             <p> - Email: {contact.orgEmail}  </p>
-                            <p> - Địa chỉ: {contact.orgAddress} </p>
+                            <p> - Địa chỉ: {contact.address} </p>
                         </div>
                         
                     </Collapsible>
