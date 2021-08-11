@@ -18,12 +18,7 @@ class RegisterProject{
     getAllRegisterProject(id){
         return axios.get(API_URL+ 'all/' + id);
     }
-     //xoa dang ki su kien cua project
-    // id la id_project
-    // user la id_user
-    //deleteRegister(id,user){
-    //    return axios.delete(API_URL + id + '/' + user, { headers: authHeader() });
-    //}
+     
 
 }
 export default new RegisterProject();
