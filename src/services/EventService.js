@@ -25,6 +25,13 @@ class EventService {
     }
 
     /*
+    * API lấy tất cả event do host tổ chức 
+    */
+    getHostEvent(userID){
+        return axios.get(EVENT_API_BASE_URL + "/user/" + userID); 
+    }
+
+    /*
     * Thiếu API cho top most favourite events 
     */
 }
