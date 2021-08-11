@@ -22,7 +22,7 @@ class CommentService {
     }
 
     getAllCommentsOfEvent(eventId) {
-        return axios.get(COMMENT_API_BASE_URL  + eventId);
+        return axios.get(COMMENT_API_BASE_URL  + "/" + eventId);
     }
 }
 
