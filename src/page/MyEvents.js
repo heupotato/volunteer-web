@@ -1,5 +1,6 @@
 import  React, { Component, useState, useEffect} from "react";
 import Thumbnail from '../component/Thumbnail'; 
+import ThumbnailHost from "../component/ThumnailHost";
 import EventService from "../services/EventService";
 
 function MyEvents() 
@@ -7,15 +8,25 @@ function MyEvents()
     const userID = localStorage.getItem("id"); 
     const role = localStorage.getItem("role"); 
     
+    /*
+    * case USER
+    */
     var myIDs = []
-    
     const [eventIDs, setEventIDs] = useState([]); 
+
+    /*
+    * case host
+    */
+    const [hostEvents, setHostEvent] = useState([]); 
 
     useEffect(
         () => {
             console.log("Fetching my ID"); 
             if (role == 2){
-
+                EventService.getHostEvent(userID).then( response => {
+                    var hostEventData = response.data; 
+                    setHostEvent(hostEventData); 
+                })
             }
             else 
             EventService.getEvents().then( response => {
@@ -24,15 +35,30 @@ function MyEvents()
             .catch(error => console.log(error));
         }, []
     )
-
-    Object.values(eventIDs).forEach(id => myIDs.push(id));
-
-    const listIDs = myIDs.map((myID) =>
+    
+    const listIDs = []; 
+    const listEvents = []; 
+    if (role == '2'){
+        listEvents = hostEvents.map((hostEvent) => 
         <div style={{marginRight: '30px', display:'inline-block'}}>
-            <Thumbnail id={myID} ></Thumbnail>
-            <div className="blank"></div>
-        </div>
-    )
+                <ThumbnailHost id={myID} ></ThumbnailHost>
+                <div className="blank"></div>
+            </div>
+        )
+    }
+    else 
+    {
+        Object.values(eventIDs).forEach(id => myIDs.push(id));
+
+        listIDs = myIDs.map((myID) =>
+            <div style={{marginRight: '30px', display:'inline-block'}}>
+                <Thumbnail eventName = {myID.eventName} eventStart = {myID.eventStart} eventEnd = {myID.eventEnd}
+                            address = {myID.address} eventImg = {myID.eventImg}></Thumbnail>
+                <div className="blank"></div>
+            </div>
+        )
+    }
+
     
     return (
         <div>
