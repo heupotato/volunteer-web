@@ -2,6 +2,7 @@ import  React, { Component, useState, useEffect} from "react";
 import Thumbnail from '../component/Thumbnail'; 
 import ThumbnailHost from "../component/ThumnailHost";
 import EventService from "../services/EventService";
+import RegisterProject from "../services/registrationproject.service"
 
 function MyEvents() 
 {
@@ -22,22 +23,25 @@ function MyEvents()
     useEffect(
         () => {
             console.log("Fetching my ID"); 
-            if (role == 2){
+            if (role == '2'){
                 EventService.getHostEvent(userID).then( response => {
                     var hostEventData = response.data; 
                     setHostEvent(hostEventData); 
                 })
+                .catch(error => console.log(error));
             }
-            else 
-            EventService.getEvents().then( response => {
-            
-            })
-            .catch(error => console.log(error));
+            else {
+                RegisterProject.getRegisterProject(userID).then (response => {
+                    var projectsData = response.data; 
+                    var projectIDs = projectsData.map((project) => project.id); 
+                    setEventIDs(projectIDs); 
+                })
+            }
         }, []
     )
     
-    const listIDs = []; 
-    const listEvents = []; 
+    var listIDs = []; 
+    var listEvents = []; 
     if (role == '2'){
         listEvents = hostEvents.map((hostEvent) => 
         <div style={{marginRight: '30px', display:'inline-block'}}>
