@@ -13,8 +13,8 @@ function NewEvent(){
     }
 
     var orgInfo = {
-        OrgName: "", 
-        OrgAddress: "", 
+        orgName: "", 
+        orgAddress: "", 
         orgEmail: "", 
         orgPhone: "", 
         hostID: 1
@@ -28,18 +28,20 @@ function NewEvent(){
     const [leader, setLeader] = useState(leaderInfo); 
     const [host, setHost] = useState(orgInfo);  
     const [eventID, setID] = useState(0); 
+
     useEffect( 
         () => {
             userService.getUser(currentUser).then( response => {
                 var userData = response.data; 
                 setLeader(userData);   
-                console.log(response.data);
+                console.log(userData);
+                //console.log(response.data);
                 const hostID = userData.host
                 HostService.getHostId(hostID).then( response => {
                 var hostData = response.data;
                 setHost({
                     orgName : hostData.orgName, 
-                    orgAddress : hostData.orgAddress, 
+                    orgAddress : hostData.address, 
                     orgEmail : hostData.orgEmail, 
                     orgPhone : hostData.orgPhone, 
                 })
@@ -55,13 +57,13 @@ function NewEvent(){
     //state thông tin của người dùng
     const [state, setState] = useState({
         eventName: "", 
-        eventStart: "2020-06-20", 
-        eventEnd: "2020-06-20", 
+        eventStart: "", 
+        eventEnd: "", 
         eventDescription: "", 
         eventReq: "", 
         minPeople: 0, 
         maxPeople: 0, 
-        deadline: "2020-06-20",
+        deadline: "",
         address: ""
 
     })
@@ -125,7 +127,7 @@ function NewEvent(){
                         address: state.address, 
                         eventImg: downloadURL, 
                         status: 1, 
-                        user: leader.id
+                        user: localStorage.getItem('id')
                     }
                     EventService.createEvent(newEvent).then(() => {
                         alert("Đã update xong, quay về trang chủ"); 
@@ -162,40 +164,40 @@ function NewEvent(){
             <form id="form-new-event" name="form-new-event" onSubmit={handleSubmit} method="POST">
                 <div className="row">
                     <div className="col">
-                        <input type="text" name="leaderName" value={leader.leaderName} readOnly
+                        <input type="text" name="leaderName" value={leader.name} readOnly
                         className="form-control" placeholder="Họ và tên" aria-label="Họ và tên"/>
                     </div>
                 </div>
                 <div className="row">
                     <div className="col">
-                        <input type="email" name="leaderEmail" value={leader.leaderEmail} readOnly
+                        <input type="email" name="leaderEmail" value={leader.email} readOnly
                         className="form-control" placeholder="Email" aria-label="Email"/>
                     </div>
                     <div className="col">
-                        <input type="tel" name="leaderPhone" value={leader.LeaderPhone} readOnly
+                        <input type="tel" name="leaderPhone" value={leader.phone} readOnly
                         className="form-control" placeholder="Số điện thoại" aria-label="Số điện thoại"/>
                     </div>
                 </div>
                     <h4 className="text-white mb-0">2. Thông tin về đơn vị tổ chức</h4>
                     <div className= "row">
                         <div className="col">
-                            <input type="text" name="OrgName" value={host.OrgName} readOnly
+                            <input type="text" name="orgName" value={host.orgName} readOnly
                             className="form-control" placeholder="Tên đơn vị tổ chức" aria-label="Tên đơn vị tổ chức"/>
                         </div>
                     </div>
                     <div className= "row">
                         <div className="col">
-                            <input type="text" name="OrgAddress" value={host.OrgAddress} readOnly
-                            className="form-control" placeholder="Địa chỉ" aria-label="Địa chỉ đơn vị tổ chức"/>
+                            <input type="text" name="orgAddress" value={host.orgAddress} readOnly
+                            className="form-control" placeholder="Địa chỉ" aria-label="Địa orgAddresschỉ đơn vị tổ chức"/>
                         </div>
                     </div>
                     <div className="row">
                         <div className="col">
-                            <input type="email" name="OrgEmail" value={host.OrgEmail} readOnly
+                            <input type="email" name="OrgEmail" value={host.orgEmail} readOnly
                             className="form-control" placeholder="Email" aria-label="Email"/>
                         </div>
                         <div className="col">
-                            <input type="tel" name="OrgPhone" value={host.OrgPhone} readOnly
+                            <input type="tel" name="OrgPhone" value={host.orgPhone} readOnly
                             className="form-control" placeholder="Số điện thoại" aria-label="Số điện thoại"/>
                         </div>
                     </div>

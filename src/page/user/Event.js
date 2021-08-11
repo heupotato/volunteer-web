@@ -8,9 +8,10 @@ import HostService from "../../services/HostService";
 import EventService from "../../services/EventService";
 import userService from "../../services/user.service";
 import CommentService from "../../services/CommentService";
+import { useHistory } from "react-router";
 function Event({match}){
     var eventID = match.params.id;
-    
+    const history = useHistory();
     const [info, setInfo] = useState({
         eventName: "", 
         commentNum: 0, //số lượng cmt select count 
@@ -85,8 +86,10 @@ function Event({match}){
                 });
             })
             .catch(error => console.log(error));
+
             CommentService.getAllCommentsOfEvent(eventID).then(response => {
                 var commentData = response.data; 
+                console.log(response.data);
                 var listComment = commentData.map((comment) => 
                     <Comment comment = {comment}></Comment>
                 ); 
@@ -95,8 +98,11 @@ function Event({match}){
         }, []
     )
     //comment của người dùng ở đây
-    var userComment = ""; 
-    const handleChange = (evt) => {userComment = evt.target.value; }
+    const [userComment, setUserComment] = useState(""); 
+    const handleChange = (evt) => {
+        console.log(evt.target.value); 
+        setUserComment(evt.target.value); 
+    }
     /*
     *
     */
@@ -105,7 +111,7 @@ function Event({match}){
         //xử lý sự kiện đăng cmt ở đây
         console.log("Đăng sự kiện")
         var newComment = {
-            content : evt.target.value, 
+            content : userComment, 
             eventId: eventID, 
             createdDate: Date.now().toString(), 
             username: localStorage.getItem("username")
@@ -130,9 +136,7 @@ function Event({match}){
         console.log(today)
         console.log(dateEnd)
         if (today > dateEnd){
-            /*
-             * Chuyển sang trang rating tại chỗ này nhé Hiếu 
-             */
+            history.push("/review");
             //route qua kèm với project ID để đánh giá 
             console.log("Đã được đánh giá")
         }
@@ -329,7 +333,7 @@ function Event({match}){
                     <div className="blank"></div>
                     <Collapsible trigger="BÌNH LUẬN" className="Collapsible">
                         <div ref={myRef} className="collapse-container">
-                            <textarea className="form-control" rows='5' value={userComment} onChange={handleChange}
+                            <textarea className="form-control" rows='5' value = {userComment} onChange={handleChange}
                             placeholder="Để lại bình luận của bạn về sự kiện này..."></textarea>
                             <input name="comment" id="comment" class="btn btn-primary" onClick={handleSubmit}
                             type="button" value="Đăng"/>

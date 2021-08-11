@@ -35,7 +35,7 @@ function Favourites()
     return (
         <div>
             <div className="blank"></div>
-            <h2 style={{fontStyle: 'italic', marginLeft: '20px'}}>Các bài viết được yêu thích nhất...</h2>
+            <h2 style={{fontStyle: 'italic', textAlign:'center'}}>Các bài viết được yêu thích nhất...</h2>
             <div className="blank"></div>
             <div style={{marginLeft: '20px'}}>
                 {listFavourites}

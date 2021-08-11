@@ -23,7 +23,9 @@ function Map(prop){
     var address = prop.address; 
     //const strAddress = removeAccents(address); 
     useEffect(() => {
-        axios.get("https://open.mapquestapi.com/geocoding/v1/address?key=TETmPNAGrSsGs5AMz2vpaGXTc0jdCR5N&location=" + address)
+        const url = "https://open.mapquestapi.com/geocoding/v1/address?key=TETmPNAGrSsGs5AMz2vpaGXTc0jdCR5N&location=" + prop.address; 
+        console.log(address); 
+        axios.get(url)
       .then(res => {
         const dataPlace = res.data; 
         const latLng = dataPlace.results[0].locations[0].latLng; 
