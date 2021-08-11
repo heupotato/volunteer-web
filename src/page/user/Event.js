@@ -107,6 +107,10 @@ function Event({match}){
     */
 
     const handleSubmit = (evt) => {
+        if (localStorage.getItem('user') == null) {
+            alert("Bạn cần đăng nhập để thực hiện thao tác này");
+            history.push("/login");
+        }
         //xử lý sự kiện đăng cmt ở đây
         console.log("Đăng sự kiện")
         var newComment = {
@@ -149,6 +153,10 @@ function Event({match}){
     *
     */ 
     const handleRegister = (evt) => {
+        if (localStorage.getItem('user') == null) {
+            alert("Bạn cần đăng nhập để thực hiện thao tác này");
+            history.push("/login");
+        }
         //Chuyển sang trang register
     }
     /*
