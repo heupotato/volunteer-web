@@ -17,12 +17,12 @@ class CommentService {
     //     return axios.get(COMMENT_API_BASE_URL + "/" + commentId);
     // }
 
-    addComment(comment, eventId) {
-        return axios.post(COMMENT_API_BASE_URL + "/" + "event/" + eventId, comment, {headers: authHeader() });
+    addComment(comment) {
+        return axios.post(COMMENT_API_BASE_URL, comment, {headers: authHeader() });
     }
 
     getAllCommentsOfEvent(eventId) {
-        return axios.get(COMMENT_API_BASE_URL + "/" + "event/" + eventId);
+        return axios.get(COMMENT_API_BASE_URL  + eventId);
     }
 }
 
