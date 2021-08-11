@@ -41,7 +41,8 @@ function MyEvents()
     if (role == '2'){
         listEvents = hostEvents.map((hostEvent) => 
         <div style={{marginRight: '30px', display:'inline-block'}}>
-                <ThumbnailHost id={myID} ></ThumbnailHost>
+                <ThumbnailHost id={hostEvent.id}  eventName = {hostEvent.eventName} eventStart = {hostEvent.eventStart} 
+                eventEnd = {hostEvent.eventEnd} address = {hostEvent.address} eventImg = {hostEvent.eventImg}></ThumbnailHost>
                 <div className="blank"></div>
             </div>
         )
@@ -52,8 +53,7 @@ function MyEvents()
 
         listIDs = myIDs.map((myID) =>
             <div style={{marginRight: '30px', display:'inline-block'}}>
-                <Thumbnail eventName = {myID.eventName} eventStart = {myID.eventStart} eventEnd = {myID.eventEnd}
-                            address = {myID.address} eventImg = {myID.eventImg}></Thumbnail>
+                <Thumbnail id={myID.id}></Thumbnail>
                 <div className="blank"></div>
             </div>
         )
