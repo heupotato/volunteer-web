@@ -109,7 +109,7 @@ function Event({match}){
     const handleSubmit = (evt) => {
         if (localStorage.getItem('user') == null) {
             alert("Bạn cần đăng nhập để thực hiện thao tác này");
-            history.push("/login");
+            history.push("/");
         }
         //xử lý sự kiện đăng cmt ở đây
         console.log("Đăng sự kiện")
@@ -157,6 +157,7 @@ function Event({match}){
             alert("Bạn cần đăng nhập để thực hiện thao tác này");
             history.push("/login");
         }
+        history.push("/registerEvent/" + eventID);
         //Chuyển sang trang register
     }
     /*

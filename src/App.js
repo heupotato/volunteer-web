@@ -44,7 +44,7 @@ function App() {
                 <Route exact path="/event/:id" component={Event}></Route>
                 <Route exact path="/newEvent" component={NewEvent}></Route>
                 <Route exact path="/homepage" component={Body}></Route>
-                <Route exact path="/registerEvent" component={Register}></Route>
+                <Route exact path="/registerEvent/:id" component={Register}></Route>
                 <Route exact path="/review" component={Review}></Route>
                 <Route exact path="/updateEvent/:id" component={UpdateEvent}></Route>
                 <Route exact path="/listParticipants" component={ListParticipants}></Route>
