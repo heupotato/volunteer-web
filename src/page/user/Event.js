@@ -84,17 +84,16 @@ function Event({match}){
                     setLeader(userData)
                     console.log("userdata" + userData.name);
                 });
+                CommentService.getAllCommentsOfEvent(eventID).then(response => {
+                    var commentData = response.data; 
+                    console.log(response.data);
+                    var listComment = commentData.map((comment) => 
+                        <Comment comment = {comment}></Comment>
+                    ); 
+                    setListComments(listComment)
+                })
             })
             .catch(error => console.log(error));
-
-            CommentService.getAllCommentsOfEvent(eventID).then(response => {
-                var commentData = response.data; 
-                console.log(response.data);
-                var listComment = commentData.map((comment) => 
-                    <Comment comment = {comment}></Comment>
-                ); 
-                setListComments(listComment)
-            })
         }, []
     )
     //comment của người dùng ở đây
