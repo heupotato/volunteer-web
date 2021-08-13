@@ -18,7 +18,9 @@ class RegisterProject{
     getAllRegisterProject(id){
         return axios.get(API_URL+ 'all/' + id);
     }
-     
+    registProject(postInfo){
+        return axios.post(API_URL, postInfo, { headers: authHeader() });
+    }
 
 }
 export default new RegisterProject();
