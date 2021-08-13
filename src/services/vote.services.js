@@ -32,3 +32,4 @@ class VoteService{
     }
 
 }
+export default new VoteService();

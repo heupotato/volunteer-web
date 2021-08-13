@@ -9,6 +9,7 @@ import EventService from "../../services/EventService";
 import userService from "../../services/user.service";
 import CommentService from "../../services/CommentService";
 import { useHistory } from "react-router";
+import voteServices from "../../services/vote.services";
 function Event({match}){
     var eventID = match.params.id;
     const history = useHistory();
@@ -42,11 +43,14 @@ function Event({match}){
     const [listComments, setListComments] = useState([]); 
     const [disabled, setDisable] = useState(false);
     const [status, setStatus] = useState(0); 
+    const [rateLeader, setRateLeader] = useState(0.0); 
+    const [rateEvent, setRateEvent] = useState({point: 0.0, maxRate: 0, totalRate: 0}); 
     useEffect( 
         () => {
             console.log("Fetching event"); 
             EventService.getEvent(eventID).then( response => {
                 var eventData = response.data; 
+                var leaderID = eventData.user; 
                 setInfo(eventData); 
                 console.log(info);
                 
@@ -91,6 +95,26 @@ function Event({match}){
                         <Comment comment = {comment}></Comment>
                     ); 
                     setListComments(listComment)
+                })
+                voteServices.getVoteLeader(leaderID).then(response => {
+                    var voteData = response.data; 
+                    var avgPoint = 0.0; 
+                    voteData.array.forEach(vote => {
+                        avgPoint = avgPoint + vote.poin; 
+                    });
+                    avgPoint = avgPoint/voteData.length; 
+                    setRateLeader(avgPoint); 
+                })
+                voteServices.getVoteProject(eventID).then(response => {
+                    var voteData = response.data; 
+                    var avgPoint = 0.0; 
+                    var maxRate = 0; 
+                    voteData.array.forEach(vote => {
+                        avgPoint = avgPoint + vote.poin; 
+                        if (vote.poin == 5.0) maxRate ++; 
+                    });
+                    avgPoint = avgPoint/voteData.length; 
+                    setRateEvent({point: avgPoint, maxRate: maxRate, totalRate: voteData.length}); 
                 })
             })
             .catch(error => console.log(error));
@@ -189,12 +213,12 @@ function Event({match}){
                                     <li className="list-line">
                                         <div className="list-content">
                                             <i className="news-icon fa fa-thumbs-up" style={{fontSize: '36px'}}></i>
-                                            <div data-toggle="tooltip" title="Đây là điểm đánh giá dành cho đơn vị tổ chức sự kiện từ trước đến nay">
+                                            <div data-toggle="tooltip" title="Đây là điểm đánh giá dành cho trưởng đoàn từ trước đến nay">
                                                 <i className="fa fa-info-circle" style={{float: 'right', fontSize: '30px'}}></i>
                                             </div>
-                                            <h6>Điểm đánh giá về đơn vị tổ chức: </h6>
+                                            <h6>Điểm đánh giá về trưởng đoàn: </h6>
                                             <div style={{color: '#212529'}}>
-                                                {info.orgPoint + " "}   
+                                                {rateLeader+ " "}   
                                                 <span className="fa fa-star"></span>
                                                 <button type="button" onClick={handleRate}
                                                 className="btn btn-info view-button">Rate</button>  
@@ -209,7 +233,7 @@ function Event({match}){
                                             </div>
                                             <h6>Điểm đánh giá sự kiện: </h6>
                                             <div style={{color: '#212529'}}>
-                                                {info.eventPoint + " "}   
+                                                {rateEvent.point + " "}   
                                                 <span className="fa fa-star"></span>
                                                 <button type="button" onClick={handleRate}
                                                 className="btn btn-info view-button">Rate</button> 
@@ -267,7 +291,7 @@ function Event({match}){
                                 <div className="row">
                                     <div className="col">
                                         <i className="news-icon fa fa-heart" style={{display: 'inline-block', marginRight: '5px', fontSize:'20px'}}></i>
-                                        <h6>5 stars rated: {info.starRated}/{info.totalRated}</h6>
+                                        <h6>5 points rated: {rateEvent.maxRate}/{rateEvent.totalRate}</h6>
                                         <i className="news-icon fa fa-share-alt-square" style={{display: 'inline-block', marginRight: '5px', fontSize:'20px'}}></i>
                                         <h6>Like/Share</h6>
                                     </div>
