@@ -52,7 +52,6 @@ function Event({match}){
                 var eventData = response.data; 
                 var leaderID = eventData.user; 
                 setInfo(eventData); 
-                console.log(info);
                 
                 /*Kiểm tra trạng thái của sự kiện
                 * 0: chưa diễn ra 
@@ -61,18 +60,12 @@ function Event({match}){
                 * 3: đã kết thúc
                 */
                 var from = moment(eventData.deadline).format('YYYY-MM-DD').split("-");
-                console.log("deadline" + from)
                 var deadlineDate = new Date(from[0], from[1] - 1, from[2]);
-                console.log("deadlineDate" + deadlineDate)
                 from = moment(eventData.eventStart).format('YYYY-MM-DD').split("-"); 
-                console.log("eventstart" + from)
                 var startDate = new Date(from[0], from[1] - 1, from[2]);
                 from = moment(eventData.eventEnd).format('YYYY-MM-DD').split("-"); 
                 var endDate = new Date(from[0], from[1] - 1, from[2]);
                 var today = new Date();
-                console.log("startDate: ", startDate, "    ", eventData.eventStart);
-                console.log("endDate: ", endDate);
-                console.log("toDate: ", today);
                 if (today <= deadlineDate) setDisable(true);
                     else setDisable(false);
 
@@ -92,7 +85,6 @@ function Event({match}){
                 userService.getUser(host).then( response => {
                     var userData = response.data;
                     setLeader(userData)
-                    console.log("userdata" + userData.name);
                 });
                 CommentService.getAllCommentsOfEvent(eventID).then(response => {
                     var commentData = response.data; 
