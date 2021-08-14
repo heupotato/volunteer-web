@@ -5,12 +5,7 @@ import registrationprojectService from "../../services/registrationproject.servi
 import userService from "../../services/user.service";
 function ListParticipants(prop)
 {
-    var projectID = prop.projectID; 
-    //từ projectID lấy ra projectName 
     var projectName = ""; 
-
-    //từ projectID lấy ra danh sách người dùng đăng ký vào sự kiện projectID
-    var participants = [];
 
     var checkdata = {
         name: "", 
@@ -18,17 +13,8 @@ function ListParticipants(prop)
         email: "", 
         tel: "", 
         reason: ""
-    } //cái checkdata này để test, có api thì xoá đi 
-    const [details, setDetails] = useState([{
-        user: 0,
-        project: 0,
-        id: 0
-    }])
-    // const [listUsers, setListUsers] = useState([{
-    //     name: "",
-    //     email: "",
-    //     phone: ""
-    // }])
+    } 
+    
     const[listParticipants, setListParticipants] = useState([]); 
     useEffect(() => {
         console.log('useEffect has been called!');

@@ -5,6 +5,7 @@ import HostService from "../../services/HostService";
 import DeleteModale from "../../component/DeleteModale";
 import userService from "../../services/user.service";
 import { useHistory } from "react-router";
+
 import moment from "moment";
 function UpdateEvent({match}){
     //var id là id của project
@@ -115,9 +116,7 @@ function UpdateEvent({match}){
             }
             EventService.updateEvent(eventID, newEvent).then(() => {
                 alert("Đã update xong, quay về trang chủ"); 
-                /*
-                * Chỗ này cho nó back về trang trước hoặc về local host giufm tui nha pà
-                */
+                history.push("/");
             })
         }
         else 

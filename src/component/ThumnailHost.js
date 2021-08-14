@@ -1,14 +1,7 @@
-import EventService from "../services/EventService";
 import { Link } from "react-router-dom";
-import  React,{useEffect,useState} from "react";
 import moment from "moment";
 
 function ThumbnailHost(props) {
-   
-    const handleChange = event =>{
-        //setDetails({...details,[event.target.name]:event.target.value});
-    }
-
     return (
         <div class="text-black rounded-article bg-article bg-gradient card">
             <div class="card-body-event"  style={{marginLeft:'50px'}}>
