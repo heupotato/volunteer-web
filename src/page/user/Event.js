@@ -67,6 +67,9 @@ function Event({match}){
                 from = moment(eventData.eventEnd).format('YYYY-MM-DD').split("-"); 
                 var endDate = new Date(from[2], from[1], from[0]);
                 var today = new Date();
+                console.log("startDate: ", startDate, "    ", eventData.eventStart);
+                console.log("endDate: ", endDate);
+                console.log("toDate: ", today);
                 if (today <= deadlineDate) setDisable(true);
                     else setDisable(false);
 
