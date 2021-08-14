@@ -60,11 +60,11 @@ function Event({match}){
                 * 2: đang diễn ra 
                 * 3: đã kết thúc
                 */
-                var from = eventData.deadline.split("-");
+                var from = moment(eventData.deadline).format('YYYY-MM-DD').split("-");
                 var deadlineDate = new Date(from[2], from[1], from[0]);
-                from = eventData.eventStart.split("-"); 
+                from = moment(eventData.eventStart).format('YYYY-MM-DD').split("-"); 
                 var startDate = new Date(from[2], from[1], from[0]);
-                from = eventData.eventEnd.split("-"); 
+                from = moment(eventData.eventEnd).format('YYYY-MM-DD').split("-"); 
                 var endDate = new Date(from[2], from[1], from[0]);
                 var today = new Date();
                 if (today <= deadlineDate) setDisable(true);
@@ -159,14 +159,13 @@ function Event({match}){
     */
 
     const handleRate = (evt) => {
-        var from = info.eventEnd.split("-")
+        var from = moment(info.eventEnd).format('YYYY-MM-DD').split("-"); 
         var dateEnd = new Date(from[2], from[1], from[0])
         var today = new Date()
         console.log(today)
         console.log(dateEnd)
         if (today > dateEnd){
-            history.push("/review");
-            //route qua kèm với project ID để đánh giá 
+            history.push("/review/" + eventID);
             console.log("Đã được đánh giá")
         }
         else {

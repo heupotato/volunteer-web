@@ -1,51 +1,53 @@
 import { useHistory } from 'react-router';
+import voteServices from '../../services/vote.services';
 
-function Review(props){
+function Review({match}){
     var project1, project2, project3;
     var leader1, leader2, leader3;
     const history = useHistory();
 
     const handleChangeProjectValue1 = (e1) => {
-    project1 = e1.target.value;
-    console.log(project1);
+        project1 = e1.target.value;
+        console.log(project1);
     };
 
     const handleChangeProjectValue2 = e2 => {
-    project2 = e2.target.value;
-    console.log(project2);
+        project2 = e2.target.value;
+        console.log(project2);
     };
 
     const handleChangeProjectValue3 = e3 => {
-    project3 = e3.target.value;
-    console.log(project3);
+        project3 = e3.target.value;
+        console.log(project3);
     };
 
     const handleChangeLeaderValue1 = e1 => {
-    leader1 = e1.target.value;
-    console.log(leader1);
+        leader1 = e1.target.value;
+        console.log(leader1);
     };
 
     const handleChangeLeaderValue2 = e2 => {
-    leader2 = e2.target.value;
-    console.log(leader2);
+        leader2 = e2.target.value;
+        console.log(leader2);
     };
 
     const handleChangeLeaderValue3 = e3 => {
-    leader3 = e3.target.value;
-    console.log(leader3);
+        leader3 = e3.target.value;
+        console.log(leader3);
     };
 
       const handleSubmit = () => {
         var averageProject = (parseInt(project1) + parseInt(project2) + parseInt(project3))/3;
         var averageLeader = (parseInt(leader1) + parseInt(leader2) + parseInt(leader3))/3;
-
-        /*
-            API here
-        */
-
-        alert("Đánh giá thành công");
-        history.push("/");
+        var leaderID = localStorage.getItem("id"); 
+        var eventID = match.params.id; 
+        voteServices.postVote(eventID, leaderID, averageProject, averageLeader).then( () => {
+            alert("Đánh giá thành công");
+            history.push("/");
+        }) 
+        .catch(error => console.log(error))
       }
+      
     return(
         <form style={{marginTop:"40px"}}>
         <h3 class="text-center" style={{marginLeft:"110px",marginBottom:"20px"}}>Đánh giá hoạt động</h3>
