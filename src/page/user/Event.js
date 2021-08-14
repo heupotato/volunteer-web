@@ -98,19 +98,21 @@ function Event({match}){
                 })
                 voteServices.getVoteLeader(leaderID).then(response => {
                     var voteData = response.data; 
+                    console.log(voteData); 
                     var avgPoint = 0.0; 
-                    voteData.array.forEach(vote => {
-                        avgPoint = avgPoint + vote.poin; 
+                    voteData.forEach(vote => {
+                        avgPoint = avgPoint + vote.vote_project; 
                     });
                     avgPoint = avgPoint/voteData.length; 
                     setRateLeader(avgPoint); 
                 })
                 voteServices.getVoteProject(eventID).then(response => {
-                    var voteData = response.data; 
+                    var voteData = response.data;
+                    console.log(voteData);  
                     var avgPoint = 0.0; 
                     var maxRate = 0; 
-                    voteData.array.forEach(vote => {
-                        avgPoint = avgPoint + vote.poin; 
+                    voteData.forEach(vote => {
+                        avgPoint = avgPoint + vote.vote_user; 
                         if (vote.poin == 5.0) maxRate ++; 
                     });
                     avgPoint = avgPoint/voteData.length; 
@@ -261,11 +263,8 @@ function Event({match}){
                                         </div>
                                         <h6>Thời gian diễn ra sự kiện</h6>
                                         <div style={{color: '#212529'}}>
-                                            <p>Từ {moment(info.eventStart)
-                                        .subtract(10, "days")
-                                        .calendar()} <span id="datetime"></span> đến {moment(info.eventEnd)
-                                            .subtract(10, "days")
-                                            .calendar()} <span id="datetime1"></span> </p>
+                                            <p>Từ {moment(info.eventStart).format('YYYY-MM-DD')} <span id="datetime"></span> 
+                                            đến {moment(info.eventEnd).format('YYYY-MM-DD')} <span id="datetime1"></span> </p>
                                         </div>
                                     </li>
                                     <li className="list-line">

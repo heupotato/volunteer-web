@@ -9,7 +9,6 @@ function Register(props){
     const eventId = props.match.params.id;
     //từ props gọi props.id là id của project
     //dùng axios để lấy tên project
-    var projectName = ""; 
     const [details, setDetails] = useState({name:"", email:"", phone:"", date:"", reason: ""});
     const [event, setEvent] = useState({id: "", eventName:""});
 

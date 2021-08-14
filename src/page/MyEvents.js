@@ -1,4 +1,4 @@
-import  React, { Component, useState, useEffect} from "react";
+import  React, { useState, useEffect} from "react";
 import Thumbnail from '../component/Thumbnail'; 
 import ThumbnailHost from "../component/ThumnailHost";
 import EventService from "../services/EventService";
@@ -19,12 +19,14 @@ function MyEvents()
     * case host
     */
     const [hostEvents, setHostEvent] = useState([]); 
-
+    console.log("USID" + userID);
     useEffect(
         () => {
             console.log("Fetching my ID"); 
+             
             if (role == '2'){
                 EventService.getHostEvent(userID).then( response => {
+                    console.log(response.data);
                     var hostEventData = response.data; 
                     setHostEvent(hostEventData); 
                 })
@@ -32,6 +34,8 @@ function MyEvents()
             }
             else {
                 RegisterProject.getRegisterProject(userID).then (response => {
+
+                    console.log(response.data);
                     var projectsData = response.data; 
                     var projectIDs = projectsData.map((project) => project.id); 
                     setEventIDs(projectIDs); 
@@ -43,7 +47,9 @@ function MyEvents()
     var listIDs = []; 
     var listEvents = []; 
     if (role == '2'){
-        listEvents = hostEvents.map((hostEvent) => 
+        console.log("htvent")
+        console.log(hostEvents);
+        listEvents =  Object.values(hostEvents).map((hostEvent) => 
         <div style={{marginRight: '30px', display:'inline-block'}}>
                 <ThumbnailHost id={hostEvent.id}  eventName = {hostEvent.eventName} eventStart = {hostEvent.eventStart} 
                 eventEnd = {hostEvent.eventEnd} address = {hostEvent.address} eventImg = {hostEvent.eventImg}></ThumbnailHost>
@@ -54,10 +60,9 @@ function MyEvents()
     else 
     {
         Object.values(eventIDs).forEach(id => myIDs.push(id));
-
         listIDs = myIDs.map((myID) =>
             <div style={{marginRight: '30px', display:'inline-block'}}>
-                <Thumbnail id={myID.id}></Thumbnail>
+                <Thumbnail id={myID}></Thumbnail>
                 <div className="blank"></div>
             </div>
         )
@@ -74,7 +79,10 @@ function MyEvents()
             }</h2>
             <div className="blank"></div>
             <div style={{marginLeft: '20px'}}>
-                {listIDs}
+                { role == '2'
+                ? listEvents
+                : listIDs
+                }
             </div>
             
         </div>

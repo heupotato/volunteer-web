@@ -1,6 +1,5 @@
 import  React from "react";
 function Comment(props){
-    console.log(props);
     //props.id là id của cmt nè 
     //xài axios từ id của cmt get hết thông tin ra nè 
     var comment = {

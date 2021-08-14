@@ -23,6 +23,7 @@ import NewEvent from './page/host/NewEvent';
 import Register from './component/Register';
 import UpdateEvent from "./page/host/UpdateEvent";
 import EventHost from './page/host/EventHost';
+import MyEvents from './page/MyEvents';
 
 function App() {
     localStorage['checkUpdateEvent'] = true;
@@ -45,8 +46,9 @@ function App() {
                 <Route exact path="/newEvent" component={NewEvent}></Route>
                 <Route exact path="/homepage" component={Body}></Route>
                 <Route exact path="/registerEvent/:id" component={Register}></Route>
-                <Route exact path="/review" component={Review}></Route>
+                <Route exact path="/review/:id" component={Review}></Route>
                 <Route exact path="/updateEvent/:id" component={UpdateEvent}></Route>
+                <Route exact path="/myEvents" component={MyEvents}></Route>
                 <Route exact path="/listParticipants" component={ListParticipants}></Route>
                 {<PrivateRoute exact path="/admin" component={Admin} isAuthenticated={localStorage.getItem('role') === '3'}></PrivateRoute> }
                 {<PrivateRoute exact path="/updateProfile" component={UpdateProfile} isAuthenticated={localStorage.getItem('id') != null}></PrivateRoute> }

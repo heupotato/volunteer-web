@@ -64,7 +64,8 @@ export default class Header extends Component {
                                 <li><Link class='dropdown-item' to='/profile'>Thông tin chung</Link></li>
                                 <li hidden={localStorage.getItem('role') != '2'}><Link class='dropdown-item' to='/newEvent'>Tạo bài đăng</Link></li>
                                 <li hidden={localStorage.getItem('role') != '3'}><Link class='dropdown-item' to='/admin'>Quản lý người dùng</Link></li>
-                                <li hidden={localStorage.getItem('role') != '2'}><Link class='dropdown-item' to='/admin'>Xem bài đăng đã tạo</Link></li>
+                                <li hidden={localStorage.getItem('role') != '2'}><Link class='dropdown-item' to='/myEvents'>Xem sự kiện đã tạo</Link></li>
+                                <li hidden={localStorage.getItem('role') != '1'}><Link class='dropdown-item' to='/myEvents'>Xem sự kiện đã tham gia</Link></li>
                                 <li><Link class='dropdown-item' to='/password'>Đổi mật khẩu</Link></li>
                                 <li><hr class='dropdown-divider' /></li>
                                 <li class='dropdown-item' >
