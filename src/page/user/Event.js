@@ -61,11 +61,14 @@ function Event({match}){
                 * 3: đã kết thúc
                 */
                 var from = moment(eventData.deadline).format('YYYY-MM-DD').split("-");
-                var deadlineDate = new Date(from[2], from[1], from[0]);
+                console.log("deadline" + from)
+                var deadlineDate = new Date(from[0], from[1] - 1, from[2], 0, 0 , 0 , 0);
+                console.log("deadlineDate" + deadlineDate)
                 from = moment(eventData.eventStart).format('YYYY-MM-DD').split("-"); 
-                var startDate = new Date(from[2], from[1], from[0]);
+                console.log("eventstart" + from)
+                var startDate = new Date(from[2], from[1] - 1, from[0]);
                 from = moment(eventData.eventEnd).format('YYYY-MM-DD').split("-"); 
-                var endDate = new Date(from[2], from[1], from[0]);
+                var endDate = new Date(from[2], from[1] - 1, from[0]);
                 var today = new Date();
                 console.log("startDate: ", startDate, "    ", eventData.eventStart);
                 console.log("endDate: ", endDate);
