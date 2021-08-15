@@ -24,6 +24,7 @@ import Register from './component/Register';
 import UpdateEvent from "./page/host/UpdateEvent";
 import EventHost from './page/host/EventHost';
 import MyEvents from './page/MyEvents';
+import Error from './page/user/error';
 
 function App() {
     localStorage['checkUpdateEvent'] = true;
@@ -42,6 +43,7 @@ function App() {
                 <Route exact path = "/body" component= {Body} />
                 <Route exact path="/event" component={Favourites}></Route>
                 <Route exact path="/eventHost/:id" component={EventHost}></Route>
+                <Route exact path="/error" component={Error}></Route>
                 <Route exact path="/event/:id" component={Event}></Route>
                 <Route exact path="/newEvent" component={NewEvent}></Route>
                 <Route exact path="/homepage" component={Body}></Route>

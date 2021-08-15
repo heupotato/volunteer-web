@@ -2,8 +2,10 @@ import  React, { useState, useEffect} from "react";
 import userService from "../../services/user.service";
 import HostService from "../../services/HostService";
 import EventService from "../../services/EventService";
-import firebase from 'firebase'
+import firebase from 'firebase';
+import { useHistory } from "react-router";
 function NewEvent(){
+    const history = useHistory();
     //từ id của leader lấy các thông tin của leaderInfo và orgInfo ra 
     //axios he
     var leaderInfo = {
@@ -88,9 +90,12 @@ function NewEvent(){
     //hàm này xử lý submit nè
     //gọi api các kiểu ở đây nè 
     const handleSubmit = (evt) => {
-        if (eventImg.image == null) return
-        evt.preventDefault(); 
-        let file = eventImg.image; 
+        if (eventImg.image == null) {
+            alert("Ảnh không được trống");
+            history.push("/error");
+        }
+        else {
+            let file = eventImg.image; 
         var storage = firebase.storage(); 
         var storageRef = storage.ref(); 
         console.log(storageRef);
@@ -130,15 +135,15 @@ function NewEvent(){
                         user: localStorage.getItem('id')
                     }
                     EventService.createEvent(newEvent).then(() => {
-                        alert("Đã update xong, quay về trang chủ"); 
-                        /*
-                        * Chỗ này cho nó back về trang trước hoặc về local host giufm tui nha pà
-                        */
+                        alert("Đã xong, quay về trang chủ"); 
+                        history.push("/");
                     })
                 })
             }
         )
 
+        }
+        
         
     }
 

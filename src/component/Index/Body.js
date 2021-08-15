@@ -74,8 +74,8 @@ class Body extends Component{
                             x="0" y="-10px" height="102%" width="100%"/>
                     </svg>
                     <h2>Sự kiện</h2>
-                    <p>Some representative placeholder content for the three columns of text below the carousel. This is the first column.</p>
-                    <p><Link to = "event" class="btn bg-define text-light" >View details &raquo;</Link></p>
+                    <p>Các sự kiện đã được đăng ký tại trang web</p>
+                    <p><Link to = "event" class="btn bg-define text-light" >Xem chi tiết &raquo;</Link></p>
                 </div>
                 <div class="col-lg-4">
                     <svg class="bd-placeholder-img rounded-circle border-button" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#186c91"/><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text>
@@ -83,8 +83,8 @@ class Body extends Component{
                             x="0" y="-10px" height="102%" width="100%"/>
                     </svg>
                     <h2>Tổ chức</h2>
-                    <p>Another exciting bit of representative placeholder content. This time, we've moved on to the second column.</p>
-                    <p><a class="btn bg-define text-light" href="#">View details &raquo;</a></p>
+                    <p>Các tổ chức chọn trang web để kết nối</p>
+                    <p><a class="btn bg-define text-light" href="#">Xem chi tiết &raquo;</a></p>
                 </div>
                 <div class="col-lg-4">
                     <svg class="bd-placeholder-img rounded-circle border-button" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#fff"/><text x="50%" y="50%" fill="#ccc6c6" dy=".3em">140x140</text>
@@ -92,8 +92,8 @@ class Body extends Component{
                             x="0" y="-10px" height="102%" width="100%"/>
                     </svg>
                     <h2>Cộng đồng</h2>
-                    <p>Another exciting bit of representative placeholder content. This time, we've moved on to the second column.</p>
-                    <p><a class="btn bg-define text-light" href="#">View details &raquo;</a></p>
+                    <p>Xem các kênh xã hội của chúng tôi</p>
+                    <p><a class="btn bg-define text-light" href="#">Xem chi tiết &raquo;</a></p>
                 </div>
             </div>
 

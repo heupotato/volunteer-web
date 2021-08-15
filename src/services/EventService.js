@@ -1,7 +1,7 @@
 import axios from 'axios';
 import authHeader from './auth-header';
 
-const EVENT_API_BASE_URL = "/api/test/projects";
+const EVENT_API_BASE_URL = "api/test/projects";
 
 class EventService {
     getEvents() {
@@ -9,6 +9,7 @@ class EventService {
     }
         
     createEvent(event) {
+        console.log(authHeader());
         return axios.post(EVENT_API_BASE_URL, event , { headers: authHeader() });
     }
 
