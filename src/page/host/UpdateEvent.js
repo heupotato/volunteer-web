@@ -13,6 +13,7 @@ function UpdateEvent({match}){
     console.log(match.params.id);
     const eventID = match.params.id; 
     var leaderInfo = {
+        username:"",
         name : "", 
         email: "", 
         phone: "", 
@@ -50,6 +51,16 @@ function UpdateEvent({match}){
     const [event, setEvent] = useState(eventInfo)
     useEffect( 
         () => {
+            EventService.getEvent(eventID).then( response => {
+                var eventData = response.data; 
+                setEvent(eventData); 
+                console.log(event);
+                if (eventData.user != localStorage.getItem('id')) {
+                    history.push("/");
+                }
+            })
+            .catch(error => console.log(error));
+
             userService.getUser(currentUser).then( response => {
                 var userData = response.data; 
                 setLeader(userData);   
@@ -64,16 +75,8 @@ function UpdateEvent({match}){
                 })
             })
             })
+
             console.log("Fetching event"); 
-            EventService.getEvent(eventID).then( response => {
-                var eventData = response.data; 
-                setEvent(eventData); 
-                console.log(event);
-                if (eventData.user != localStorage.getItem('id')) {
-                    history.push("/");
-                }
-            })
-            .catch(error => console.log(error));
             
         }, []
     )

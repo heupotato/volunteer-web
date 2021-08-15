@@ -29,6 +29,7 @@ function EventHost({match}){
         maxPeople: 0, 
         nowRegistered: 0, //số lượng người hiện tại đã đăng ký 
         deadline: "",  
+        user:""
     })
     const [contact, setContact] = useState({
         orgName: "orgName", 
@@ -54,6 +55,11 @@ function EventHost({match}){
                 var eventData = response.data; 
                 var leaderID = eventData.user; 
                 setInfo(eventData); 
+
+                if (info.user != localStorage.getItem('id')) {
+                    alert("Bạn không có quyền truy cập vào trang này");
+                    history.push("/");
+                }
                 
                 /*Kiểm tra trạng thái của sự kiện
                 * 0: chưa diễn ra 
