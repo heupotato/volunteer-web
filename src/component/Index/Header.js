@@ -87,26 +87,20 @@ export default class Header extends Component {
                                             <Link to="/" class="nav-Link text-light" style={{fontSize: '18px', textDecoration: 'none'}} aria-current="page">Trang chủ</Link>
                                         </li>
                                         <li class="nav-item">
-                                            <Link class="nav-Link text-light" style={{fontSize: '18px',textDecoration: 'none'}} to="#">Cách hoạt động</Link>
+                                            <Link to="/" class="nav-Link text-light" style={{fontSize: '18px', textDecoration: 'none'}} aria-current="page">Cách hoạt động</Link>
                                         </li>
                                         <li class="nav-item">
-                                            <Link class="nav-Link text-light"  style={{fontSize: '18px',textDecoration: 'none'}} to="#">Tổ chức sự kiện</Link>
+                                            <Link to="/newEvent" class="nav-Link text-light" style={{fontSize: '18px', textDecoration: 'none'}} aria-current="page">Tổ chức sự kiện</Link>
                                         </li>
+                                        <Link to = "/about" class="nav-Link text-light"  style={{fontSize: '18px',textDecoration: 'none'}}>về chúng tôi</Link>
                                         <li class="nav-item dropdown">
-                                            <Link class="nav-Link dropdown-toggle text-light" to="#" id="navbarDropdown" style={{fontSize: '18px',textDecoration: 'none'}} role="button" data-bs-toggle="dropdown" aria-expanded="false">Phản hồi</Link>
-                                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                                <li><Link class="dropdown-item" to="#"  style={{fontSize: '15px',textDecoration: 'none'}}>Quyên góp</Link></li>
-                                                <li><Link class="dropdown-item" to="#" style={{fontSize: '15px',textDecoration: 'none'}}>Feedback</Link></li>
-                                            </ul>
-                                        </li>
-                                        <li class="nav-item dropdown">
-                                            <Link class="nav-Link dropdown-toggle text-light" to="#" id="navbarDropdown" style={{fontSize: '18px',textDecoration: 'none'}} role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <Link to = "/" class="nav-Link dropdown-toggle text-light" id="navbarDropdown" style={{fontSize: '18px',textDecoration: 'none'}} role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                             Cộng đồng
                                             </Link>
                                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                                <li><Link class="dropdown-item" to="#"style={{fontSize: '15px',textDecoration: 'none'}}>Facebook</Link></li>
-                                                <li><Link class="dropdown-item" to="#"style={{fontSize: '15px',textDecoration: 'none'}}>Instagram</Link></li>
-                                                <li><Link class="dropdown-item" to="#"style={{fontSize: '15px',textDecoration: 'none'}}>Chatwork</Link></li>
+                                                <li><Link to = "/" class="dropdown-item"style={{fontSize: '15px',textDecoration: 'none'}}>Facebook</Link></li>
+                                                <li><Link to = "/" class="dropdown-item"style={{fontSize: '15px',textDecoration: 'none'}}>Instagram</Link></li>
+                                                <li><Link to = "/" class="dropdown-item"style={{fontSize: '15px',textDecoration: 'none'}}>Chatwork</Link></li>
                                             </ul>
                                         </li>
                                     </ul>
@@ -158,26 +152,22 @@ export default class Header extends Component {
                                                     <Link to="/" class="nav-Link text-light" style={{fontSize: '18px', textDecoration: 'none'}} aria-current="page">Trang chủ</Link>
                                                 </li>
                                                 <li class="nav-item">
-                                                    <Link class="nav-Link text-light" style={{fontSize: '18px',textDecoration: 'none'}} to="#">Cách hoạt động</Link>
+                                                    <Link class="nav-Link text-light" style={{fontSize: '18px',textDecoration: 'none'}}>Cách hoạt động</Link>
                                                 </li>
                                                 <li class="nav-item">
-                                                    <Link class="nav-Link text-light"  style={{fontSize: '18px',textDecoration: 'none'}} to="#">Tổ chức sự kiện</Link>
+                                                    <Link to = "/newEvent" class="nav-Link text-light"  style={{fontSize: '18px',textDecoration: 'none'}}>Tổ chức sự kiện</Link>
                                                 </li>
                                                 <li class="nav-item dropdown">
-                                                    <Link class="nav-Link dropdown-toggle text-light" to="#" id="navbarDropdown" style={{fontSize: '18px',textDecoration: 'none'}} role="button" data-bs-toggle="dropdown" aria-expanded="false">Phản hồi</Link>
-                                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                                        <li><Link class="dropdown-item" to="#"  style={{fontSize: '15px',textDecoration: 'none'}}>Quyên góp</Link></li>
-                                                        <li><Link class="dropdown-item" to="#" style={{fontSize: '15px',textDecoration: 'none'}}>Feedback</Link></li>
-                                                    </ul>
+                                                <Link to = "/about" class="nav-Link text-light"  style={{fontSize: '18px',textDecoration: 'none'}}>Về chúng tôi</Link>
                                                 </li>
                                                 <li class="nav-item dropdown">
-                                                    <Link class="nav-Link dropdown-toggle text-light" to="#" id="navbarDropdown" style={{fontSize: '18px',textDecoration: 'none'}} role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <Link to = "/" class="nav-Link dropdown-toggle text-light" id="navbarDropdown" style={{fontSize: '18px',textDecoration: 'none'}} role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                     Cộng đồng
                                                     </Link>
                                                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                                        <li><Link class="dropdown-item" to="#"style={{fontSize: '15px',textDecoration: 'none'}}>Facebook</Link></li>
-                                                        <li><Link class="dropdown-item" to="#"style={{fontSize: '15px',textDecoration: 'none'}}>Instagram</Link></li>
-                                                        <li><Link class="dropdown-item" to="#"style={{fontSize: '15px',textDecoration: 'none'}}>Chatwork</Link></li>
+                                                        <li><Link to = "/" class="dropdown-item"style={{fontSize: '15px',textDecoration: 'none'}}>Facebook</Link></li>
+                                                        <li><Link to = "/" class="dropdown-item"style={{fontSize: '15px',textDecoration: 'none'}}>Instagram</Link></li>
+                                                        <li><Link to = "/" class="dropdown-item"style={{fontSize: '15px',textDecoration: 'none'}}>Chatwork</Link></li>
                                                     </ul>
                                                 </li>
                                             </ul>

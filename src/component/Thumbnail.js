@@ -1,10 +1,12 @@
 import EventService from "../services/EventService";
-import { Link } from "react-router-dom";
 import  React,{useEffect,useState} from "react";
 import moment from "moment";
+import { useHistory } from "react-router";
 
 function Thumbnail(props) {
-    const [details, setDetails] = useState({eventName:"", id:"", address:"", eventStart:"",eventEnd:"", eventImg:""})
+    const [details, setDetails] = useState({eventName:"", id:"", address:"", eventStart:"",eventEnd:"", eventImg:"", user:""})
+    const history = useHistory();
+    const [link, setLink] = useState("");
     useEffect(() => {
         EventService.getEvent(props.id).then(res => {
                 setDetails(res.data)
@@ -12,6 +14,15 @@ function Thumbnail(props) {
     })
     const handleChange = event =>{
         setDetails({...details,[event.target.name]:event.target.value});
+    }
+
+    const handleButton = () => {
+        if (localStorage.getItem('id') == details.user) {
+            history.push("/eventHost/" + props.id);
+        }
+        else {
+            history.push("/event/" + props.id);
+        }
     }
 
     return (
@@ -28,9 +39,7 @@ function Thumbnail(props) {
                 {}
                 </p>
                 <img class="card-img-bottom" src={details.eventImg} alt="" style={{ height:'300px', width:'350px'}}/>
-                <Link to={`/event/${props.id}`}>
-                    <button class="btn btn-primary" style={{position: 'absolute', left:'35%'}}>Xem thêm</button>
-                </Link>
+                <button onClick={handleButton} class="btn btn-primary" style={{position: 'absolute', left:'35%'}}>Xem thêm</button>
 
             </div>
         </div>

@@ -139,6 +139,7 @@ export default class Register extends Component {
         });
     }
     onChangeGender(e) {
+        console.log(e.target.value);
         this.setState({
             gender: e.target.value
         });
@@ -240,11 +241,11 @@ export default class Register extends Component {
                                                 <div class="maxl" >
                                                 
                                                     <label class="radio inline" style={{ marginRight: '10px' }} >
-                                                        <input type="radio"  value="Nam" checked={this.state.gender === "male",true} name="gender" onChange={this.onChangeGender} validations={[required, gender]} />
+                                                        <input type="radio"  value="Nam"  name="gender" onChange={this.onChangeGender} validations={[required, gender]} />
                                                         <span> Nam </span>
                                                     </label>
                                                     <label class="radio inline" style={{ marginRight: '10px' }} >
-                                                        <input type="radio" value="Nữ" checked={this.state.gender === "female"} name="gender" onChange={this.onChangeGender} validations={[required, gender]} />
+                                                        <input type="radio" value="Nữ"  name="gender" onChange={this.onChangeGender} validations={[required, gender]} />
                                                         <span> Nữ </span>
                                                     </label>
                                                 </div>

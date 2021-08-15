@@ -33,6 +33,10 @@ function NewEvent(){
 
     useEffect( 
         () => {
+            if (localStorage.getItem('user') == null) {
+                alert("Bạn cần đăng nhập với tư cách host để thực hiện");
+                history.push("/login");
+            }
             userService.getUser(currentUser).then( response => {
                 var userData = response.data; 
                 setLeader(userData);   
@@ -157,8 +161,9 @@ function NewEvent(){
         }
     }
 
+
     return(
-        <div className = "bg-image" style={{backgroundImage: "url('https://vicongdong.vn/wp-content/uploads/2020/02/t%C3%ACnh-nguy%E1%BB%87n-vi%C3%AAn.jpg'",
+        <div  className = "bg-image" style={{backgroundImage: "url('https://vicongdong.vn/wp-content/uploads/2020/02/t%C3%ACnh-nguy%E1%BB%87n-vi%C3%AAn.jpg'",
         height: '100%'}} >
             <div className="mask" style={{backgroundColor: 'rgba(0, 0, 0, 0.6)', paddingBottom: '20px'}}>
                 <div className="d-flex justify-content-center align-items-center h-100">

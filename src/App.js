@@ -14,8 +14,6 @@ import edit from './component/Admin/edit';
 import Review from './component/Review/Review';
 import ListParticipants from './page/host/ListParticipants';
 import UpdatePassword from './component/Update/UpdatePassword';
-import BoardUser from "./component/board-user.component";
-import BoardAdmin from "./component/board-admin.component";
 import PrivateRoute from './component/PrivateRoute/PrivateRoute';
 import Favourites from './page/Favourites';
 import Event from './page/user/Event';
@@ -43,6 +41,7 @@ function App() {
                 <Route exact path = "/body" component= {Body} />
                 <Route exact path="/event" component={Favourites}></Route>
                 <Route exact path="/eventHost/:id" component={EventHost}></Route>
+                <Route exact path="/edit/:id" component={edit}></Route>
                 <Route exact path="/error" component={Error}></Route>
                 <Route exact path="/event/:id" component={Event}></Route>
                 <Route exact path="/newEvent" component={NewEvent}></Route>
