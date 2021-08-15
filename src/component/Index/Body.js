@@ -82,9 +82,9 @@ class Body extends Component{
                         <image xlinkHref="https://i.ibb.co/x1R5csz/Untitled.png"
                             x="0" y="-10px" height="102%" width="100%"/>
                     </svg>
-                    <h2>Tổ chức</h2>
-                    <p>Các tổ chức chọn trang web để kết nối</p>
-                    <p><a class="btn bg-define text-light" href="#">Xem chi tiết &raquo;</a></p>
+                    <h2>Tìm kiếm</h2>
+                    <p>Tìm kiếm sự kiện tại đây</p>
+                    <p><Link to = "/search" class="btn bg-define text-light" href="#">Xem chi tiết &raquo;</Link></p>
                 </div>
                 <div class="col-lg-4">
                     <svg class="bd-placeholder-img rounded-circle border-button" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#fff"/><text x="50%" y="50%" fill="#ccc6c6" dy=".3em">140x140</text>
@@ -93,7 +93,7 @@ class Body extends Component{
                     </svg>
                     <h2>Cộng đồng</h2>
                     <p>Xem các kênh xã hội của chúng tôi</p>
-                    <p><a class="btn bg-define text-light" href="#">Xem chi tiết &raquo;</a></p>
+                    <p><Link class="btn bg-define text-light" href="#">Xem chi tiết &raquo;</Link></p>
                 </div>
             </div>
 
