@@ -8,93 +8,160 @@ import { useHistory } from "react-router";
 import Map from "../../component/Map";
 import moment from "moment";
 function EventHost({match}){
-    //event Host này đi theo link nên id là 
+    
     var eventID = match.params.id;
-    /*
-     * Đoạn ni BLong quẩy axios đi nha =))) 
-     */
     let history = useHistory();
     const [info, setInfo] = useState({
-        eventName: "Chương trình tình nguyện xây nhà tình thương tại Liên Chiểu, Đà Nẵng", 
-        orgPoint: 5,  // điểm cho tổ chức, tính khoảng 5 đi 
-        eventPoint: 5, //điểm cho sự kiện
+        eventName: "", 
         commentNum: 0, //số lượng cmt select count 
-        eventStart: '15-6-2018', 
-        eventEnd: '15-8-2018', 
-        eventImg: "https://thelifetank.com/wp-content/uploads/2018/08/avatar-default-icon.png", 
+        eventStart: '', 
+        eventEnd: '', 
+        eventImg: "", 
         starRated: 0, 
         totalRated: 0, 
-        eventDescription: "description here", 
-        eventReq: "requirements here", 
-        address: "Danang University of Technology", //địa điểm diễn ra sự kiện để gọi google api 
+        eventDescription: "", 
+        eventReq: "", 
+        address: "", //địa điểm diễn ra sự kiện để gọi google api 
         maxPeople: 0, 
         nowRegistered: 0, //số lượng người hiện tại đã đăng ký 
-        deadline: "15-5-2018", 
+        deadline: "",  
     })
     const [contact, setContact] = useState({
-        leaderFirstname: "leaderFirstname", 
-        leaderLastname: "leaderLastname", 
-        leaderEmail: "leaderEmail", 
-        LeaderPhone: "LeaderPhone", 
         orgName: "orgName", 
-        orgAddress: "orgAddress", 
+        address: "address", 
         orgEmail: "orgEmail", 
-        orgPhone: "orgPhone", 
+        orgPhone: "orgPhone",
     })
+    const [leader, setLeader] = useState({
+        name: "",
+        address: "", 
+        email: "", 
+        phone: "", 
+    })
+    const [listComments, setListComments] = useState([]); 
+    const [disabled, setDisable] = useState(false);
+    const [status, setStatus] = useState(0); 
+    const [rateLeader, setRateLeader] = useState(0.0); 
+    const [rateEvent, setRateEvent] = useState({point: 0.0, maxRate: 0, totalRate: 0}); 
     useEffect( 
         () => {
             console.log("Fetching event"); 
             EventService.getEvent(eventID).then( response => {
                 var eventData = response.data; 
-                setInfo({
-                    eventName: eventData.eventName, 
-                    address: eventData.address, 
-                    eventStart: eventData.eventStart, 
-                    eventEnd: eventData.eventEnd,
-                    eventDescription: eventData.eventDescription, 
-                    eventReq: eventData.eventReq, 
-                    minPeople: eventData.minPeople, 
-                    maxPeople: eventData.maxPeople, 
-                    deadline: eventData.deadline, 
-                    eventImg: eventData.eventImg
-                }); 
-                console.log(info);
-                var host = eventData.host; 
-                setContact({
-                    orgName : host.orgName, 
-                    orgAddress : host.orgAddress, 
-                    orgEmail : host.orgEmail, 
-                    orgPhone : host.orgPhone, 
-                    hostID : host.hostID
-                })
+                var leaderID = eventData.user; 
+                setInfo(eventData); 
                 
+                /*Kiểm tra trạng thái của sự kiện
+                * 0: chưa diễn ra 
+                * 1: đã bị huỷ
+                * 2: đang diễn ra 
+                * 3: đã kết thúc
+                */
+                var from = moment(eventData.deadline).format('YYYY-MM-DD').split("-");
+                var deadlineDate = new Date(from[0], from[1] - 1, from[2]);
+                from = moment(eventData.eventStart).format('YYYY-MM-DD').split("-"); 
+                var startDate = new Date(from[0], from[1] - 1, from[2]);
+                from = moment(eventData.eventEnd).format('YYYY-MM-DD').split("-"); 
+                var endDate = new Date(from[0], from[1] - 1, from[2]);
+                var today = new Date();
+                if (today <= deadlineDate) setDisable(true);
+                    else setDisable(false);
+
+                var stat = eventData.status; 
+                if (stat == 1) setStatus(stat); 
+                else {
+                    if (today < startDate) setStatus(0); 
+                    else if (today >= startDate && today <=endDate) setStatus(2); 
+                    else if (today > endDate) setStatus(3); 
+                }
+
+                var host = eventData.user; 
+                HostService.getHostId(host).then( response => {
+                    var hostData = response.data;
+                    setContact(hostData)
+                });
+                userService.getUser(host).then( response => {
+                    var userData = response.data;
+                    setLeader(userData)
+                });
+                CommentService.getAllCommentsOfEvent(eventID).then(response => {
+                    var commentData = response.data; 
+                    console.log(response.data);
+                    var listComment = commentData.map((comment) => 
+                        <Comment comment = {comment}></Comment>
+                    ); 
+                    setListComments(listComment)
+                })
+                voteServices.getVoteLeader(leaderID).then(response => {
+                    var voteData = response.data; 
+                    console.log(voteData); 
+                    var avgPoint = 0.0; 
+                    voteData.forEach(vote => {
+                        avgPoint = avgPoint + vote.vote_project; 
+                    });
+                    avgPoint = avgPoint/voteData.length; 
+                    setRateLeader(avgPoint); 
+                })
+                voteServices.getVoteProject(eventID).then(response => {
+                    var voteData = response.data;
+                    console.log(voteData);  
+                    var avgPoint = 0.0; 
+                    var maxRate = 0; 
+                    voteData.forEach(vote => {
+                        avgPoint = avgPoint + vote.vote_user; 
+                        if (vote.poin == 5.0) maxRate ++; 
+                    });
+                    avgPoint = avgPoint/voteData.length; 
+                    setRateEvent({point: avgPoint, maxRate: maxRate, totalRate: voteData.length}); 
+                })
             })
             .catch(error => console.log(error));
         }, []
     )
     //comment của người dùng ở đây
-    var userComment = ""; 
-    const handleChange = (evt) => {userComment = evt.target.value; }
+    vconst [userComment, setUserComment] = useState(""); 
+    const handleChange = (evt) => {
+        console.log(evt.target.value); 
+        setUserComment(evt.target.value); 
+    }
     /*
     *
     */
 
     const handleSubmit = (evt) => {
+        if (localStorage.getItem('user') == null) {
+            alert("Bạn cần đăng nhập để thực hiện thao tác này");
+            history.push("/");
+        }
         //xử lý sự kiện đăng cmt ở đây
         console.log("Đăng sự kiện")
-        window.location.reload()
+        var newComment = {
+            content : userComment, 
+            eventId: eventID, 
+            createdDate: Date.now().toString(), 
+            username: localStorage.getItem("username")
+        }
+        CommentService.addComment(newComment).then(response => {
+            alert("Đã đăng cmt thành công"); 
+            /*
+            * Khi nào comment được thì mình mở cái dòng window.location.reload() nha pà
+            */
+            //window.location.reload()
+        })
+       .catch(error => console.log(error))
     }
     /*
     *
     */
 
     const handleRate = (evt) => {
-        var from = info.eventEnd.split("-")
-        var dateEnd = new Date(from[2], from[1], from[0])
+        var from = moment(info.eventEnd).format('YYYY-MM-DD').split("-"); 
+        var dateEnd = new Date(from[0], from[1] - 1, from[2])
         var today = new Date()
+        console.log(today)
+        console.log(dateEnd)
         if (today > dateEnd){
-            //chuyển sang trang rating (này là Hiếu làm),
-            //route qua kèm với project ID để đánh giá 
+            history.push("/review/" + eventID);
             console.log("Đã được đánh giá")
         }
         else {
@@ -106,7 +173,8 @@ function EventHost({match}){
     *
     */
     const handleViewParticipant = (evt) => {
-        //chuyển sang trang danh sách người dùng đã đăng ký 
+        //chuyển sang trang danh sách người dùng đã đăng ký
+        //route chỗ này nha 
     }
     /*
     *
@@ -114,11 +182,7 @@ function EventHost({match}){
     const handleUpdate = (evt) => {
         history.push('/updateEvent' + "/" + eventID);
     }
-    const comments = [1, 2, 3]; //lấy xuống các id comments của event này, content trong mảng là để test, có thể sửa lại sau
-    const listComments = comments.map((comment) => 
-        <Comment id = {comment}></Comment>
-    );
-
+    
     const recentPosts = [1, 2, 3]; //lấy xuống top 5 event được post gần đây nhất
     const listPosts  = recentPosts.map((post) =>
         <div>
@@ -148,7 +212,7 @@ function EventHost({match}){
                                             </div>
                                             <h6>Điểm đánh giá về đơn vị tổ chức: </h6>
                                             <div style={{color: '#212529'}}>
-                                                {info.orgPoint + " "}   
+                                                {rateLeader + " "}   
                                                 <span className="fa fa-star"></span>
                                                 <button type="button" onClick={handleRate}
                                                 className="btn btn-info view-button">Rate</button>  
@@ -163,7 +227,7 @@ function EventHost({match}){
                                             </div>
                                             <h6>Điểm đánh giá sự kiện: </h6>
                                             <div style={{color: '#212529'}}>
-                                                {info.eventPoint + " "}   
+                                                {rateEvent.point + " "}   
                                                 <span className="fa fa-star"></span>
                                                 <button type="button" onClick={handleRate}
                                                 className="btn btn-info view-button">Rate</button> 
@@ -178,7 +242,7 @@ function EventHost({match}){
                                             </div>
                                             <h6>Đánh giá cụ thể: </h6>
                                             <div style={{color: '#212529'}}>
-                                                <h6 style={{display: 'inline-block'}}>{info.commentNum} comment(s)</h6>
+                                                <h6 style={{display: 'inline-block'}}>{listComments.length} comment(s)</h6>
                                                 <button type="button" onClick={executeScroll}
                                                 className="btn btn-info view-button">View</button>          
                                             </div> 
@@ -191,11 +255,8 @@ function EventHost({match}){
                                         </div>
                                         <h6>Thời gian diễn ra sự kiện</h6>
                                         <div style={{color: '#212529'}}>
-                                            <p>Từ {moment(info.eventStart)
-                                        .subtract(10, "days")
-                                        .calendar()} <span id="datetime"></span> đến {moment(info.eventEnd)
-                                            .subtract(10, "days")
-                                            .calendar()} <span id="datetime1"></span> </p>
+                                            <p>Từ {moment(info.eventStart).format('YYYY-MM-DD')} <span id="datetime"></span> 
+                                            đến {moment(info.eventEnd).format('YYYY-MM-DD')} <span id="datetime1"></span> </p>
                                         </div>
                                     </li>
                                     <li className="list-line">
@@ -220,7 +281,7 @@ function EventHost({match}){
                                 </div>
                                 <div>
                                     <i className="news-icon fa fa-heart" style={{display: 'inline-block', marginRight: '5px'}}></i>
-                                    <h6>5 stars rated: {info.starRated}/{info.totalRated}</h6>
+                                    <h6>5 points rated: {rateEvent.maxRate}/{rateEvent.totalRate}</h6>
                                     <i className="news-icon fa fa-share-alt-square" style={{display: 'inline-block', marginRight: '5px'}}></i>
                                     <h6>Like/Share</h6>
                                     <button type="button" style={{maxWidth:'100px', maxHeight:'100px', marginTop:'20px'}} onClick={handleViewParticipant}
@@ -232,6 +293,20 @@ function EventHost({match}){
                             </div>
                         </div>
                     </div>
+                    <div className="blank"></div>
+                    {
+                        status == 0 
+                        ? <button type="button"  disabled={true} class="btn btn-block btn-success btn-lg">Sự kiện sắp diễn ra</button>
+                        :[
+                            status == 1 
+                            ? <button type="button"  disabled={true} class="btn btn-block btn-danger btn-lg">Sự kiện đã bị huỷ</button>
+                            : [
+                                status == 2
+                                ? <button type="button"  disabled={true} className="btn btn-block btn-info btn-lg">Sự kiện đang diễn ra</button>
+                                : <button type="button"  disabled={true} class="btn btn-block btn-primary btn-lg">Sự kiện đã kết thúc</button>
+                            ]
+                        ]
+                    }
                     <div className="blank"></div>
                     <Collapsible trigger="CHI TIẾT VỀ SỰ KIỆN" className="Collapsible">
                         <div className="collapse-container">   
@@ -280,7 +355,7 @@ function EventHost({match}){
                     <div className="blank"></div>
                     <Collapsible trigger="BÌNH LUẬN" className="Collapsible">
                         <div ref={myRef} className="collapse-container">
-                            <textarea className="form-control" rows='5' value={userComment} onChange={handleChange}
+                            <textarea className="form-control" rows='5' value = {userComment} onChange={handleChange}
                             placeholder="Để lại bình luận của bạn về sự kiện này..."></textarea>
                             <input name="comment" id="comment" class="btn btn-primary" onClick={handleSubmit}
                             type="button" value="Đăng"/>
