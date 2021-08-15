@@ -7,6 +7,10 @@ import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
 import Map from "../../component/Map";
 import moment from "moment";
+import userService from "../../services/user.service";
+import CommentService from "../../services/CommentService";
+import HostService from "../../services/HostService";
+import voteServices from "../../services/vote.services";
 function EventHost({match}){
     
     var eventID = match.params.id;
@@ -119,7 +123,7 @@ function EventHost({match}){
         }, []
     )
     //comment của người dùng ở đây
-    vconst [userComment, setUserComment] = useState(""); 
+    const [userComment, setUserComment] = useState(""); 
     const handleChange = (evt) => {
         console.log(evt.target.value); 
         setUserComment(evt.target.value); 
