@@ -84,7 +84,7 @@ class Body extends Component{
                     </svg>
                     <h2>Tìm kiếm</h2>
                     <p>Tìm kiếm sự kiện tại đây</p>
-                    <p><Link to = "/search" class="btn bg-define text-light" to = "/">Xem chi tiết &raquo;</Link></p>
+                    <p><Link to = "/search" class="btn bg-define text-light">Xem chi tiết &raquo;</Link></p>
                 </div>
                 <div class="col-lg-4">
                     <svg class="bd-placeholder-img rounded-circle border-button" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#fff"/><text x="50%" y="50%" fill="#ccc6c6" dy=".3em">140x140</text>

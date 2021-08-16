@@ -45,11 +45,11 @@ export default class Header extends Component {
                             <Link to="/event" style={{ textDecoration:'none', color:'black'}}>
                                 <div class="navbar-user-item">
                                     <div class="navbar-user-icon" style={{alignItems: 'center'}}>
-                                        <i class="fa fa-heart " style={{fontSize:'36px', marginTop: '15px', marginLeft: '15px'}}>
+                                        <i class="fa fa-heart " style={{fontSize:'36px', marginTop: '15px', marginLeft: '20px'}}>
                                     </i>
                                     </div>
                                 </div>
-                                <div class="navbar-user-text" style={{alignItems: 'right', marginLeft:'45x'}}>Yêu thích</div>
+                                <div class="navbar-user-text" style={{alignItems: 'right', marginLeft:'50x'}}>Các Sự kiện</div>
                             </Link>
                         </div>
 
@@ -87,12 +87,11 @@ export default class Header extends Component {
                                             <Link to="/" class="nav-Link text-light" style={{fontSize: '18px', textDecoration: 'none'}} aria-current="page">Trang chủ</Link>
                                         </li>
                                         <li class="nav-item">
-                                            <Link to="/" class="nav-Link text-light" style={{fontSize: '18px', textDecoration: 'none'}} aria-current="page">Cách hoạt động</Link>
-                                        </li>
-                                        <li class="nav-item">
                                             <Link to="/newEvent" class="nav-Link text-light" style={{fontSize: '18px', textDecoration: 'none'}} aria-current="page">Tổ chức sự kiện</Link>
                                         </li>
-                                        <Link to = "/about" class="nav-Link text-light"  style={{fontSize: '18px',textDecoration: 'none'}}>về chúng tôi</Link>
+                                        <li class="nav-item">
+                                            <Link to="/about" class="nav-Link text-light" style={{fontSize: '18px', textDecoration: 'none'}} aria-current="page">Về chúng tôi</Link>
+                                        </li>
                                         <li class="nav-item dropdown">
                                             <Link to = "/" class="nav-Link dropdown-toggle text-light" id="navbarDropdown" style={{fontSize: '18px',textDecoration: 'none'}} role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                             Cộng đồng
@@ -121,11 +120,11 @@ export default class Header extends Component {
                                 <Link to="/event" style={{ textDecoration:'none', color:'black'}}>
                                     <div class="navbar-user-item">
                                         <div class="navbar-user-icon" style={{alignItems: 'center'}}>
-                                            <i class="fa fa-heart " style={{fontSize:'36px', marginTop: '15px', marginLeft: '17px'}}>
+                                            <i class="fa fa-heart " style={{fontSize:'36px', marginTop: '15px', marginLeft: '20px'}}>
                                         </i>
                                         </div>
                                     </div>
-                                    <div class="navbar-user-text" style={{alignItems: 'center'}}>Yêu thích</div>
+                                    <div class="navbar-user-text" style={{alignItems: 'center'}}>Các sự kiện</div>
                                 </Link>
                             </div>
                             <div class="col-sm-auto">
@@ -150,9 +149,6 @@ export default class Header extends Component {
                                             <ul class="navbar-nav navbar-brand me-auto mb-2 mb-lg-0">
                                                 <li class="nav-item">
                                                     <Link to="/" class="nav-Link text-light" style={{fontSize: '18px', textDecoration: 'none'}} aria-current="page">Trang chủ</Link>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <Link class="nav-Link text-light" style={{fontSize: '18px',textDecoration: 'none'}}>Cách hoạt động</Link>
                                                 </li>
                                                 <li class="nav-item">
                                                     <Link to = "/newEvent" class="nav-Link text-light"  style={{fontSize: '18px',textDecoration: 'none'}}>Tổ chức sự kiện</Link>

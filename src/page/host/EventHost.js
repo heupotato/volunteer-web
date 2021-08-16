@@ -11,6 +11,7 @@ import userService from "../../services/user.service";
 import CommentService from "../../services/CommentService";
 import HostService from "../../services/HostService";
 import voteServices from "../../services/vote.services";
+import Error from '../../page/user/error';
 function EventHost({match}){
     
     var eventID = match.params.id;
@@ -55,8 +56,7 @@ function EventHost({match}){
                 var eventData = response.data; 
                 var leaderID = eventData.user; 
                 setInfo(eventData); 
-
-                if (info.user != localStorage.getItem('id')) {
+                if (eventData.user != localStorage.getItem('id')) {
                     alert("Bạn không có quyền truy cập vào trang này");
                     history.push("/");
                 }
@@ -200,11 +200,19 @@ function EventHost({match}){
              <div className="blank"></div>
         </div>  
     )
+
+    const isHidden = () => {
+        return (localStorage.getItem("id") == info.user)
+    }
+
     //jump to comment
     const myRef = useRef(null)
     const executeScroll = () => myRef.current.scrollIntoView()
     return(
-        <div className="container" style={{paddingBottom: '50px'}}>
+        <div>
+            {
+                isHidden() ? (
+                    <div className="container" style={{paddingBottom: '50px'}}>
             <div className="row">
                 <div className="col-9">
                     <div style={{paddingTop: '25px'}}>
@@ -387,6 +395,11 @@ function EventHost({match}){
                 </div>
             </div>
             <div className="blank"></div>
+        </div>
+                ) : (
+                    <Error />
+                )
+            }
         </div>
     );
 }

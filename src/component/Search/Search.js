@@ -21,16 +21,16 @@ function Search()
                 let ids = listUser.map(element => element.id);
                 setEventIDs(ids);
               })
-            .finally();
+            .catch(e => console.log(e))
         }
         else {
             searchService.getSearchResult(value).then(response => {
                 var listEvent = response.data;
                 let ids = listEvent.map(element => element.id);
                 setEventIDs(ids);
-                console.log(eventIDs);
+
               })
-            .finally()
+			  .catch(e => console.log(e))
         }
       }, []);
 
@@ -39,7 +39,7 @@ function Search()
     const handleSubmit = () => {
         
     }
-
+	console.log(eventIDs);
     const handleInputChanged = (event) => {
         setState({
           eventName: event.target.value
@@ -55,7 +55,7 @@ function Search()
                 <button class="btn btn-success" style={{marginLeft:'300px',position:'absolute', paddingLeft:'20px',paddingRight:'20px', marginTop:'14px'}} type="submit"
                 onClick={handleSubmit()} >Search</button>
             </form>
-            <div hidden={localStorage.getItem('setState') == null}>
+            <div >
             <SearchResult listIDs = {favouritesIDs}></SearchResult>
             </div>
         </div>

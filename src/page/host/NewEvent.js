@@ -4,6 +4,7 @@ import HostService from "../../services/HostService";
 import EventService from "../../services/EventService";
 import firebase from 'firebase';
 import { useHistory } from "react-router";
+import Error from '../../page/user/error';
 function NewEvent(){
     const history = useHistory();
     //từ id của leader lấy các thông tin của leaderInfo và orgInfo ra 
@@ -33,7 +34,7 @@ function NewEvent(){
 
     useEffect( 
         () => {
-            if (localStorage.getItem('user') == null) {
+            if (localStorage.getItem('role') != 2) {
                 alert("Bạn cần đăng nhập với tư cách host để thực hiện");
                 history.push("/login");
             }
@@ -161,9 +162,15 @@ function NewEvent(){
         }
     }
 
+    const isHidden = () => {
+        return localStorage.getItem('role') == 2;
+    }
 
     return(
-        <div  className = "bg-image" style={{backgroundImage: "url('https://vicongdong.vn/wp-content/uploads/2020/02/t%C3%ACnh-nguy%E1%BB%87n-vi%C3%AAn.jpg'",
+        <div>
+        {
+            isHidden() ? (
+                <div  className = "bg-image" style={{backgroundImage: "url('https://vicongdong.vn/wp-content/uploads/2020/02/t%C3%ACnh-nguy%E1%BB%87n-vi%C3%AAn.jpg'",
         height: '100%'}} >
             <div className="mask" style={{backgroundColor: 'rgba(0, 0, 0, 0.6)', paddingBottom: '20px'}}>
                 <div className="d-flex justify-content-center align-items-center h-100">
@@ -291,6 +298,11 @@ function NewEvent(){
         </div>
     </div>
     </div>
+            ) : (
+                <Error />
+            )
+        }
+        </div>
     );
 }
 
