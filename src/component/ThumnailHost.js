@@ -16,8 +16,7 @@ function ThumbnailHost(props) {
                 {}
                 </p>
                 <img class="card-img-bottom" src={props.eventImg} alt="" style={{ height:'300px', width:'350px'}}/>
-                {/* Chỗ này sửa link về eventHost nha */}
-                <Link to={`/event/${props.id}`}>
+                <Link to={`/eventHost/${props.id}`}>
                     <button class="btn btn-primary" style={{position: 'absolute', left:'35%'}}>Xem thêm</button>
                 </Link>
 

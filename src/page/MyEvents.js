@@ -2,13 +2,15 @@ import  React, { useState, useEffect} from "react";
 import Thumbnail from '../component/Thumbnail'; 
 import ThumbnailHost from "../component/ThumnailHost";
 import EventService from "../services/EventService";
-import RegisterProject from "../services/registrationproject.service"
+import RegisterProject from "../services/registrationproject.service";
+import Error from "../page/user/error";
+import { useHistory } from "react-router";
 
 function MyEvents() 
 {
     const userID = localStorage.getItem("id"); 
     const role = localStorage.getItem("role"); 
-    
+    const history = useHistory();
     /*
     * case USER
     */
@@ -23,7 +25,12 @@ function MyEvents()
     useEffect(
         () => {
             console.log("Fetching my ID"); 
-             
+            
+            if (localStorage.getItem('user') == null) {
+                alert("Bạn cần đăng nhập để thực hiện thao tác này")
+                history.push("/login");
+            }
+
             if (role == '2'){
                 EventService.getHostEvent(userID).then( response => {
                     console.log(response.data);
@@ -68,9 +75,16 @@ function MyEvents()
         )
     }
 
+    const isHidden = () => {
+        return localStorage.getItem('user') != null;
+    }
     
     return (
         <div>
+            {
+                isHidden() ? 
+                (
+                    <div>
             <div className="blank"></div>
             <h2 style={{fontStyle: 'italic', textAlign:'center'}}>{
                 role == '2'
@@ -85,6 +99,12 @@ function MyEvents()
                 }
             </div>
             
+        </div>
+                ) :
+                (
+                    <Error />
+                )
+            }
         </div>
     ); 
 }
