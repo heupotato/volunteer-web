@@ -1,10 +1,12 @@
 import { Button } from 'react-bootstrap';
 import  React, { Component, useState } from "react";
 import EventService from '../services/EventService';
-import Modal from 'react-bootstrap/Modal'
+import Modal from 'react-bootstrap/Modal';
+import { useHistory } from 'react-router';
 function DeleteModale(prop)
 {
     const [show, setShow] = useState(false);
+    const history = useHistory();
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -12,8 +14,10 @@ function DeleteModale(prop)
         console.log(prop.projectID)
         if (reason == ""); 
         else {
-            EventService.deleteEvent(prop.projectID).then( () => {
+            EventService.deleteEvent(prop.projectID, reason).then( () => {
                 handleClose(); 
+                alert("Đã xóa, về trang chủ");
+                history.push("/");
                 /*
                 * chỗ này navigate về trang chủ luôn nhé
                 */

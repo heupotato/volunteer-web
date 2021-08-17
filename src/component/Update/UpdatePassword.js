@@ -165,7 +165,7 @@ export default class Update extends Component{
 
 
                                 <div className="form-group" style={{marginBottom:"40px",marginTop:"30px"}}>
-                                <button className="btn btn-primary btn-block"> Cập nhập</button>
+                                <button className="btn btn-primary btn-block"> Cập nhật</button>
                                 </div>
                             </div>
                             </div>

@@ -103,7 +103,7 @@ function NewEvent(){
             let file = eventImg.image; 
         var storage = firebase.storage(); 
         var storageRef = storage.ref(); 
-        console.log(storageRef);
+        console.log("Store fileeeee");
         var uploadTask = storageRef.child('folder/' + projectID + file.name).put(file); 
 
         uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
@@ -178,7 +178,7 @@ function NewEvent(){
         <div className="container">
             <h2 className="h2-title text-white mb-0 " >Bắt đầu sự kiện tình nguyện của bạn</h2>
             <h4 className="text-white mb-0">1. Thông tin về trưởng đoàn tổ chức</h4>
-            <form id="form-new-event" name="form-new-event" onSubmit={handleSubmit} method="POST">
+            <form id="form-new-event" name="form-new-event" >
                 <div className="row">
                     <div className="col">
                         <input type="text" name="leaderName" value={leader.name} readOnly
@@ -291,8 +291,8 @@ function NewEvent(){
                         </div>
                     </div>
                     <div className="container-button">
-                        <button type="submit" className= "btn btn-success btn-lg" 
-                        form="form-new-event" value="Submit" style={{margin: 'auto'}}>Tạo event mới</button>
+                        <input type="button" className= "btn btn-success btn-lg" onClick={handleSubmit}
+                        form="form-new-event" value="Đăng ký" style={{margin: 'auto'}} />
                     </div>        
             </form> 
         </div>

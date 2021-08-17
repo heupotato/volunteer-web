@@ -92,19 +92,19 @@ export default class edit extends Component{
                             {!this.state.successful && (
                               <div class='row' id='padding-top'>
                               <div class='col-md-8 col-md-offset-2'>
-                                  <h1 style={{paddingBottom: "20px",paddingTop:"40px"}}>Cap nhap tai khoan</h1>
+                                  <h1 style={{paddingBottom: "20px",paddingTop:"40px"}}>Cập nhật tài khoản</h1>
                                         <div class='form-group' style={{marginBottom:"20px"}}>       
 
                             <div>
                                 
                                 <div className="form-group" style={{marginBottom:"20px"}}>
-                                <label>khoa tai khoan</label>
+                                <label>Khóa tài khoản</label>
                                 <Input  type="text" className="form-control" name="active" value={this.state.active} onChange={this.onChangeActive}  />
                                 </div>
 
 
                                 <div className="form-group" style={{marginBottom:"40px",marginTop:"30px"}}>
-                                <button className="btn btn-primary btn-block"> Cập nhập</button>
+                                <button className="btn btn-primary btn-block"> Cập nhật</button>
                                 </div>
                             </div>
                             </div>

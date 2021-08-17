@@ -10,7 +10,7 @@ class EventService {
         
     createEvent(event) {
         console.log(authHeader());
-        return axios.post(EVENT_API_BASE_URL, event , { headers: authHeader() });
+        return axios.post(EVENT_API_BASE_URL, event, { headers: authHeader() });
     }
 
     getEvent(eventID) {
