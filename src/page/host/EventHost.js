@@ -54,7 +54,7 @@ function EventHost({match}){
     useEffect( 
         () => {
             console.log("Fetching event"); 
-            registrationprojectService.getRegisterProject(eventID).then(response => {
+            registrationprojectService.getAllRegisterProject(eventID).then(response => {
                 var res = response.data; 
                 setRegisterNum(res.length); 
             })
@@ -162,7 +162,7 @@ function EventHost({match}){
             /*
             * Khi nào comment được thì mình mở cái dòng window.location.reload() nha pà
             */
-            //window.location.reload()
+            window.location.reload()
         })
        .catch(error => console.log(error))
     }
@@ -189,8 +189,7 @@ function EventHost({match}){
     *
     */
     const handleViewParticipant = (evt) => {
-        //chuyển sang trang danh sách người dùng đã đăng ký
-        //route chỗ này nha 
+        history.push("/listParticipants/" + eventID); 
     }
     /*
     *
@@ -291,7 +290,7 @@ function EventHost({match}){
                                         <h6>Số lượng người tham gia</h6>
                                         <div style={{color: '#212529'}}>
                                             <div style={{color: '#212529'}}>
-                                                <h6 style={{display: 'inline-block'}}>{info.nowRegistered} người</h6>
+                                                <h6 style={{display: 'inline-block'}}>{registeredNum} người</h6>
                                             </div> 
                                         </div>
                                     </li>
@@ -309,8 +308,7 @@ function EventHost({match}){
                                     <i className="news-icon fa fa-share-alt-square" style={{display: 'inline-block', marginRight: '5px'}}></i>
                                     <h6>Like/Share</h6>
                                     <button type="button" style={{maxWidth:'100px', maxHeight:'100px', marginTop:'20px'}} onClick={handleViewParticipant}
-                                    className="btn btn-info view-button"><Link style={{ textDecoration: 'none', color:'white' }} to = "/listParticipants">Danh sách đăng ký</Link></button> 
-                                    {/* set link cua nut cap nhat tai day */}
+                                    className="btn btn-info view-button"> Danh sách đăng ký</button> 
                                     <button type="button"  onClick={handleUpdate} style={{marginLeft:"30px", maxWidth:'100px', maxHeight:'100px',  marginTop:'20px'}}
                                     className="btn btn-primary">Cập nhật sự kiện</button>  
                                 </div>

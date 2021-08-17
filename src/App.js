@@ -50,7 +50,7 @@ function App() {
                 <Route exact path="/review/:id" component={Review}></Route>
                 <Route exact path="/updateEvent/:id" component={UpdateEvent}></Route>
                 <Route exact path="/myEvents" component={MyEvents}></Route>
-                <Route exact path="/listParticipants" component={ListParticipants}></Route>
+                <Route exact path="/listParticipants/:id" component={ListParticipants}></Route>
                 {<PrivateRoute exact path="/admin" component={Admin} isAuthenticated={localStorage.getItem('role') === '3'}></PrivateRoute> }
                 {<PrivateRoute exact path="/updateProfile" component={UpdateProfile} isAuthenticated={localStorage.getItem('id') != null}></PrivateRoute> }
             </Switch>

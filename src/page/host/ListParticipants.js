@@ -3,7 +3,7 @@ import  React, { useState, useEffect } from "react";
 import ReasonModal from "../../component/ReasonModal";
 import registrationprojectService from "../../services/registrationproject.service";
 import userService from "../../services/user.service";
-function ListParticipants(prop)
+function ListParticipants({match})
 {
     var projectName = ""; 
 
@@ -14,13 +14,14 @@ function ListParticipants(prop)
         tel: "", 
         reason: ""
     } 
+    var eventID = match.params.id
     
     const[listParticipants, setListParticipants] = useState([]); 
     useEffect(() => {
         console.log('useEffect has been called!');
-        registrationprojectService.getAllRegisterProject(1).then(response => {
+        registrationprojectService.getAllRegisterProject(eventID).then(response => {
             var listUsers = response.data;
-            
+        
             //var listParticipant = []
             listUsers.map((x, index) => userService.getUser(x.user).then( res =>
                 {
@@ -33,7 +34,7 @@ function ListParticipants(prop)
                         {/* <th>{participant.DoB}</th> */}
                         <th>{participant.email}</th>
                         <th>{participant.phone}</th>
-                        <th><ReasonModal index={index} name={participant.name} reason={participant.reason}></ReasonModal></th>
+                        <th><ReasonModal index={index} name={participant.name} reason={x.reason}></ReasonModal></th>
                     </tr>, ...currentArray]
                     )
                 },
