@@ -12,6 +12,7 @@ import CommentService from "../../services/CommentService";
 import HostService from "../../services/HostService";
 import voteServices from "../../services/vote.services";
 import Error from '../../page/user/error';
+import registrationprojectService from "../../services/registrationproject.service";
 function EventHost({match}){
     
     var eventID = match.params.id;
@@ -49,9 +50,14 @@ function EventHost({match}){
     const [status, setStatus] = useState(0); 
     const [rateLeader, setRateLeader] = useState(0.0); 
     const [rateEvent, setRateEvent] = useState({point: 0.0, maxRate: 0, totalRate: 0}); 
+    const [registeredNum, setRegisterNum] = useState(0); 
     useEffect( 
         () => {
             console.log("Fetching event"); 
+            registrationprojectService.getRegisterProject(eventID).then(response => {
+                var res = response.data; 
+                setRegisterNum(res.length); 
+            })
             EventService.getEvent(eventID).then( response => {
                 var eventData = response.data; 
                 var leaderID = eventData.user; 
@@ -342,7 +348,7 @@ function EventHost({match}){
                             </p>
                             <h6 style={{fontStyle: 'italic'}}>SỐ LƯỢNG NGƯỜI ĐÃ ĐĂNG KÝ</h6> 
                             <p>
-                                {info.nowRegistered} người
+                                {registeredNum} người
                             </p>
                         </div>
                        

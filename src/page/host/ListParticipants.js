@@ -33,7 +33,7 @@ function ListParticipants(prop)
                         {/* <th>{participant.DoB}</th> */}
                         <th>{participant.email}</th>
                         <th>{participant.phone}</th>
-                        <th><ReasonModal index={index} name={checkdata.name} reason={checkdata.reason}></ReasonModal></th>
+                        <th><ReasonModal index={index} name={participant.name} reason={participant.reason}></ReasonModal></th>
                     </tr>, ...currentArray]
                     )
                 },
