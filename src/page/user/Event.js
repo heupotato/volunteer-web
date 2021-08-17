@@ -10,6 +10,7 @@ import userService from "../../services/user.service";
 import CommentService from "../../services/CommentService";
 import { useHistory } from "react-router";
 import voteServices from "../../services/vote.services";
+import registrationprojectService from "../../services/registrationproject.service";
 function Event({match}){
     var eventID = match.params.id;
     const history = useHistory();
@@ -45,8 +46,13 @@ function Event({match}){
     const [status, setStatus] = useState(0); 
     const [rateLeader, setRateLeader] = useState(0.0); 
     const [rateEvent, setRateEvent] = useState({point: 0.0, maxRate: 0, totalRate: 0}); 
+    const [registeredNum, setRegisterNum] = useState(0); 
     useEffect( 
         () => {
+            registrationprojectService.getAllRegisterProject(eventID).then(response => {
+                var res = response.data; 
+                setRegisterNum(res.length); 
+            })
             console.log("Fetching event"); 
             EventService.getEvent(eventID).then( response => {
                 var eventData = response.data; 
@@ -272,7 +278,7 @@ function Event({match}){
                                         <h6>Số lượng người tham gia</h6>
                                         <div style={{color: '#212529'}}>
                                             <div style={{color: '#212529'}}>
-                                                <h6 style={{display: 'inline-block'}}>{info.nowRegistered} người</h6>
+                                                <h6 style={{display: 'inline-block'}}>{registeredNum} người</h6>
                                             </div> 
                                         </div>
                                     </li>
@@ -330,7 +336,7 @@ function Event({match}){
                             </p>
                             <h6 style={{fontStyle: 'italic'}}>SỐ LƯỢNG NGƯỜI ĐÃ ĐĂNG KÝ</h6> 
                             <p>
-                                {info.nowRegistered} người
+                                {registeredNum} người
                             </p>
                         </div>
                        
