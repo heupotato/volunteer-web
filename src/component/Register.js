@@ -31,7 +31,8 @@ function Register(props){
         else{
             registrationprojectService.registProject(postInfo).then(
                 console.log("ok"),
-                alert("Đã đăng ký thành công")
+                alert("Đã đăng ký thành công"),
+                history.push("/")
             )
             .catch(e => console.log(e));
         }

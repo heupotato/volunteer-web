@@ -5,6 +5,7 @@ import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import { isEmail } from "validator";
 import AuthService from "../../services/auth.service";
+import { useHistory } from 'react-router';
 
 const required = value => {
     if (!value) {
@@ -175,9 +176,11 @@ export default class Register extends Component {
                 this.state.role,
             ).then(
                 response => {
+                    alert("Đăng ký thành công");
+                    this.props.history.push("/login");
+                    window.location.reload();
                     this.setState({
-                        message: response.data.message,
-                        successful: true
+                        
                     });
                 },
                 error => {
