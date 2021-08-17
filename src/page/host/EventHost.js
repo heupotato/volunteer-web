@@ -302,15 +302,19 @@ function EventHost({match}){
                                         <img width="300px" height="200px" style={{marginBottom: '0%'}} src={info.eventImg}></img>
                                     </div>
                                 </div>
-                                <div>
-                                    <i className="news-icon fa fa-heart" style={{display: 'inline-block', marginRight: '5px'}}></i>
-                                    <h6>5 points rated: {rateEvent.maxRate}/{rateEvent.totalRate}</h6>
-                                    <i className="news-icon fa fa-share-alt-square" style={{display: 'inline-block', marginRight: '5px'}}></i>
-                                    <h6>Like/Share</h6>
-                                    <button type="button" style={{maxWidth:'100px', maxHeight:'100px', marginTop:'20px'}} onClick={handleViewParticipant}
-                                    className="btn btn-info view-button"> Danh sách đăng ký</button> 
-                                    <button type="button"  onClick={handleUpdate} style={{marginLeft:"30px", maxWidth:'100px', maxHeight:'100px',  marginTop:'20px'}}
-                                    className="btn btn-primary">Cập nhật sự kiện</button>  
+                                <div className="row">
+                                    <div className="col">
+                                        <i className="news-icon fa fa-heart" style={{display: 'inline-block', marginRight: '5px', fontSize:'20px'}}></i>
+                                        <h6>5 points rated: {rateEvent.maxRate}/{rateEvent.totalRate}</h6>
+                                        <i className="news-icon fa fa-share-alt-square" style={{display: 'inline-block', marginRight: '5px', fontSize:'20px'}}></i>
+                                        <h6>Like/Share</h6>
+                                    </div>
+                                    <div className = "col">
+                                        <button type="button" style={{maxWidth:'100px', maxHeight:'100px', marginTop:'20px'}} onClick={handleViewParticipant}
+                                        className="btn btn-info view-button"> Danh sách đăng ký</button> 
+                                        <button type="button"  onClick={handleUpdate} style={{marginLeft:"30px", maxWidth:'100px', maxHeight:'100px',  marginTop:'20px'}}
+                                        className="btn btn-primary">Cập nhật sự kiện</button>  
+                                    </div>
                                 </div>
                             </div>
                         </div>
