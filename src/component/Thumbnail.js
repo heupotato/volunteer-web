@@ -30,12 +30,8 @@ function Thumbnail(props) {
             <div class="card-body-event"  style={{marginLeft:'50px'}}>
                 <h5 class="card-title">{details.eventName.toUpperCase()}</h5>
                 <p>Địa điểm: {details.address}</p>
-                <p>Thời gian: Từ ngày {moment(details.eventStart)
-                                        .subtract(10, "days")
-                                        .calendar()} 
-                             đến ngày {moment(details.eventEnd)
-                                        .subtract(10, "days")
-                                        .calendar()}
+                <p>Thời gian: Từ ngày { moment(details.eventStart).format('YYYY-MM-DD')} 
+                             đến ngày { moment(details.eventEnd).format('YYYY-MM-DD')}
                 {}
                 </p>
                 <img class="card-img-bottom" src={details.eventImg} alt="" style={{ height:'300px', width:'350px'}}/>

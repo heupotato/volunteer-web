@@ -224,12 +224,12 @@ export default class UpdateProfile extends Component{
                                 <label>Địa chỉ</label>
                                 <Input  type="text" className="form-control" name="address" value={this.state.address} onChange={this.onChangeAddress}  />
                                 </div>
-
+{/* 
                                 <div class='form-group' style={{marginBottom:"20px"}}>
                                 <label style={{marginBottom:"10px"}}>Cập nhật ảnh đại diện</label>
                                 <br></br>
                                 <input type='file' name='fileUpload' value=''/>
-                                </div>
+                                </div> */}
 
                                 <div class="row" style={{marginTop:"10px",marginBottom:"13px"}}>
                                     <div class="col-sm-auto">

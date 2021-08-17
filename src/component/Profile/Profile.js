@@ -139,7 +139,7 @@ export default class Profile extends Component  {
                                         <div class="row" style={{marginTop:"20px",marginBottom:"13px"}}>
                                             <div class="col-sm-12">
                                             <Link to="/updateProfile">
-                                            <input type = "submit" class="btn btn-primary" target="__blank" value="Cập nhập" />
+                                            <input type = "submit" class="btn btn-primary" target="__blank" value="Cập nhật" />
                                             </Link>
                                             </div>
                                         </div>
